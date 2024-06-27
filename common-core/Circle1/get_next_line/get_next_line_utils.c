@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:52:29 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/06/27 10:52:31 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/06/27 13:33:11 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ char	*ft_strchr(const char *s, int c)
 
 char	*ft_strjoin_free_s1(char *s1, char const *s2)
 {
-	char    *s3;
-	char    *ptr3;
-	char    *ptr1;
+	char	*s3;
+	char	*ptr3;
+	char	*ptr1;
 
 	s3 = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(*s3));
 	if (!s3)
@@ -72,8 +72,8 @@ char	*ft_memcpy(char *dst, const char *src, size_t n)
 
 char	*ft_strdup(const char *s)
 {
-	char    *s2;
-	size_t  len;
+	char	*s2;
+	size_t	len;
 
 	len = ft_strlen(s);
 	s2 = malloc((len + 1) * sizeof(char));
@@ -82,26 +82,4 @@ char	*ft_strdup(const char *s)
 	ft_memcpy(s2, s, len);
 	s2[len] = '\0';
 	return (s2);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*buf;
-	size_t	i;
-
-	i = 0;
-	if (!s || start >= ft_strlen(s))
-		return (ft_strdup(""));
-	if (ft_strlen(s) - start < len)
-		len = ft_strlen(s) - start;
-	buf = malloc((len + 1) * sizeof(*s));
-	if (!buf)
-		return (NULL);
-	while (i < len)
-	{
-		buf[i] = s[start + i];
-		i++; 
-	}
-	buf[i] = '\0';
-	return (buf);
 }

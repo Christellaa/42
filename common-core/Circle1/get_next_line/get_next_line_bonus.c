@@ -6,11 +6,33 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:52:14 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/06/27 10:52:17 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/06/27 13:33:01 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*buf;
+	size_t	i;
+
+	i = 0;
+	if (!s || start >= ft_strlen(s))
+		return (ft_strdup(""));
+	if (ft_strlen(s) - start < len)
+		len = ft_strlen(s) - start;
+	buf = malloc((len + 1) * sizeof(*s));
+	if (!buf)
+		return (NULL);
+	while (i < len)
+	{
+		buf[i] = s[start + i];
+		i++;
+	}
+	buf[i] = '\0';
+	return (buf);
+}
 
 static char	*extract_line(char **buf)
 {
@@ -76,5 +98,5 @@ char	*get_next_line(int fd)
 		free(buf[fd]);
 		return (NULL);
 	}
-	return(extract_line(&buf[fd]));
+	return (extract_line(&buf[fd]));
 }
