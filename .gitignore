@@ -1,0 +1,8 @@
+.vscode/
+*.txt
+main*.c
+*.o
+gnl
+*.a
+a.out
+common-core/Circle1/get_next_line/Makefile
