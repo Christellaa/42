@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 14:57:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/21 15:26:29 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/05/29 08:03:37 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/05/29 08:03:39 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** Copy from string s to a new string
-** Returns a pointer to the new string, or NULL if the allocation fails
-** 
-*/
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-#include "libft.h"
+# include <unistd.h>
+# include <stdarg.h>
 
-char	*ft_strdup(const char *s)
-{
-	char	*new;
-	int		size;
-	int		i;
+int				print_char(char c);
+int				print_str(char *s);
+int				print_int(long long nb);
+int				print_unsigned(unsigned int nb);
+int				print_hex(unsigned int nb, char current);
+int				print_hex_long(unsigned long nb, char current);
+int				print_pointer(void *p);
+int				ft_printf(const char *format, ...);
 
-	size = ft_strlen(s);
-	new = malloc((size + 1) * sizeof(char));
-	if (!new)
-		return (NULL);
-	i = 0;
-	while (s[i])
-	{
-		new[i] = s[i];
-		i++;
-	}
-	new[i] = '\0';
-	return (new);
-}
+#endif

@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strequ.c                                        :+:      :+:    :+:   */
+/*   print_char.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cde-sous  <cde-sous@student.42.fr   >      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 17:08:19 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/05 17:14:21 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/06/10 12:57:06 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/06/10 12:57:06 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-int	ft_strequ(const char *s1, const char *s2)
+int	print_char(char c)
 {
-	if (!s1 || !s2)
-		return (0);
-	while (*s1 && *s2)
-	{
-		if (*s1 != *s2)
-			return (0);
-		s1++;
-		s2++;
-	}
-	return (*s1 == *s2);
+	return (write(1, &c, 1));
 }

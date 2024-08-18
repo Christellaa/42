@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/16 15:38:40 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/07 10:44:54 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/06/27 10:52:29 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/08/13 19:27:31 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** Returns a pointer to the first occurrence of the character c in the string s
-** or NULL if the character is not found
-** The terminating null byte is considered to be part of the string
-*/
+#include "get_next_line.h"
 
-#include "libft.h"
-
-char	*ft_strchr(const char *s, int c)
+char	*ft_strjoin_free_s1(char *s1, char const *s2)
 {
-	while (*s)
+	char	*s3;
+	char	*ptr3;
+	char	*ptr1;
+
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (s1);
+	s3 = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!s3)
 	{
-		if (*s == c)
-			return ((char *)s);
-		s++;
+		free(s1);
+		return (NULL);
 	}
-	return (NULL);
+	ptr3 = s3;
+	ptr1 = s1;
+	while (*ptr1)
+		*ptr3++ = *ptr1++;
+	while (*s2)
+		*ptr3++ = *s2++;
+	*ptr3 = '\0';
+	free(s1);
+	return (s3);
 }

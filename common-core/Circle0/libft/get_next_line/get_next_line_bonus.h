@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/16 15:38:40 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/07 10:44:54 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/06/27 10:51:54 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/08/05 16:01:50 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** Returns a pointer to the first occurrence of the character c in the string s
-** or NULL if the character is not found
-** The terminating null byte is considered to be part of the string
-*/
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
-#include "libft.h"
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# endif
 
-char	*ft_strchr(const char *s, int c)
-{
-	while (*s)
-	{
-		if (*s == c)
-			return ((char *)s);
-		s++;
-	}
-	return (NULL);
-}
+# ifndef OPEN_MAX
+#  define OPEN_MAX 1024
+# endif
+
+# include <stdlib.h>
+# include <unistd.h>
+# include "../libft.h"
+
+char		*ft_strjoin_free_s1(char *s1, char const *s2);
+char		*get_next_line(int fd);
+
+#endif
