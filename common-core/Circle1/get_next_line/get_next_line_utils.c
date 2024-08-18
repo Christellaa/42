@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:52:29 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/06/27 13:33:11 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/07 10:41:59 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ size_t	ft_strlen(const char *s)
 
 	len = 0;
 	while (s[len])
-	{
 		len++;
-	}
 	return (len);
 }
 
