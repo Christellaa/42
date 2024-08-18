@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/15 16:19:43 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/18 20:16:42 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define PLAYER 'P'
 # define MONSTER 'M'
 # define OBSTACLE 'O'
+# define VISITED 'V'
 
 # define KEY_W 119
 # define KEY_A 97
@@ -51,18 +52,13 @@
 
 # define TILESIZE 60
 
-typedef enum s_bool
-{
-	true = 1,
-	false = 0
-}	t_bool;
-
 typedef struct s_map_validator
 {
-	int		p_count;
-	int		e_count;
-	int		c_count;
-	t_bool	map_valid;
+	int	p_count;
+	int	e_count;
+	int	c_count;
+	int	e_reachable;
+	int	c_reachable;
 }	t_map_validator;
 
 typedef struct s_layer
@@ -98,11 +94,11 @@ typedef struct s_game
 	t_img	player;
 	t_img	monster;
 	t_img	obstacle;
-	int		height;
-	int		width;
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_map	map;
+	int		player_x;
+	int		player_y;
 }	t_game;
 
 // cleanup.c
@@ -124,9 +120,11 @@ t_img	*get_tile(t_game *game, char tile);
 int		draw_tile(char tile, int row, int col, t_game *game);
 int		blend_transparency(t_game *game, t_img *img, int x, int y);
 // checks.c
-int		check_char(char c, t_map *map); // change its name
+int		check_elements(char c, t_map *map);
+int		validate_elements(t_map map);
 int		check_map(t_map_validator validator); // is it useful?
 int		check_map_edges(t_map map);
+int		check_playability(t_game game);
 // map.c
 int		get_map_dimensions(int fd, t_map *map);
 int		render_map(t_game *game);

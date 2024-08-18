@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:12:17 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/15 16:43:00 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/18 20:22:08 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	init_map(t_map *map)
 	map->validator.c_count = 0;
 	map->validator.e_count = 0;
 	map->validator.p_count = 0;
-	map->validator.map_valid = 1;
+	map->validator.c_reachable = 0;
+	map->validator.e_reachable = 0;
 	map->rows = 0;
 	map->cols = 0;
 }
@@ -68,10 +69,8 @@ int	init_game(t_game *game)
 	game->mlx_ptr = mlx_init();
 	if (!game->mlx_ptr)
 		handle_error("initialize mlx", -1, NULL, NULL);
-	game->height = game->map.cols * TILESIZE;
-	game->width = game->map.rows * TILESIZE;
-	game->win_ptr = mlx_new_window(game->mlx_ptr, game->height, game->width, \
-	"Game");
+	game->win_ptr = mlx_new_window(game->mlx_ptr, game->map.cols * TILESIZE, \
+	game->map.rows * TILESIZE, "Game");
 	init_imgs(game);
 	return (0);
 }
