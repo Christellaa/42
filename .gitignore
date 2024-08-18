@@ -6,3 +6,5 @@ gnl
 *.a
 a.out
 common-core/Circle1/get_next_line/Makefile
+common-core/Circle2/so_long/TODO
+common-core/Circle2/pipex/tests.txt
