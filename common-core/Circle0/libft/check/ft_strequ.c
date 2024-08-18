@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strequ.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/16 15:38:40 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/05 15:48:22 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/08/05 17:08:19 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/08/05 17:13:57 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** Returns a pointer to the first occurrence of the character c in the string s
-** or NULL if the character is not found
-** The terminating null byte is considered to be part of the string
-*/
-
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+int	ft_strequ(const char *s1, const char *s2)
 {
-	while (*s)
+	if (!s1 || !s2)
+		return (0);
+	while (*s1 && *s2)
 	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
+		if (*s1 != *s2)
+			return (0);
+		s1++;
+		s2++;
 	}
-	if (*s == (char)c)
-		return ((char *)s);
-	return (NULL);
+	return (*s1 == *s2);
 }

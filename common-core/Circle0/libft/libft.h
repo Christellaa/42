@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 08:03:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/29 08:03:39 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/05 17:09:58 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int				ft_isalpha(int c);
 int				ft_isascii(int c);
 int				ft_isdigit(int c);
 int				ft_isprint(int c);
+int				ft_strequ(const char *s1, const char *s2);
 
 int				ft_toupper(int c);
 int				ft_tolower(int c);
