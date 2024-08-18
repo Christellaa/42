@@ -74,6 +74,7 @@ char	*get_next_line(int fd)
 	if (!buf[fd] || !*buf[fd])
 	{
 		free(buf[fd]);
+		buf[fd] = NULL;
 		return (NULL);
 	}
 	return (extract_line(&buf[fd]));
