@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/18 20:16:42 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/19 12:11:28 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # define PLAYER 'P'
 # define MONSTER 'M'
 # define OBSTACLE 'O'
-# define VISITED 'V'
 
 # define KEY_W 119
 # define KEY_A 97
@@ -102,8 +101,9 @@ typedef struct s_game
 }	t_game;
 
 // cleanup.c
-int		handle_error(char *msg, int fd, char **to_free, char **to_free2);
-void	free_group(char **group);
+int		handle_error(char *msg, int fd, char **to_free, int **to_free2);
+void	free_group_char(char **group);
+void	free_group_int(int **group);
 int		open_or_reset_fd(int fd, char *filename);
 // inits.c
 void	init_layers(t_layer *layers[3]);
@@ -112,8 +112,8 @@ int		init_imgs(t_game *game);
 int		init_game(t_game *game);
 // layers.c
 int		alloc_layer(t_map *map, int i);
-int		assign_to_layer(char c, int row, int col, t_map *map);
-int		load_layers(int fd, t_map *map);
+int		assign_to_layer(char c, int row, int col, t_game *game);
+int		load_layers(int fd, t_game *game);
 // draw.c
 int		draw_base(t_game *game);
 t_img	*get_tile(t_game *game, char tile);
@@ -122,8 +122,8 @@ int		blend_transparency(t_game *game, t_img *img, int x, int y);
 // checks.c
 int		check_elements(char c, t_map *map);
 int		validate_elements(t_map map);
-int		check_map(t_map_validator validator); // is it useful?
 int		check_map_edges(t_map map);
+void	explore_map(t_game *game, int x, int y, int *(visited)[game->map.cols]);
 int		check_playability(t_game game);
 // map.c
 int		get_map_dimensions(int fd, t_map *map);

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 11:33:59 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/18 20:40:38 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/19 13:05:08 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int	check_elements(char c, t_map *map)
 		map->validator.p_count++;
 	if (c == EXIT)
 		map->validator.e_count++;
-	// . check if map is playable (player can go to both collectibles and exit)
-	// after rendering whole map
 	if (c == COLLECTIBLE)
 		map->validator.c_count++;
 	return (0);
@@ -57,19 +55,16 @@ int	check_map_edges(t_map map)
 			handle_error("Map not surrounded by walls\n", -1, NULL, NULL);
 		col++;
 	}
-	if (map.cols > col)
-		handle_error("Not all lines are the same length\n", -1, NULL, NULL);
 	return (0);
 }
 
-void	explore_map(t_game *game, int x, int y, \
-		int visited[game->map.rows][game->map.cols])
+void	explore_map(t_game *game, int x, int y, int *(visited)[game->map.cols])
 {
 	if (x <= 0 || y <= 0 || x >= game->map.cols || y >= game->map.rows || \
 	game->map.layers[1]->tiles[y][x] == WALL || \
-	game->map.layers[1]->tiles[y][x] == VISITED)
+	visited[y][x] == 1)
 		return ;
-	if (game->map.layers[1]->tiles[y][x] == COLLECTIBLE)
+	else if (game->map.layers[1]->tiles[y][x] == COLLECTIBLE)
 		game->map.validator.c_reachable++;
 	else if (game->map.layers[1]->tiles[y][x] == EXIT)
 		game->map.validator.e_reachable = 1;
@@ -82,19 +77,29 @@ void	explore_map(t_game *game, int x, int y, \
 
 int	check_playability(t_game game)
 {
+	int	i;
+	int	**visited;
 	int	x;
 	int	y;
-	int	visited;
 
-	visited[game.map.rows][game.map.cols];
-
+	i = 0;
+	visited = malloc(game.map.rows * sizeof(int *));
+	if (!visited)
+		handle_error("malloc visited rows\n", -1, NULL, NULL);
+	while (i < game.map.rows)
+	{
+		visited[i] = malloc(game.map.cols * sizeof(int));
+		if (!visited[i])
+			handle_error("malloc visited cols\n", -1, NULL, visited);
+		ft_memset(visited[i], 0, game.map.cols * sizeof(int));
+		i++;
+	}
 	x = game.player_x;
 	y = game.player_y;
-	ft_memset(visited, 0, sizeof(visited));
 	explore_map(&game, x, y, visited);
 	if (game.map.validator.e_reachable != 1 || \
 	game.map.validator.c_reachable != game.map.validator.c_count)
-		handle_error("Not all collectibles or the exit are reachable\n", -1, \
-		NULL, NULL);
+		handle_error("Can't reach collectibles or exit\n", -1, NULL, NULL);
+	free_group_int(visited);
 	return (0);
 }
