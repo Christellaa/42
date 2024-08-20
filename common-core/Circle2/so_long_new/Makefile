@@ -6,7 +6,7 @@
 #    By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 18:26:25 by cde-sous          #+#    #+#              #
-#    Updated: 2024/08/14 15:42:21 by cde-sous         ###   ########.fr        #
+#    Updated: 2024/08/20 16:28:39 by cde-sous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ endif
 
 INCLUDES := inc/so_long.h
 SRC_DIR := src
-SRC := main.c map.c layers.c checks.c draw.c inits.c cleanup.c
+SRC := so_long.c inits.c checks.c maps.c interactions.c cleanup.c
 OBJ_DIR := obj
 OBJ := $(SRC:%.c=$(OBJ_DIR)/%.o)
 
