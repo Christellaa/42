@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:50:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/20 17:02:58 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/22 11:02:35 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	init_map_grid(t_game *game)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	game->map.grid = malloc(sizeof(char *) * game->height);
@@ -23,17 +22,39 @@ void	init_map_grid(t_game *game)
 		handle_error("Error during map grid allocation\n", -1, game, NULL);
 	while (i < game->height)
 	{
-		game->map.grid[i] = malloc(sizeof(char) * game->width);
+		game->map.grid[i] = malloc(sizeof(char) * game->width + 1);
 		if (!game->map.grid[i])
 			handle_error("Error during map grid allocation\n", -1, game, NULL);
-		j = 0;
-		while (i < game->width)
-		{
-			game->map.grid[i][j] = '0';
-			j++;
-		}
+		ft_memset(game->map.grid[i], '0', game->width);
+		game->map.grid[i][game->width] = '\0';
 		i++;
 	}
+}
+
+void	get_map_dimensions(t_game *game, char *filename)
+{
+	int		i;
+	int		fd;
+	char	*line;
+
+	i = 0;
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		handle_error("Error while opening file\n", -1, game, NULL);
+	game->width = 0;
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		if (game->width < (int)ft_strlen(line))
+			game->width = ft_strlen(line);
+		free(line);
+		i++;
+	}
+	game->height = i;
+	close(fd);
+	init_map_grid(game);
 }
 
 void	init_img(t_game *game, char *path)
@@ -57,9 +78,9 @@ void	init_imgs(t_game *game)
 	init_img(game, PLAYER_XPM);
 }
 
-int	init_game(t_game *game)
+int	init_game(t_game *game, char *filename)
 {
-	init_map(game);
+	get_map_dimensions(game, filename);
 	game->mlx_ptr = mlx_init();
 	if (!game->mlx_ptr)
 		handle_error("Error during mlx initialization\n", -1, game, NULL);
@@ -75,4 +96,5 @@ int	init_game(t_game *game)
 	game->map.validator.c_count = 0;
 	game->map.validator.e_reachable = 0;
 	game->map.validator.c_reachable = 0;
+	return (0);
 }

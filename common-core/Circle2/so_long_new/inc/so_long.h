@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/20 16:57:53 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/22 10:26:21 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_map_validator
 
 typedef struct s_map
 {
-	int				**grid;
+	char			**grid;
 	t_map_validator	validator;
 }	t_map;
 
@@ -100,12 +100,13 @@ int		handle_error(char *msg, int fd, t_game *game_free, char **to_free);
 void	free_group(char **group);
 // inits.c
 void	init_map_grid(t_game *game);
+void	get_map_dimensions(t_game *game, char *filename);
 void	init_img(t_game *game, char *path);
 void	init_imgs(t_game *game);
 int		init_game(t_game *game, char *filename);
 // map.c
 void	parse_map(t_game *game, char *filename);
-void	draw_img(t_game *game, t_img *img, int i, int j);
+void	draw_img(t_game *game, int i, int j);
 int		render_map(t_game *game);
 // checks.c
 void	check_params(t_game *game);

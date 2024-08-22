@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:21:28 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/20 16:51:51 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/22 10:27:31 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,12 @@ int	press_key(int key, t_game *game)
 		move_player(game, 0, 1);
 	if (key == KEY_D || key == KEY_RIGHT)
 		move_player(game, 1, 0);
+	return (0);
 }
 
 void	exit_game(t_game *game)
 {
-	free_map(&game->map);
+	free(&game->map);
 	mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
 	exit(0);
@@ -78,8 +79,9 @@ void	close_window(int key, t_game *game)
 		exit_game(game);
 	}
 }
-
+/* 
 void	win_game(t_game *game)
 {
 	//todo
 }
+ */

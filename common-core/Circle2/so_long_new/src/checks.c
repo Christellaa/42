@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:33:00 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/20 16:16:12 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/22 10:46:29 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void	check_params(t_game *game)
 		while (j < game->width)
 		{
 			if (!ft_strchr("01CEPMO", game->map.grid[i][j]))
-				handle_error("Invalid map parameters\n", -1, game, NULL);
+			{
+			    ft_printf("Invalid character found: '%c' at position (%d, %d)\n", game->map.grid[i][j], i, j);
+				handle_error("Invalid map parameters\n", 0, NULL, NULL);
+			}
 			if (game->map.grid[i][j] == PLAYER)
 				game->map.validator.p_count++;
 			if (game->map.grid[i][j] == EXIT)
@@ -57,10 +60,10 @@ void	check_reachability(t_game *game, int i, int j)
 	if (game->map.grid[i][j] == COLLECTIBLE)
 		game->map.validator.c_reachable++;
 	game->map.grid[i][j] = OBSTACLE;
-	check_reachability_recursive(game, i - 1, j);
-	check_reachability_recursive(game, i + 1, j);
-	check_reachability_recursive(game, i, j - 1);
-	check_reachability_recursive(game, i, j + 1);
+	check_reachability(game, i - 1, j);
+	check_reachability(game, i + 1, j);
+	check_reachability(game, i, j - 1);
+	check_reachability(game, i, j + 1);
 }
 
 void	check_map_rectangular(t_game *game)
