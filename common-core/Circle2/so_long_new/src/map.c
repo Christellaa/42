@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 14:17:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/22 11:04:10 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/22 18:23:40 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,28 @@
 
 void	parse_map(t_game *game, char *filename)
 {
-	int		i;
 	int		fd;
+	int		i;
 	char	*line;
-	int		line_len;
 
-	i = 0;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		handle_error("Error while opening file\n", -1, game, NULL);
-	while (1)
+	game->map.grid = ft_calloc(sizeof(char *), (game->height + 1));
+	if (!game->map.grid)
+		handle_error("Error while allocating memory to grid", 0, NULL, NULL);
+	i = 0;
+	line = gnl_newline(fd);
+	while (line)
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		line_len = ft_strlen(line);
-		if (line_len > 0 && line[line_len - 1] == '\n')
-			line[line_len - 1] = '\0';
-		ft_printf("line: %s\n", line);
-		ft_strlcpy(game->map.grid[i], line, game->width + 1);
+		game->map.grid[i] = ft_strdup(line);
 		free(line);
+		line = gnl_newline(fd);
 		i++;
 	}
+	free(line);
 	close(fd);
+	game->map.grid[i] = NULL;
 }
 
 void	draw_img(t_game *game, int i, int j)

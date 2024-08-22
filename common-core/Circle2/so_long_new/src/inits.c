@@ -6,55 +6,45 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:50:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/22 11:02:35 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/22 18:24:39 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-void	init_map_grid(t_game *game)
+char	*gnl_newline(int fd)
 {
-	int	i;
+	char	*line;
 
-	i = 0;
-	game->map.grid = malloc(sizeof(char *) * game->height);
-	if (!game->map.grid)
-		handle_error("Error during map grid allocation\n", -1, game, NULL);
-	while (i < game->height)
-	{
-		game->map.grid[i] = malloc(sizeof(char) * game->width + 1);
-		if (!game->map.grid[i])
-			handle_error("Error during map grid allocation\n", -1, game, NULL);
-		ft_memset(game->map.grid[i], '0', game->width);
-		game->map.grid[i][game->width] = '\0';
-		i++;
-	}
+	line = get_next_line(fd);
+	if (line && line[ft_strlen(line) - 1] == '\n')
+		line[ft_strlen(line) - 1] = '\0';
+	return (line);
 }
 
 void	get_map_dimensions(t_game *game, char *filename)
 {
-	int		i;
 	int		fd;
 	char	*line;
 
-	i = 0;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		handle_error("Error while opening file\n", -1, game, NULL);
 	game->width = 0;
-	while (1)
+	game->height = 0;
+	line = gnl_newline(fd);
+	while (line)
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		if (game->width < (int)ft_strlen(line))
+		if (game->width == 0)
 			game->width = ft_strlen(line);
+		else if (game->width != (int)ft_strlen(line))
+			handle_error("Invalid map dimensions\n", -1, game, NULL);
+		game->height++;
 		free(line);
-		i++;
+		line = gnl_newline(fd);
 	}
-	game->height = i;
+	free(line);
 	close(fd);
-	init_map_grid(game);
 }
 
 void	init_img(t_game *game, char *path)

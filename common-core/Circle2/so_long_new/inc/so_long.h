@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/22 10:26:21 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/22 18:24:46 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ typedef struct s_game
 int		handle_error(char *msg, int fd, t_game *game_free, char **to_free);
 void	free_group(char **group);
 // inits.c
-void	init_map_grid(t_game *game);
+char	*gnl_newline(int fd);
 void	get_map_dimensions(t_game *game, char *filename);
 void	init_img(t_game *game, char *path);
 void	init_imgs(t_game *game);
