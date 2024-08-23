@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 18:29:55 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/07 16:36:53 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/23 10:47:21 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 typedef struct s_pipex
 {
-	int		inputfile;
-	int		outputfile;
+	int		infile;
+	int		outfile;
 	char	**envp;
 }	t_pipex;
 

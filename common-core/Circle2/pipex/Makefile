@@ -29,6 +29,8 @@ $(LIBFT):
 	@echo "Building $(LIBFT)"
 	@$(MAKE) -C $(LIBFT_DIR)
 
+bonus: $(LIBFT) $(NAMEB)
+
 clean:
 	@echo "Removing object files"
 	@rm -f $(OBJS) $(OBJSB)
@@ -41,4 +43,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re

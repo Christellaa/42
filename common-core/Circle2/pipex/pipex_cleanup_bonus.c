@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:56:13 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/07 13:51:39 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/23 11:19:53 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,14 @@ void	free_group(char **group)
 		}
 		free(group);
 		group = NULL;
+	}
+}
+
+void	close_here_doc(t_pipex pipex)
+{
+	if (pipex.is_here_doc == 1)
+	{
+		if (unlink(pipex.here_doc) != 0)
+			handle_error("Error: unlink here_doc", NULL, 0, 0);
 	}
 }

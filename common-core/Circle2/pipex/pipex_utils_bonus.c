@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:30:58 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/07 13:51:34 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/23 11:27:39 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,28 @@ void	check_files(int nb_args, int idx, int idx2, char **av)
 	}
 }
 
-int	handle_here_doc(char *delimiter)
+char	*name_here_doc(void)
+{
+	int		fd;
+	char	*name;
+
+	fd = open("/dev/random", O_RDONLY);
+	if (fd < 0)
+		handle_error("Error: open /dev/random", NULL, 0, 0);
+	name = ft_calloc(10, sizeof(char));
+	if (!name)
+		handle_error("Error: calloc name", NULL, 0, 0);
+	read(fd, name, 10);
+	close(fd);
+	return (name);
+}
+
+int	handle_here_doc(char *delimiter, t_pipex *pipex)
 {
 	int		tmp_file;
 	char	*line;
 
-	tmp_file = open("here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	tmp_file = open(pipex->here_doc, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (tmp_file < 0)
 		return (-1);
 	while (1)
@@ -51,11 +67,11 @@ int	handle_here_doc(char *delimiter)
 	}
 	free(line);
 	close(tmp_file);
-	open("here_doc", O_RDONLY);
+	open(pipex->here_doc, O_RDONLY);
 	return (tmp_file);
 }
 
-int	get_files(char **av, int idx, int flag)
+int	get_files(char **av, int idx, int flag, t_pipex *pipex)
 {
 	int	file;
 
@@ -64,14 +80,14 @@ int	get_files(char **av, int idx, int flag)
 	else if (flag == 1)
 		file = open(av[idx], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (flag == 2)
-		file = handle_here_doc(av[idx + 1]);
+		file = handle_here_doc(av[idx + 1], pipex);
 	else if (flag == 3)
 		file = open(av[idx], O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (file < 0 && (flag == 0 || flag == 2))
 	{
 		if (flag == 2)
-			unlink("here_doc");
-		handle_error("open file", NULL, 0, 0);
+			unlink(pipex->here_doc);
+		handle_error("Error: open file", NULL, 0, 0);
 	}
 	return (file);
 }
@@ -90,7 +106,7 @@ int	count_cmd(int ac, char **av)
 	}
 	if (nb_cmd == 0)
 	{
-		ft_printf("no commands found");
+		ft_printf("Error: find commands");
 		exit(EXIT_FAILURE);
 	}
 	return (nb_cmd);
