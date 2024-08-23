@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:43:39 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/20 16:46:29 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/23 16:25:12 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,5 @@ int	main(int ac, char **av)
 	// win game [interaction]
 	//mlx_hook(game.win_ptr, ClientMessage, StructureNotifyMask, win_game, &game);
 	// window resized [interaction]
-	mlx_hook(game.win_ptr, ConfigureNotify, StructureNotifyMask, render_map, \
-			&game);
 	mlx_loop(game.mlx_ptr);
 }

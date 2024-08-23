@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:33:00 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/22 18:41:14 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/23 14:52:52 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,26 +61,6 @@ void	check_map_edges(t_game *game)
 	}
 }
 
-void	check_reachability(t_game *game, int i, int j)
-{
-	ft_printf("1_grid[i][j]: %c\n", game->map.grid[i][j]);
-	if (i < 0 || i >= game->height || j < 0 || j >= game->width)
-		return ;
-	ft_printf("2_grid[i][j]: %c\n", game->map.grid[i][j]);
-	if (game->map.grid[i][j] == WALL || game->map.grid[i][j] == OBSTACLE)
-		return ;
-	ft_printf("3_grid[i][j]: %c\n", game->map.grid[i][j]);
-	if (game->map.grid[i][j] == EXIT)
-		game->map.validator.e_reachable = 1;
-	if (game->map.grid[i][j] == COLLECTIBLE)
-		game->map.validator.c_reachable++;
-	game->map.grid[i][j] = OBSTACLE;
-	check_reachability(game, i - 1, j);
-	check_reachability(game, i + 1, j);
-	check_reachability(game, i, j - 1);
-	check_reachability(game, i, j + 1);
-}
-
 void	check_map_rectangular(t_game *game)
 {
 	int	i;
@@ -114,7 +94,7 @@ int	check_map_validity(t_game *game)
 	if (game->map.validator.c_count < 1)
 		handle_error("Collectible count is not valid\n", -1, game, NULL);
 	check_map_edges(game);
-	check_reachability(game, game->player.x, game->player.y);
+	check_reachability(game);
 	if (game->map.validator.e_reachable == 0)
 		handle_error("Exit is not reachable\n", -1, game, NULL);
 	if (game->map.validator.c_reachable != game->map.validator.c_count)

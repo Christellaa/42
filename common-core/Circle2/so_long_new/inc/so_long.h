@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/22 18:24:46 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/23 16:49:41 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,17 @@
 
 # define KEY_ESC 65307
 
-# define FLOOR_XPM "textures/floor.xpm"
 # define WALL_XPM "textures/wall.xpm"
+# define FLOOR_XPM "textures/floor.xpm"
 # define COLLECTIBLE_XPM "textures/collectible.xpm"
 # define EXIT_XPM "textures/exit/exit_close.xpm"
 # define EXIT_OPEN_XPM "textures/exit/exit_open.xpm"
-# define PLAYER_XPM "textures/player/player_bottom.xpm"
-# define MONSTER_XPM "textures/monster/monster_left.xpm"
+# define PLAYER_UP_XPM "textures/player/player_up.xpm"
+# define PLAYER_DOWN_XPM "textures/player/player_down.xpm"
+# define PLAYER_LEFT_XPM "textures/player/player_left.xpm"
+# define PLAYER_RIGHT_XPM "textures/player/player_right.xpm"
+# define MONSTER_LEFT_XPM "textures/monster/monster_left.xpm"
+# define MONSTER_RIGHT_XPM "textures/monster/monster_right.xpm"
 # define OBSTACLE_XPM "textures/obstacle.xpm"
 
 # define TILESIZE 60
@@ -69,13 +73,13 @@ typedef struct s_map
 
 typedef struct s_img
 {
-	void		*img_ptr;
-	int			width;
-	int			height;
-	char		*data;
-	int			bpp;
-	int			sizeline;
-	int			endian;
+	void	*img_ptr;
+	char	*data;
+	int		width;
+	int		height;
+	int		bpp;
+	int		sizeline;
+	int		endian;
 }	t_img;
 
 typedef struct s_player
@@ -86,13 +90,18 @@ typedef struct s_player
 
 typedef struct s_game
 {
-	t_img		image;
+	t_img		wall;
+	t_img		floor;
+	t_img		collectible;
+	t_img		exit;
+	t_img		player;
 	t_map		map;
 	int			height;
 	int			width;
 	void		*mlx_ptr;
 	void		*win_ptr;
-	t_player	player;
+	t_player	player_pos;
+	int			move_count;
 }	t_game;
 
 // cleanup.c
@@ -101,19 +110,26 @@ void	free_group(char **group);
 // inits.c
 char	*gnl_newline(int fd);
 void	get_map_dimensions(t_game *game, char *filename);
-void	init_img(t_game *game, char *path);
-void	init_imgs(t_game *game);
+void	init_img(t_game *game, t_img *img, char *path);
+int		init_imgs(t_game *game);
 int		init_game(t_game *game, char *filename);
 // map.c
 void	parse_map(t_game *game, char *filename);
-void	draw_img(t_game *game, int i, int j);
+t_img	*get_tile(t_game *game, char tile);
 int		render_map(t_game *game);
+// draw.c
+void	draw_base(t_game *game);
+void	draw_img(t_game *game, t_img *img, int i, int j);
+int		blend_transparency(t_game *game, t_img *img, int x, int y);
 // checks.c
 void	check_params(t_game *game);
 void	check_map_edges(t_game *game);
-void	check_reachability(t_game *game, int i, int j);
 void	check_map_rectangular(t_game *game);
 int		check_map_validity(t_game *game);
+// reachability.c
+char	**init_checked(t_game *game);
+void	flood_fill(t_game *game, int y, int x, char **checked);
+void	check_reachability(t_game *game);
 // interactions.c
 void	move_player(t_game *game, int x, int y);
 int		press_key(int key, t_game *game);

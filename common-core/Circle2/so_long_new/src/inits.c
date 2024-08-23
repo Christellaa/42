@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:50:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/22 18:24:39 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/23 16:50:42 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,29 @@ void	get_map_dimensions(t_game *game, char *filename)
 	close(fd);
 }
 
-void	init_img(t_game *game, char *path)
+void	init_img(t_game *game, t_img *img, char *path)
 {
-	game->image.img_ptr = mlx_xpm_file_to_image(game->mlx_ptr, path,
-			&game->image.width, &game->image.height);
-	if (!game->image.img_ptr)
+	img->img_ptr = mlx_xpm_file_to_image(game->mlx_ptr, path,
+			&img->width, &img->height);
+	if (!img->img_ptr)
 		handle_error("Error during image initialization\n", -1, game, NULL);
-	game->image.data = mlx_get_data_addr(game->image.img_ptr,
-			&game->image.bpp, &game->image.sizeline, &game->image.endian);
-	if (!game->image.data)
+	img->data = mlx_get_data_addr(img->img_ptr, &img->bpp,
+			&img->sizeline, &img->endian);
+	if (!img->data)
 		handle_error("Error during image initialization\n", -1, game, NULL);
 }
 
-void	init_imgs(t_game *game)
+int	init_imgs(t_game *game)
 {
-	init_img(game, FLOOR_XPM);
-	init_img(game, WALL_XPM);
-	init_img(game, COLLECTIBLE_XPM);
-	init_img(game, EXIT_XPM);
-	init_img(game, PLAYER_XPM);
+	init_img(game, &game->floor, FLOOR_XPM);
+	init_img(game, &game->wall, WALL_XPM);
+	init_img(game, &game->collectible, COLLECTIBLE_XPM);
+	init_img(game, &game->exit, EXIT_XPM);
+	init_img(game, &game->player, PLAYER_DOWN_XPM);
+	if (!game->floor.img_ptr || !game->wall.img_ptr || \
+	!game->collectible.img_ptr || !game->exit.img_ptr || !game->player.img_ptr)
+		handle_error("initialize images", -1, NULL, NULL);
+	return (1);
 }
 
 int	init_game(t_game *game, char *filename)
@@ -78,13 +82,15 @@ int	init_game(t_game *game, char *filename)
 			game->height * TILESIZE, "so_long");
 	if (!game->win_ptr)
 		handle_error("Error during window creation\n", -1, game, NULL);
-	init_imgs(game);
-	game->player.x = 0;
-	game->player.y = 0;
+	if (!init_imgs(game))
+		handle_error("Error during image initialization\n", -1, game, NULL);
+	game->player_pos.x = -1;
+	game->player_pos.y = -1;
 	game->map.validator.p_count = 0;
 	game->map.validator.e_count = 0;
 	game->map.validator.c_count = 0;
 	game->map.validator.e_reachable = 0;
 	game->map.validator.c_reachable = 0;
+	game->move_count = 0;
 	return (0);
 }
