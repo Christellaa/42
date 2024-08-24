@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:21:28 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/23 16:51:20 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/24 09:27:55 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,15 @@ void	move_player(t_game *game, int x, int y)
 {
 	int	new_x;
 	int	new_y;
+	int	move_counter;
 
 	new_x = game->player_pos.x + x;
 	new_y = game->player_pos.y + y;
+	move_counter = game->move_count;
 	check_move(game, new_x, new_y);
 	game->map.grid[game->player_pos.y][game->player_pos.x] = PLAYER;
-	ft_printf("Move count: %d\n", game->move_count);
+	if (move_counter != game->move_count)
+		ft_printf("Move count: %d\n", game->move_count);
 	render_map(game);
 }
 
