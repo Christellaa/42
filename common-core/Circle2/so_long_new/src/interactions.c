@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:21:28 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/24 09:27:55 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/24 10:45:39 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ void	check_move(t_game *game, int x, int y)
 	if (game->map.grid[y][x] == EXIT)
 	{
 		if (game->map.validator.c_count == 0)
-		{	// delete return
-			return ;
-			//win_game(game);
-		}
+			win_game(game);
 		return ;
 	}
 	game->map.grid[game->player_pos.y][game->player_pos.x] = FLOOR;
@@ -77,31 +74,21 @@ int	press_key(int key, t_game *game)
 		move_player(game, 1, 0);
 	}
 	if (key == KEY_ESC)
-		//mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 		exit_game(game);
 	return (0);
 }
 
-void	exit_game(t_game *game)
+int	exit_game(t_game *game)
 {
 	mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
 	exit(0);
-}
-/*
-void	close_window(int key, t_game *game)
-{
-	// mouse click on red cross
-	if (key == 17)
-	{
-		ft_printf("You closed the window cross!\n");
-		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-		exit_game(game);
-	}
+	return (0);
 }
 
-void	win_game(t_game *game)
+int	win_game(t_game *game)
 {
-	//todo
+	ft_printf("You won the game in %d moves!\n", game->move_count);
+	exit_game(game);
+	return (0);
 }
-*/

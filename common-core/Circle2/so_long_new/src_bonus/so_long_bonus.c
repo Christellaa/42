@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   so_long_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:43:39 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/24 14:04:07 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/24 15:53:04 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long.h"
+#include "../inc/so_long_bonus.h"
 
 int	main(int ac, char **av)
 {
@@ -23,6 +23,7 @@ int	main(int ac, char **av)
 	if (init_game(&game, av[1]) != 0)
 		handle_error("Error during game initialization\n", -1, NULL, NULL);
 	parse_map(&game, av[1]);
+	get_number_monsters(&game);
 	check_map_validity(&game);
 	render_map(&game);
 	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, press_key, &game);

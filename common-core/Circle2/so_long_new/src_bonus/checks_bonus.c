@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checks.c                                           :+:      :+:    :+:   */
+/*   checks_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:33:00 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/24 11:03:26 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/24 11:09:07 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long.h"
+#include "../inc/so_long_bonus.h"
 
 void	check_params(t_game *game)
 {
@@ -23,7 +23,7 @@ void	check_params(t_game *game)
 		j = 0;
 		while (j < game->width - 1)
 		{
-			if (!ft_strchr("01CEP", game->map.grid[i][j]))
+			if (!ft_strchr("01CEPMO", game->map.grid[i][j]))
 			{
 				handle_error("Invalid map parameters\n", 0, NULL, NULL);
 			}

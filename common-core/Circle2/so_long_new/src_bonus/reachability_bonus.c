@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reachability.c                                     :+:      :+:    :+:   */
+/*   reachability_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:52:53 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/24 11:06:44 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/24 11:09:45 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long.h"
+#include "../inc/so_long_bonus.h"
 
 void	flood_fill(t_game *game, int i, int j, char **checked)
 {
 	if (i < 0 || i >= game->height || j < 0 || j >= game->width)
 		return ;
-	if (game->map.grid[i][j] == WALL || checked[i][j])
+	if (game->map.grid[i][j] == WALL || game->map.grid[i][j] == OBSTACLE \
+	|| checked[i][j])
 		return ;
 	if (game->map.grid[i][j] == EXIT)
 		game->map.validator.e_reachable = 1;

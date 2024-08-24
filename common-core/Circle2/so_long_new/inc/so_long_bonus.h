@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/24 11:45:20 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/24 15:55:32 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
 # include "../mlx/mlx.h"
 # include "../X11/X.h"
@@ -26,6 +26,8 @@
 # define COLLECTIBLE 'C'
 # define EXIT 'E'
 # define PLAYER 'P'
+# define MONSTER 'M'
+# define OBSTACLE 'O'
 
 // with keysym of X11
 # define KEY_W 119
@@ -48,6 +50,9 @@
 # define PLAYER_DOWN_XPM "textures/player/player_down.xpm"
 # define PLAYER_LEFT_XPM "textures/player/player_left.xpm"
 # define PLAYER_RIGHT_XPM "textures/player/player_right.xpm"
+# define MONSTER_LEFT_XPM "textures/monster/monster_left.xpm"
+# define MONSTER_RIGHT_XPM "textures/monster/monster_right.xpm"
+# define OBSTACLE_XPM "textures/obstacle.xpm"
 
 # define TILESIZE 60
 
@@ -77,6 +82,12 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
+typedef struct s_monster
+{
+	int	x;
+	int	y;
+}	t_monster;
+
 typedef struct s_player
 {
 	int	x;
@@ -90,13 +101,18 @@ typedef struct s_game
 	t_img		collectible;
 	t_img		exit;
 	t_img		player;
+	t_img		monster;
+	t_img		obstacle;
 	t_map		map;
 	int			height;
 	int			width;
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_player	player_pos;
+	t_monster	*monsters;
+	int			monster_count;
 	int			move_count;
+	int			current_monster;
 }	t_game;
 
 // cleanup.c
@@ -126,9 +142,14 @@ char	**init_checked(t_game *game);
 void	flood_fill(t_game *game, int y, int x, char **checked);
 void	check_reachability(t_game *game);
 // interactions.c
-void	move_player(t_game *game, int x, int y);
 int		press_key(int key, t_game *game);
 int		exit_game(t_game *game);
 int		win_game(t_game *game);
+// moves.c
+void	get_number_monsters(t_game *game);
+void	check_player_move(t_game *game, int x, int y);
+void	check_monster_move(t_game *game, int x, int y, int m_count);
+void	move_player(t_game *game, int x, int y);
+void	move_monsters(t_game *game, int x, int y, int i);
 
 #endif
