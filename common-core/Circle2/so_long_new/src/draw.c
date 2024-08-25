@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:50:20 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/23 15:20:00 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/25 19:26:27 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,16 @@ void	draw_img(t_game *game, t_img *img, int i, int j)
 
 	x = j * TILESIZE;
 	y = i * TILESIZE;
-	if (img == &game->player)
+	if (img == &game->player_down || img == &game->player_up || \
+	img == &game->player_left || img == &game->player_right)
 	{
 		game->player_pos.x = j;
 		game->player_pos.y = i;
+	}
+	if (img == &game->exit_close)
+	{
+		game->exit_pos.x = j;
+		game->exit_pos.y = i;
 	}
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, img->img_ptr, x, y);
 }

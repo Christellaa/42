@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:50:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/23 16:50:42 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/25 22:03:31 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*gnl_newline(int fd)
 	char	*line;
 
 	line = get_next_line(fd);
-	if (line && line[ft_strlen(line) - 1] == '\n')
+	if (line && line[ft_strlen(line) - 1] == '\n' && ft_strlen(line) > 1)
 		line[ft_strlen(line) - 1] = '\0';
 	return (line);
 }
@@ -29,46 +29,49 @@ void	get_map_dimensions(t_game *game, char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		handle_error("Error while opening file\n", -1, game, NULL);
-	game->width = 0;
+		exit_game(game, "Error during map opening\n", ERROR);
+	game->width = -1;
 	game->height = 0;
 	line = gnl_newline(fd);
 	while (line)
 	{
-		if (game->width == 0)
+		if (game->width <= 0)
 			game->width = ft_strlen(line);
-		else if (game->width != (int)ft_strlen(line))
-			handle_error("Invalid map dimensions\n", -1, game, NULL);
 		game->height++;
 		free(line);
 		line = gnl_newline(fd);
 	}
 	free(line);
 	close(fd);
+	if (game->width <= 0 || game->height <= 0)
+		exit_game(game, "Invalid map dimensions\n", ERROR);
 }
 
-void	init_img(t_game *game, t_img *img, char *path)
+int	init_img(t_game *game, t_img *img, char *path)
 {
 	img->img_ptr = mlx_xpm_file_to_image(game->mlx_ptr, path,
 			&img->width, &img->height);
 	if (!img->img_ptr)
-		handle_error("Error during image initialization\n", -1, game, NULL);
+		exit_game(game, "Error during image initialization\n", ERROR);
 	img->data = mlx_get_data_addr(img->img_ptr, &img->bpp,
 			&img->sizeline, &img->endian);
 	if (!img->data)
-		handle_error("Error during image initialization\n", -1, game, NULL);
+		exit_game(game, "Error during image initialization\n", ERROR);
+	return (1);
 }
 
 int	init_imgs(t_game *game)
 {
-	init_img(game, &game->floor, FLOOR_XPM);
-	init_img(game, &game->wall, WALL_XPM);
-	init_img(game, &game->collectible, COLLECTIBLE_XPM);
-	init_img(game, &game->exit, EXIT_XPM);
-	init_img(game, &game->player, PLAYER_DOWN_XPM);
-	if (!game->floor.img_ptr || !game->wall.img_ptr || \
-	!game->collectible.img_ptr || !game->exit.img_ptr || !game->player.img_ptr)
-		handle_error("initialize images", -1, NULL, NULL);
+	if (!init_img(game, &game->wall, WALL_XPM) || \
+		!init_img(game, &game->floor, FLOOR_XPM) || \
+		!init_img(game, &game->collectible, COLLECTIBLE_XPM) || \
+		!init_img(game, &game->exit_close, EXIT_CLOSE_XPM) || \
+		!init_img(game, &game->exit_open, EXIT_OPEN_XPM) || \
+		!init_img(game, &game->player_down, PLAYER_DOWN_XPM) || \
+		!init_img(game, &game->player_up, PLAYER_UP_XPM) || \
+		!init_img(game, &game->player_left, PLAYER_LEFT_XPM) || \
+		!init_img(game, &game->player_right, PLAYER_RIGHT_XPM))
+		exit_game(game, "Error during image initialization\n", ERROR);
 	return (1);
 }
 
@@ -77,15 +80,18 @@ int	init_game(t_game *game, char *filename)
 	get_map_dimensions(game, filename);
 	game->mlx_ptr = mlx_init();
 	if (!game->mlx_ptr)
-		handle_error("Error during mlx initialization\n", -1, game, NULL);
+		exit_game(game, "Error during mlx initialization\n", ERROR);
 	game->win_ptr = mlx_new_window(game->mlx_ptr, game->width * TILESIZE,
 			game->height * TILESIZE, "so_long");
 	if (!game->win_ptr)
-		handle_error("Error during window creation\n", -1, game, NULL);
+		exit_game(game, "Error during window initialization\n", ERROR);
 	if (!init_imgs(game))
-		handle_error("Error during image initialization\n", -1, game, NULL);
+		exit_game(game, "Error during image initialization\n", ERROR);
 	game->player_pos.x = -1;
 	game->player_pos.y = -1;
+	game->exit_pos.x = -1;
+	game->exit_pos.y = -1;
+	game->player_pos.direction = 4;
 	game->map.validator.p_count = 0;
 	game->map.validator.e_count = 0;
 	game->map.validator.c_count = 0;

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 14:17:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/24 14:40:04 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/25 19:33:18 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@ void	parse_map(t_game *game, char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		handle_error("Error while opening file\n", -1, game, NULL);
+		exit_game(game, "Error during map opening\n", ERROR);
 	game->map.grid = ft_calloc(sizeof(char *), (game->height + 1));
 	if (!game->map.grid)
-		handle_error("Error while allocating memory to grid", 0, NULL, NULL);
+	{
+		close(fd);
+		exit_game(game, "Error while allocating memory to grid\n", ERROR);
+	}
 	i = 0;
 	line = gnl_newline(fd);
 	while (line)
@@ -47,9 +50,23 @@ t_img	*get_tile(t_game *game, char tile)
 	else if (tile == COLLECTIBLE)
 		return (&game->collectible);
 	else if (tile == EXIT)
-		return (&game->exit);
+	{
+		if (game->map.validator.c_count == 0)
+			return (&game->exit_open);
+		else
+			return (&game->exit_close);
+	}
 	else if (tile == PLAYER)
-		return (&game->player);
+	{
+		if (game->player_pos.direction == 1)
+			return (&game->player_left);
+		if (game->player_pos.direction == 2)
+			return (&game->player_up);
+		if (game->player_pos.direction == 3)
+			return (&game->player_right);
+		if (game->player_pos.direction == 4)
+			return (&game->player_down);
+	}
 	return (NULL);
 }
 
@@ -68,7 +85,10 @@ int	render_map(t_game *game)
 		{
 			img = get_tile(game, game->map.grid[i][j]);
 			if (!img)
-				handle_error("Invalid tile in map\n", -1, game, NULL);
+			{
+				ft_printf("tile: %c\n", game->map.grid[i][j]);
+				exit_game(game, "Invalid map tile\n", ERROR);
+			}
 			draw_img(game, img, i, j);
 			blend_transparency(game, img, j * TILESIZE, i * TILESIZE);
 			j++;

@@ -6,7 +6,7 @@
 #    By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 18:26:25 by cde-sous          #+#    #+#              #
-#    Updated: 2024/08/24 13:46:11 by cde-sous         ###   ########.fr        #
+#    Updated: 2024/08/25 21:54:06 by cde-sous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ else
 	CC := clang
 endif
 
-CFLAGS := -Wall -Wextra -Werror -O3
+CFLAGS := -Wall -Wextra -Werror -O3 -g3
 
 ifeq ($(shell uname), Linux)
 	MLX_INCLUDES := -I/usr/include -Imlx
@@ -37,7 +37,9 @@ else
 	-framework AppKit
 endif
 
-INCLUDES := inc/so_long.h
+INCLUDES := inc/so_long.h inc/colors.h inc/keys.h inc/imgs.h
+INCLUDES_B := inc_bonus/so_long_bonus.h inc_bonus/colors_bonus.h \
+			inc_bonus/keys_bonus.h inc_bonus/imgs_bonus.h
 SRC_DIR := src
 SRC := so_long.c inits.c map.c draw.c checks.c reachability.c interactions.c \
 		cleanup.c

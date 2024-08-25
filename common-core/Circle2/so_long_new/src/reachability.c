@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:52:53 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/24 11:06:44 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/25 17:57:01 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ char	**init_checked(t_game *game)
 
 	checked = ft_calloc(sizeof(char *), game->height);
 	if (!checked)
-		handle_error("Error while allocating memory to checked", 0, game, NULL);
+		exit_game(game, "Error while allocating memory to checked\n", ERROR);
 	i = 0;
 	while (i < game->height)
 	{
 		checked[i] = ft_calloc(sizeof(char), game->width);
 		if (!checked[i])
-			handle_error("Error while allocating memory to checked", 0, game, \
-			checked);
+			exit_game(game, "Error while allocating memory to checked\n", \
+			ERROR);
 		i++;
 	}
 	return (checked);
@@ -68,4 +68,6 @@ void	check_reachability(t_game *game)
 		}
 		i++;
 	}
+	i = 0;
+	free_group(game, checked);
 }

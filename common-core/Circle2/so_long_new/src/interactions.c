@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:21:28 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/24 10:45:39 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/25 19:50:07 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,38 @@ void	check_move(t_game *game, int x, int y)
 		game->map.grid[y][x] = FLOOR;
 		game->map.validator.c_count--;
 		if (game->map.validator.c_count == 0)
-			init_img(game, &game->exit, EXIT_OPEN_XPM);
+			mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
+				game->exit_open.img_ptr, game->exit_pos.x * TILESIZE,
+				game->exit_pos.y * TILESIZE);
+	}
+}
+
+void	change_player_direction(t_game *game, int direction)
+{
+	game->player_pos.direction = direction;
+	if (game->player_pos.direction == 1)
+	{
+		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
+			game->player_left.img_ptr, game->player_pos.x * TILESIZE,
+			game->player_pos.y * TILESIZE);
+	}
+	if (game->player_pos.direction == 2)
+	{
+		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
+			game->player_up.img_ptr, game->player_pos.x * TILESIZE,
+			game->player_pos.y * TILESIZE);
+	}
+	if (game->player_pos.direction == 3)
+	{
+		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
+			game->player_right.img_ptr, game->player_pos.x * TILESIZE,
+			game->player_pos.y * TILESIZE);
+	}
+	if (game->player_pos.direction == 4)
+	{
+		mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
+			game->player_down.img_ptr, game->player_pos.x * TILESIZE,
+			game->player_pos.y * TILESIZE);
 	}
 }
 
@@ -55,40 +86,32 @@ int	press_key(int key, t_game *game)
 {
 	if (key == KEY_W || key == KEY_UP)
 	{
-		init_img(game, &game->player, PLAYER_UP_XPM);
+		change_player_direction(game, 2);
 		move_player(game, 0, -1);
 	}
 	if (key == KEY_A || key == KEY_LEFT)
 	{
-		init_img(game, &game->player, PLAYER_LEFT_XPM);
+		change_player_direction(game, 1);
 		move_player(game, -1, 0);
 	}
 	if (key == KEY_S || key == KEY_DOWN)
 	{
-		init_img(game, &game->player, PLAYER_DOWN_XPM);
+		change_player_direction(game, 4);
 		move_player(game, 0, 1);
 	}
 	if (key == KEY_D || key == KEY_RIGHT)
 	{
-		init_img(game, &game->player, PLAYER_RIGHT_XPM);
+		change_player_direction(game, 3);
 		move_player(game, 1, 0);
 	}
 	if (key == KEY_ESC)
-		exit_game(game);
-	return (0);
-}
-
-int	exit_game(t_game *game)
-{
-	mlx_destroy_display(game->mlx_ptr);
-	free(game->mlx_ptr);
-	exit(0);
+		close_game(game);
 	return (0);
 }
 
 int	win_game(t_game *game)
 {
-	ft_printf("You won the game in %d moves!\n", game->move_count);
-	exit_game(game);
+	ft_printf("You won the game in %d moves!\n", GREEN, game->move_count);
+	close_game(game);
 	return (0);
 }

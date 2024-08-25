@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/24 11:45:20 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/25 19:45:09 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,20 @@
 # include "../libft/ft_printf/ft_printf.h"
 # include "../libft/get_next_line/get_next_line.h"
 # include <fcntl.h>
+# include "colors.h"
+# include "keys.h"
+# include "imgs.h"
+
+# define ERROR "Error\n"
+# define WIN "Win\n"
+# define INFO "Info\n"
+# define USAGE "Usage: ./so_long [map.ber]\n"
 
 # define FLOOR '0'
 # define WALL '1'
 # define COLLECTIBLE 'C'
 # define EXIT 'E'
 # define PLAYER 'P'
-
-// with keysym of X11
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
-# define KEY_LEFT 65361
-# define KEY_UP 65362
-# define KEY_RIGHT 65363
-# define KEY_DOWN 65364
-
-# define KEY_ESC 65307
-
-# define WALL_XPM "textures/wall.xpm"
-# define FLOOR_XPM "textures/floor.xpm"
-# define COLLECTIBLE_XPM "textures/collectible.xpm"
-# define EXIT_XPM "textures/exit/exit_close.xpm"
-# define EXIT_OPEN_XPM "textures/exit/exit_open.xpm"
-# define PLAYER_UP_XPM "textures/player/player_up.xpm"
-# define PLAYER_DOWN_XPM "textures/player/player_down.xpm"
-# define PLAYER_LEFT_XPM "textures/player/player_left.xpm"
-# define PLAYER_RIGHT_XPM "textures/player/player_right.xpm"
 
 # define TILESIZE 60
 
@@ -81,31 +67,47 @@ typedef struct s_player
 {
 	int	x;
 	int	y;
+	int	direction;
 }	t_player;
+
+typedef struct s_exit
+{
+	int	x;
+	int	y;
+}	t_exit;
 
 typedef struct s_game
 {
 	t_img		wall;
 	t_img		floor;
 	t_img		collectible;
-	t_img		exit;
-	t_img		player;
+	t_img		exit_close;
+	t_img		exit_open;
+	t_img		player_down;
+	t_img		player_up;
+	t_img		player_left;
+	t_img		player_right;
 	t_map		map;
 	int			height;
 	int			width;
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_player	player_pos;
+	t_exit		exit_pos;
 	int			move_count;
 }	t_game;
 
 // cleanup.c
-int		handle_error(char *msg, int fd, t_game *game_free, char **to_free);
-void	free_group(char **group);
+void	free_group(t_game *game, char **group);
+void	free_imgs(t_game *game);
+void	print_msg(char *msg, char *exit_type);
+int		exit_game(t_game *game, char *msg, char *exit_type);
+int		close_game(t_game *game);
+
 // inits.c
 char	*gnl_newline(int fd);
 void	get_map_dimensions(t_game *game, char *filename);
-void	init_img(t_game *game, t_img *img, char *path);
+int		init_img(t_game *game, t_img *img, char *path);
 int		init_imgs(t_game *game);
 int		init_game(t_game *game, char *filename);
 // map.c
@@ -128,7 +130,6 @@ void	check_reachability(t_game *game);
 // interactions.c
 void	move_player(t_game *game, int x, int y);
 int		press_key(int key, t_game *game);
-int		exit_game(t_game *game);
 int		win_game(t_game *game);
 
 #endif
