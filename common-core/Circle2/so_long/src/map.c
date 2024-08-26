@@ -5,84 +5,92 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/12 19:29:07 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/19 13:32:03 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/08/20 14:17:10 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/08/26 15:04:45 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-int	get_map_dimensions(int fd, t_map *map)
+void	parse_map(t_game *game, char *filename)
 {
+	int		fd;
+	int		i;
 	char	*line;
 
-	line = get_next_line(fd);
-	if (!line)
-		handle_error("Empty map\n", -1, NULL, NULL);
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		exit_game(game, "Unable to open map file", ERROR);
+	game->map.grid = ft_calloc(sizeof(char *), (game->height + 1));
+	if (!game->map.grid)
+	{
+		close(fd);
+		exit_game(game, "Unable to allocate memory to grid", ERROR);
+	}
+	i = 0;
+	line = gnl_newline(fd);
 	while (line)
 	{
-		map->cols = ft_strlen(line);
-		map->rows++;
+		game->map.grid[i] = ft_strdup(line);
 		free(line);
-		line = get_next_line(fd);
+		line = gnl_newline(fd);
+		i++;
 	}
 	free(line);
-	if (map->cols == 0 || map->rows == 0)
-		handle_error("Empty map\n", -1, NULL, NULL);
-	return (0);
+	close(fd);
+	game->map.grid[i] = NULL;
+}
+
+t_img	*get_tile(t_game *game, char tile)
+{
+	if (tile == WALL)
+		return (&game->wall);
+	else if (tile == FLOOR)
+		return (&game->floor);
+	else if (tile == COLLECTIBLE)
+		return (&game->collectible);
+	else if (tile == EXIT)
+	{
+		if (game->map.validator.c_count == 0)
+			return (&game->exit_open);
+		else
+			return (&game->exit_close);
+	}
+	else if (tile == PLAYER)
+	{
+		if (game->player_pos.direction == 1)
+			return (&game->player_left);
+		if (game->player_pos.direction == 2)
+			return (&game->player_up);
+		if (game->player_pos.direction == 3)
+			return (&game->player_right);
+		if (game->player_pos.direction == 4)
+			return (&game->player_down);
+	}
+	return (NULL);
 }
 
 int	render_map(t_game *game)
 {
-	int		row;
-	int		col;
 	int		i;
-	t_img	*tile;
+	int		j;
+	t_img	*img;
 
-	draw_base(game);
-	row = 0;
-	while (row < game->map.rows)
-	{
-		col = 0;
-		while (col < game->map.cols)
-		{
-			i = 0;
-			while (i < 3)
-			{
-				tile = get_tile(game, game->map.layers[i]->tiles[row][col]);
-				draw_tile(game->map.layers[i]->tiles[row][col], row, col, game);
-				blend_transparency(game, tile, col * TILESIZE, row * TILESIZE);
-				i++;
-			}
-			col++;
-		}
-		row++;
-	}
-	return (0);
-}
-
-int	load_map(char *filename, t_game *game)
-{
-	int		fd;
-	int		i;
-
-	fd = open_or_reset_fd(-1, filename);
-	get_map_dimensions(fd, &game->map);
-	init_game(game);
-	if (game->map.rows == 0 || game->map.cols == 0)
-		return (1);
 	i = 0;
-	while (i < 3)
+	draw_base(game);
+	while (i < game->height)
 	{
-		alloc_layer(&game->map, i);
+		j = 0;
+		while (j < game->width)
+		{
+			img = get_tile(game, game->map.grid[i][j]);
+			if (!img)
+				exit_game(game, "Invalid map tile", ERROR);
+			draw_img(game, img, i, j);
+			blend_transparency(game, img, j * TILESIZE, i * TILESIZE);
+			j++;
+		}
 		i++;
 	}
-	fd = open_or_reset_fd(fd, filename);
-	load_layers(fd, game);
-	check_map_edges(game->map);
-	validate_elements(game->map);
-	check_playability(*game);
-	// check params
-	close(fd);
 	return (0);
 }

@@ -6,50 +6,86 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:30:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/19 12:11:51 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 15:05:02 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-int	handle_error(char *msg, int fd, char **to_free, int **to_free2)
-{
-	ft_printf(msg);
-	if (fd)
-		close(fd);
-	if (to_free)
-		free_group_char(to_free);
-	if (to_free2)
-		free_group_int(to_free2);
-	exit(EXIT_FAILURE);
-}
-
-void	free_group_char(char **group)
+void	free_group(t_game *game, char **group)
 {
 	int	i;
 
 	i = 0;
-	while (group[i])
-		free(group[i++]);
+	if (!group)
+		return ;
+	while (i < game->height)
+	{
+		free(group[i]);
+		group[i] = NULL;
+		i++;
+	}
 	free(group);
+	group = NULL;
 }
 
-void	free_group_int(int **group)
+void	free_imgs(t_game *game)
 {
-	int	i;
+	if (!game->mlx_ptr)
+		return ;
+	mlx_destroy_image(game->mlx_ptr, game->wall.img_ptr);
+	mlx_destroy_image(game->mlx_ptr, game->floor.img_ptr);
+	mlx_destroy_image(game->mlx_ptr, game->collectible.img_ptr);
+	mlx_destroy_image(game->mlx_ptr, game->exit_close.img_ptr);
+	mlx_destroy_image(game->mlx_ptr, game->exit_open.img_ptr);
+	mlx_destroy_image(game->mlx_ptr, game->player_down.img_ptr);
+	mlx_destroy_image(game->mlx_ptr, game->player_up.img_ptr);
+	mlx_destroy_image(game->mlx_ptr, game->player_left.img_ptr);
+	mlx_destroy_image(game->mlx_ptr, game->player_right.img_ptr);
 
-	i = 0;
-	while (group[i])
-		free(group[i++]);
-	free(group);
+	game->wall.img_ptr = NULL;
+	game->floor.img_ptr = NULL;
+	game->collectible.img_ptr = NULL;
+	game->exit_close.img_ptr = NULL;
+	game->exit_open.img_ptr = NULL;
+	game->player_down.img_ptr = NULL;
+	game->player_up.img_ptr = NULL;
+	game->player_left.img_ptr = NULL;
+	game->player_right.img_ptr = NULL;
 }
 
-int	open_or_reset_fd(int fd, char *filename)
+void	print_msg(char *msg, char *exit_type)
 {
-	if (fd >= 0)
-		close(fd);
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		handle_error("open file", -1, NULL, NULL);
-	return (fd);
+	char	*color;
+
+	color = RESET;
+	if (ft_strncmp(exit_type, ERROR, 5) == 0)
+		color = RED;
+	else if (ft_strncmp(exit_type, INFO, 4) == 0)
+		color = YELLOW;
+	ft_printf("%s%s: %s\n%s", color, exit_type, msg, RESET);
+}
+
+int	exit_game(t_game *game, char *msg, char *exit_type)
+{
+	if (game)
+	{
+		free_imgs(game);
+		if (game->mlx_ptr)
+		{
+			if (game->win_ptr)
+				mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+			mlx_destroy_display(game->mlx_ptr);
+			free(game->mlx_ptr);
+		}
+		free_group(game, game->map.grid);
+	}
+	print_msg(msg, exit_type);
+	exit(EXIT_SUCCESS);
+}
+
+int	close_game(t_game *game)
+{
+	exit_game(game, "Game closed", INFO);
+	exit(EXIT_SUCCESS);
 }

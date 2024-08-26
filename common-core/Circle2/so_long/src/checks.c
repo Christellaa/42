@@ -5,101 +5,100 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/12 11:33:59 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/19 13:05:08 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/08/20 13:33:00 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/08/26 15:18:29 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-int	check_elements(char c, t_map *map)
-{
-	if (c == PLAYER)
-		map->validator.p_count++;
-	if (c == EXIT)
-		map->validator.e_count++;
-	if (c == COLLECTIBLE)
-		map->validator.c_count++;
-	return (0);
-}
-
-int	validate_elements(t_map map)
-{
-	if (map.validator.p_count != 1)
-		handle_error("Too many players or no player\n", -1, NULL, NULL);
-	if (map.validator.e_count != 1)
-		handle_error("Too many exits or no exit\n", -1, NULL, NULL);
-	if (map.validator.c_count < 1)
-		handle_error("Not enough collectibles\n", -1, NULL, NULL);
-	return (0);
-}
-
-int	check_map_edges(t_map map)
-{
-	int	row;
-	int	col;
-
-	row = 0;
-	col = 0;
-	while (row < map.rows)
-	{
-		if (map.layers[1]->tiles[row][0] != WALL || \
-		map.layers[1]->tiles[row][map.cols - 1] != WALL)
-			handle_error("Map not surrounded by walls\n", -1, NULL, NULL);
-		row++;
-	}
-	while (col < map.cols)
-	{
-		if (map.layers[1]->tiles[0][col] != WALL || \
-		map.layers[1]->tiles[map.rows - 1][col] != WALL)
-			handle_error("Map not surrounded by walls\n", -1, NULL, NULL);
-		col++;
-	}
-	return (0);
-}
-
-void	explore_map(t_game *game, int x, int y, int *(visited)[game->map.cols])
-{
-	if (x <= 0 || y <= 0 || x >= game->map.cols || y >= game->map.rows || \
-	game->map.layers[1]->tiles[y][x] == WALL || \
-	visited[y][x] == 1)
-		return ;
-	else if (game->map.layers[1]->tiles[y][x] == COLLECTIBLE)
-		game->map.validator.c_reachable++;
-	else if (game->map.layers[1]->tiles[y][x] == EXIT)
-		game->map.validator.e_reachable = 1;
-	visited[y][x] = 1;
-	explore_map(game, x + 1, y, visited);
-	explore_map(game, x - 1, y, visited);
-	explore_map(game, x, y + 1, visited);
-	explore_map(game, x, y - 1, visited);
-}
-
-int	check_playability(t_game game)
+void	check_params(t_game *game)
 {
 	int	i;
-	int	**visited;
-	int	x;
-	int	y;
+	int	j;
 
 	i = 0;
-	visited = malloc(game.map.rows * sizeof(int *));
-	if (!visited)
-		handle_error("malloc visited rows\n", -1, NULL, NULL);
-	while (i < game.map.rows)
+	while (i < game->height)
 	{
-		visited[i] = malloc(game.map.cols * sizeof(int));
-		if (!visited[i])
-			handle_error("malloc visited cols\n", -1, NULL, visited);
-		ft_memset(visited[i], 0, game.map.cols * sizeof(int));
+		j = 0;
+		while (j < game->width - 1)
+		{
+			if (!ft_strchr("01CEP", game->map.grid[i][j]))
+				exit_game(game, "Invalid character in map", ERROR);
+			if (game->map.grid[i][j] == PLAYER)
+				game->map.validator.p_count++;
+			if (game->map.grid[i][j] == EXIT)
+				game->map.validator.e_count++;
+			if (game->map.grid[i][j] == COLLECTIBLE)
+				game->map.validator.c_count++;
+			j++;
+		}
 		i++;
 	}
-	x = game.player_x;
-	y = game.player_y;
-	explore_map(&game, x, y, visited);
-	if (game.map.validator.e_reachable != 1 || \
-	game.map.validator.c_reachable != game.map.validator.c_count)
-		handle_error("Can't reach collectibles or exit\n", -1, NULL, NULL);
-	free_group_int(visited);
+}
+
+void	check_map_edges(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < game->height)
+	{
+		if (game->map.grid[i][0] != WALL \
+			|| game->map.grid[i][game->width - 1] != WALL)
+			exit_game(game, \
+			"Map is not closed by walls at first and last line", ERROR);
+		i++;
+	}
+	i = 0;
+	while (i < game->width)
+	{
+		if (game->map.grid[0][i] != WALL \
+			|| game->map.grid[game->height - 1][i] != WALL)
+			exit_game(game, \
+			"Map is not closed by walls at first and last column", ERROR);
+		i++;
+	}
+}
+
+void	check_map_rectangular(t_game *game)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < game->height)
+	{
+		j = 0;
+		while (j < game->width)
+		{
+			if (game->map.grid[i][j] == '\0')
+				exit_game(game, "Map is not rectangular", ERROR);
+			j++;
+		}
+		if (j != game->width)
+			exit_game(game, "Map is not rectangular", ERROR);
+		i++;
+	}
+	if (i != game->height)
+		exit_game(game, "Map is not rectangular", ERROR);
+}
+
+int	check_map_validity(t_game *game)
+{
+	check_map_rectangular(game);
+	check_map_edges(game);
+	check_params(game);
+	if (game->map.validator.p_count != 1)
+		exit_game(game, "Player count is not valid", ERROR);
+	if (game->map.validator.e_count != 1)
+		exit_game(game, "Exit count is not valid", ERROR);
+	if (game->map.validator.c_count < 1)
+		exit_game(game, "Collectible count is not valid", ERROR);
+	check_reachability(game);
+	if (game->map.validator.e_reachable == 0)
+		exit_game(game, "Exit is not reachable", ERROR);
+	if (game->map.validator.c_reachable != game->map.validator.c_count)
+		exit_game(game, "Collectibles are not reachable", ERROR);
 	return (0);
 }

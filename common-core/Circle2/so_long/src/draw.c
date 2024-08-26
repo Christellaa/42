@@ -5,65 +5,53 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/13 21:20:02 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/15 17:21:00 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/08/23 14:50:20 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/08/25 19:26:27 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-int	draw_base(t_game *game)
+void	draw_base(t_game *game)
 {
 	t_img	*floor;
-	int		current_row;
-	int		current_col;
+	int		i;
+	int		j;
 
 	floor = &game->floor;
-	current_row = 0;
-	while (current_row < game->map.rows)
+	i = 0;
+	while (i < game->height)
 	{
-		current_col = 0;
-		while (current_col < game->map.cols)
+		j = 0;
+		while (j < game->width)
 		{
-			mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, \
-			floor->img_ptr, current_col * TILESIZE, current_row * TILESIZE);
-			current_col++;
+			draw_img(game, floor, i, j);
+			j++;
 		}
-		current_row++;
+		i++;
 	}
-	return (0);
 }
 
-t_img	*get_tile(t_game *game, char tile)
-{
-	if (tile == WALL)
-		return (&game->wall);
-	else if (tile == COLLECTIBLE)
-		return (&game->collectible);
-	else if (tile == EXIT)
-		return (&game->exit);
-	else if (tile == PLAYER)
-		return (&game->player);
-	else if (tile == FLOOR)
-		return (&game->floor);
-	else
-		return (NULL);
-}
 
-int	draw_tile(char tile, int row, int col, t_game *game)
+void	draw_img(t_game *game, t_img *img, int i, int j)
 {
-	t_img	*img;
-	int		pos_x;
-	int		pos_y;
+	int	x;
+	int	y;
 
-	pos_x = col * TILESIZE;
-	pos_y = row * TILESIZE;
-	img = get_tile(game, tile);
-	if (!img)
-		return (0);
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, img->img_ptr, \
-	pos_x, pos_y);
-	return (0);
+	x = j * TILESIZE;
+	y = i * TILESIZE;
+	if (img == &game->player_down || img == &game->player_up || \
+	img == &game->player_left || img == &game->player_right)
+	{
+		game->player_pos.x = j;
+		game->player_pos.y = i;
+	}
+	if (img == &game->exit_close)
+	{
+		game->exit_pos.x = j;
+		game->exit_pos.y = i;
+	}
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, img->img_ptr, x, y);
 }
 
 int	blend_transparency(t_game *game, t_img *img, int x, int y)

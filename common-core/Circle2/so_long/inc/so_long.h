@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/19 12:11:28 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 12:02:09 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,120 +14,63 @@
 # define SO_LONG_H
 
 # include "../mlx/mlx.h"
+# include "../X11/X.h"
+# include "../X11/keysym.h"
 # include "../libft/libft.h"
-# include "../libft/ft_printf/ft_printf.h"
-# include "../libft/get_next_line/get_next_line.h"
 # include <fcntl.h>
+# include "colors.h"
+# include "keys.h"
+# include "imgs.h"
+# include "structs.h"
+
+# define ERROR "Error"
+# define WIN "Win"
+# define INFO "Info"
+# define USAGE "Usage: ./so_long [map.ber]\n"
 
 # define FLOOR '0'
 # define WALL '1'
 # define COLLECTIBLE 'C'
 # define EXIT 'E'
 # define PLAYER 'P'
-# define MONSTER 'M'
-# define OBSTACLE 'O'
-
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
-
-// with keysim of X11
-# define KEY_LEFT 65361
-# define KEY_UP 65362
-# define KEY_RIGHT 65363
-# define KEY_DOWN 65364
-
-# define KEY_ESC 65307
-
-# define FLOOR_XPM "textures/floor.xpm"
-# define WALL_XPM "textures/wall.xpm"
-# define COLLECTIBLE_XPM "textures/collectible.xpm"
-# define EXIT_XPM "textures/exit/exit_close.xpm"
-# define EXIT_OPEN_XPM "textures/exit/exit_open.xpm"
-# define PLAYER_XPM "textures/player/player_bottom.xpm"
-# define MONSTER_XPM "textures/monster/monster_left.xpm"
-# define OBSTACLE_XPM "textures/obstacle.xpm"
 
 # define TILESIZE 60
 
-typedef struct s_map_validator
-{
-	int	p_count;
-	int	e_count;
-	int	c_count;
-	int	e_reachable;
-	int	c_reachable;
-}	t_map_validator;
-
-typedef struct s_layer
-{
-	char	**tiles;
-}	t_layer;
-
-typedef struct s_map
-{
-	t_layer			*layers[3];
-	int				rows;
-	int				cols;
-	t_map_validator	validator;
-}	t_map;
-
-typedef struct s_img
-{
-	void		*img_ptr;
-	int			width;
-	int			height;
-	char		*data;
-	int			bpp; //bits per pixel
-	int			sizeline; // size of each line in bytes
-	int			endian;
-}	t_img;
-
-typedef struct s_game
-{
-	t_img	floor;
-	t_img	wall;
-	t_img	collectible;
-	t_img	exit;
-	t_img	player;
-	t_img	monster;
-	t_img	obstacle;
-	void	*mlx_ptr;
-	void	*win_ptr;
-	t_map	map;
-	int		player_x;
-	int		player_y;
-}	t_game;
-
 // cleanup.c
-int		handle_error(char *msg, int fd, char **to_free, int **to_free2);
-void	free_group_char(char **group);
-void	free_group_int(int **group);
-int		open_or_reset_fd(int fd, char *filename);
+void	free_group(t_game *game, char **group);
+void	free_imgs(t_game *game);
+void	print_msg(char *msg, char *exit_type);
+int		exit_game(t_game *game, char *msg, char *exit_type);
+int		close_game(t_game *game);
+
 // inits.c
-void	init_layers(t_layer *layers[3]);
-void	init_map(t_map *map);
+char	*gnl_newline(int fd);
+void	get_map_dimensions(t_game *game, char *filename);
+int		init_img(t_game *game, t_img *img, char *path);
 int		init_imgs(t_game *game);
-int		init_game(t_game *game);
-// layers.c
-int		alloc_layer(t_map *map, int i);
-int		assign_to_layer(char c, int row, int col, t_game *game);
-int		load_layers(int fd, t_game *game);
-// draw.c
-int		draw_base(t_game *game);
+int		init_game(t_game *game, char *filename);
+// map.c
+void	parse_map(t_game *game, char *filename);
 t_img	*get_tile(t_game *game, char tile);
-int		draw_tile(char tile, int row, int col, t_game *game);
+int		render_map(t_game *game);
+// draw.c
+void	draw_base(t_game *game);
+void	draw_img(t_game *game, t_img *img, int i, int j);
 int		blend_transparency(t_game *game, t_img *img, int x, int y);
 // checks.c
-int		check_elements(char c, t_map *map);
-int		validate_elements(t_map map);
-int		check_map_edges(t_map map);
-void	explore_map(t_game *game, int x, int y, int *(visited)[game->map.cols]);
-int		check_playability(t_game game);
-// map.c
-int		get_map_dimensions(int fd, t_map *map);
-int		render_map(t_game *game);
-int		load_map(char *filename, t_game *game);
+void	check_params(t_game *game);
+void	check_map_edges(t_game *game);
+void	check_map_rectangular(t_game *game);
+int		check_map_validity(t_game *game);
+// reachability.c
+char	**init_checked(t_game *game);
+void	flood_fill(t_game *game, int y, int x, char **checked);
+void	check_reachability(t_game *game);
+// interactions.c
+int		check_move(t_game *game, int x, int y);
+void	change_player_direction(t_game *game, int direction);
+void	move_player(t_game *game, int x, int y);
+int		press_key(int key, t_game *game);
+int		win_game(t_game *game);
 
 #endif
