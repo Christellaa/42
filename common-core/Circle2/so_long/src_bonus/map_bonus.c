@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 14:17:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 16:55:17 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 21:33:06 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	parse_map(t_game *game, char *filename)
 	close(fd);
 	game->map.grid[i] = NULL;
 }
-
 
 t_img	*get_tile(t_game *game, char tile)
 {

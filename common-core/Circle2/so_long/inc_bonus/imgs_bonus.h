@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 16:34:12 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 11:57:20 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 21:32:57 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,5 @@
 # define MONSTER_LEFT_XPM "textures/monster/monster_left.xpm"
 # define MONSTER_RIGHT_XPM "textures/monster/monster_right.xpm"
 # define OBSTACLE_XPM "textures/obstacle.xpm"
-
 
 #endif

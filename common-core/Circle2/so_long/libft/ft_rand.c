@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 11:32:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 11:33:41 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 21:33:42 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static unsigned int	g_state = 0;
 
 #define MULTIPLIER 1103515245
 #define INCREMENT 12345
-#define MODULUS (2147483648)
 
 // init random state
 static void	init_rng(void)
@@ -36,16 +35,14 @@ static void	init_rng(void)
 	}
 	read(fd, &g_state, sizeof(g_state));
 	close(fd);
-
 	if (g_state == 0)
 		g_state = 1;
 }
 
-
 // Generate the next random number
 static unsigned int	next_rng(void)
 {
-	g_state = (g_state * MULTIPLIER + INCREMENT) % MODULUS;
+	g_state = (g_state * MULTIPLIER + INCREMENT) % 2147483648;
 	return (g_state);
 }
 
@@ -59,7 +56,7 @@ unsigned int	ft_rand(unsigned int min, unsigned int max)
 	if (g_state == 0)
 		init_rng();
 	range = max - min + 1;
-	treshold = MODULUS - 1 - ((MODULUS - 1) % range);
+	treshold = 2147483648 - 1 - ((2147483648 - 1) % range);
 	while (1)
 	{
 		random_value = next_rng();

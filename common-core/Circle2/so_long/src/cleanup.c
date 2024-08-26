@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:30:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 15:05:02 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 21:33:29 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	free_imgs(t_game *game)
 	mlx_destroy_image(game->mlx_ptr, game->player_up.img_ptr);
 	mlx_destroy_image(game->mlx_ptr, game->player_left.img_ptr);
 	mlx_destroy_image(game->mlx_ptr, game->player_right.img_ptr);
-
 	game->wall.img_ptr = NULL;
 	game->floor.img_ptr = NULL;
 	game->collectible.img_ptr = NULL;

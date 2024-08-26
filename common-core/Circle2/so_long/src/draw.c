@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:50:20 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/25 19:26:27 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 21:33:32 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	draw_base(t_game *game)
 		i++;
 	}
 }
-
 
 void	draw_img(t_game *game, t_img *img, int i, int j)
 {
