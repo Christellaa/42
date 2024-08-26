@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 11:31:41 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 14:54:31 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@
 # include "../X11/keysym.h"
 # include "../libft/libft.h"
 # include <fcntl.h>
+# include "colors_bonus.h"
+# include "keys_bonus.h"
+# include "imgs_bonus.h"
+# include "structs_bonus.h"
+
+# define ERROR "Error"
+# define INFO "Info"
+# define USAGE "Usage: ./so_long [map.ber]\n"
 
 # define FLOOR '0'
 # define WALL '1'
@@ -27,127 +35,49 @@
 # define MONSTER 'M'
 # define OBSTACLE 'O'
 
-// with keysym of X11
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
-# define KEY_LEFT 65361
-# define KEY_UP 65362
-# define KEY_RIGHT 65363
-# define KEY_DOWN 65364
-
-# define KEY_ESC 65307
-
-# define WALL_XPM "textures/wall.xpm"
-# define FLOOR_XPM "textures/floor.xpm"
-# define COLLECTIBLE_XPM "textures/collectible.xpm"
-# define EXIT_XPM "textures/exit/exit_close.xpm"
-# define EXIT_OPEN_XPM "textures/exit/exit_open.xpm"
-# define PLAYER_UP_XPM "textures/player/player_up.xpm"
-# define PLAYER_DOWN_XPM "textures/player/player_down.xpm"
-# define PLAYER_LEFT_XPM "textures/player/player_left.xpm"
-# define PLAYER_RIGHT_XPM "textures/player/player_right.xpm"
-# define MONSTER_LEFT_XPM "textures/monster/monster_left.xpm"
-# define MONSTER_RIGHT_XPM "textures/monster/monster_right.xpm"
-# define OBSTACLE_XPM "textures/obstacle.xpm"
-
 # define TILESIZE 60
 
-typedef struct s_map_validator
-{
-	int	p_count;
-	int	e_count;
-	int	c_count;
-	int	e_reachable;
-	int	c_reachable;
-}	t_map_validator;
-
-typedef struct s_map
-{
-	char			**grid;
-	t_map_validator	validator;
-}	t_map;
-
-typedef struct s_img
-{
-	void	*img_ptr;
-	char	*data;
-	int		width;
-	int		height;
-	int		bpp;
-	int		sizeline;
-	int		endian;
-}	t_img;
-
-typedef struct s_monster
-{
-	int	x;
-	int	y;
-}	t_monster;
-
-typedef struct s_player
-{
-	int	x;
-	int	y;
-}	t_player;
-
-typedef struct s_game
-{
-	t_img		wall;
-	t_img		floor;
-	t_img		collectible;
-	t_img		exit;
-	t_img		player;
-	t_img		monster;
-	t_img		obstacle;
-	t_map		map;
-	int			height;
-	int			width;
-	void		*mlx_ptr;
-	void		*win_ptr;
-	t_player	player_pos;
-	t_monster	*monsters;
-	int			monster_count;
-	int			move_count;
-	int			current_monster;
-}	t_game;
-
-// cleanup.c
-int		handle_error(char *msg, int fd, t_game *game_free, char **to_free);
-void	free_group(char **group);
-// inits.c
-char	*gnl_newline(int fd);
+// cleanup_bonus.c
+void	free_group(t_game *game, char **group);
+void	safe_free_img(t_game *game, t_img *img);
+void	free_imgs(t_game *game);
+int		exit_game(t_game *game, char *msg, char *exit_type);
+int		close_game(t_game *game);
+// inits_bonus.c
 void	get_map_dimensions(t_game *game, char *filename);
-void	init_img(t_game *game, t_img *img, char *path);
-int		init_imgs(t_game *game);
+void	get_number_monsters(t_game *game);
+int		init_img(t_game *game, t_img *img, char *path);
+void	init_imgs(t_game *game);
 int		init_game(t_game *game, char *filename);
-// map.c
+// map_bonus.c
+char	*gnl_newline(int fd);
 void	parse_map(t_game *game, char *filename);
 t_img	*get_tile(t_game *game, char tile);
+t_img	*get_tile2(t_game *game, char tile);
 int		render_map(t_game *game);
-// draw.c
+// draw_bonus.c
 void	draw_base(t_game *game);
 void	draw_img(t_game *game, t_img *img, int i, int j);
 int		blend_transparency(t_game *game, t_img *img, int x, int y);
-// checks.c
+// checks_bonus.c
 void	check_params(t_game *game);
 void	check_map_edges(t_game *game);
 void	check_map_rectangular(t_game *game);
 int		check_map_validity(t_game *game);
-// reachability.c
-char	**init_checked(t_game *game);
+// reachability_bonus.c
 void	flood_fill(t_game *game, int y, int x, char **checked);
+char	**init_checked(t_game *game);
 void	check_reachability(t_game *game);
-// interactions.c
+// interactions_bonus.c
+void	change_player_direction(t_game *game, int direction);
+void	change_monsters_direction(t_game *game, int direction);
+void	get_key(int key, t_game *game);
 int		press_key(int key, t_game *game);
-int		exit_game(t_game *game);
 int		win_game(t_game *game);
-// moves.c
-void	get_number_monsters(t_game *game);
-void	check_player_move(t_game *game, int x, int y);
-int		check_monster_move(t_game *game, int x, int y, int m_count);
+// moves_bonus.c
+int		check_player_move(t_game *game, int x, int y);
+int		check_monster_move(t_game *game, int x, int y, int i);
 void	move_player(t_game *game, int x, int y);
-void	move_monsters(t_game *game);
+void	move_monsters(t_game *game, int new_x, int new_y, int i);
 
 #endif

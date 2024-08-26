@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:21:28 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 11:44:52 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 14:59:39 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ int	press_key(int key, t_game *game)
 
 int	win_game(t_game *game)
 {
-	ft_printf("%sYou won the game in %d moves!\n", GREEN, game->move_count);
+	ft_printf("%sYou won the game in %d moves!\n%s", GREEN, game->move_count, \
+	RESET);
 	close_game(game);
 	return (0);
 }

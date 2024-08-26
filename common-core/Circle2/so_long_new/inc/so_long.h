@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 11:41:55 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 12:02:09 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@
 # include "../X11/X.h"
 # include "../X11/keysym.h"
 # include "../libft/libft.h"
-# include "../libft/ft_printf/ft_printf.h"
-# include "../libft/get_next_line/get_next_line.h"
 # include <fcntl.h>
 # include "colors.h"
 # include "keys.h"
 # include "imgs.h"
+# include "structs.h"
 
 # define ERROR "Error"
 # define WIN "Win"
@@ -36,66 +35,6 @@
 # define PLAYER 'P'
 
 # define TILESIZE 60
-
-typedef struct s_map_validator
-{
-	int	p_count;
-	int	e_count;
-	int	c_count;
-	int	e_reachable;
-	int	c_reachable;
-}	t_map_validator;
-
-typedef struct s_map
-{
-	char			**grid;
-	t_map_validator	validator;
-}	t_map;
-
-typedef struct s_img
-{
-	void	*img_ptr;
-	char	*data;
-	int		width;
-	int		height;
-	int		bpp;
-	int		sizeline;
-	int		endian;
-}	t_img;
-
-typedef struct s_player
-{
-	int	x;
-	int	y;
-	int	direction;
-}	t_player;
-
-typedef struct s_exit
-{
-	int	x;
-	int	y;
-}	t_exit;
-
-typedef struct s_game
-{
-	t_img		wall;
-	t_img		floor;
-	t_img		collectible;
-	t_img		exit_close;
-	t_img		exit_open;
-	t_img		player_down;
-	t_img		player_up;
-	t_img		player_left;
-	t_img		player_right;
-	t_map		map;
-	int			height;
-	int			width;
-	void		*mlx_ptr;
-	void		*win_ptr;
-	t_player	player_pos;
-	t_exit		exit_pos;
-	int			move_count;
-}	t_game;
 
 // cleanup.c
 void	free_group(t_game *game, char **group);

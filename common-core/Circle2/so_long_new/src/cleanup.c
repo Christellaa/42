@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:30:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/25 19:44:58 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 15:05:02 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,11 @@ void	print_msg(char *msg, char *exit_type)
 {
 	char	*color;
 
-	if (ft_strncmp(exit_type, "ERROR", 5) == 0)
+	color = RESET;
+	if (ft_strncmp(exit_type, ERROR, 5) == 0)
 		color = RED;
-	else if (ft_strncmp(exit_type, "WIN", 3) == 0)
-		color = GREEN;
-	else if (ft_strncmp(exit_type, "INFO", 4) == 0)
+	else if (ft_strncmp(exit_type, INFO, 4) == 0)
 		color = YELLOW;
-	else
-		color = WHITE;
 	ft_printf("%s%s: %s\n%s", color, exit_type, msg, RESET);
 }
 
@@ -89,6 +86,6 @@ int	exit_game(t_game *game, char *msg, char *exit_type)
 
 int	close_game(t_game *game)
 {
-	exit_game(game, "Game closed", "INFO");
+	exit_game(game, "Game closed", INFO);
 	exit(EXIT_SUCCESS);
 }

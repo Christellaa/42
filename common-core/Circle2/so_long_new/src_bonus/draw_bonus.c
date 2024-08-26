@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:50:20 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 09:35:09 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 15:33:31 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,22 @@ void	draw_img(t_game *game, t_img *img, int i, int j)
 
 	x = j * TILESIZE;
 	y = i * TILESIZE;
-	if (img == &game->player)
+	if (img == &game->player_down || img == &game->player_up || \
+	img == &game->player_left || img == &game->player_right)
 	{
 		game->player_pos.x = j;
 		game->player_pos.y = i;
 	}
-	else if (img == &game->monster && game->current_monster < \
-	game->monster_count)
+	if (img == &game->exit_close)
 	{
-		ft_printf("draw_img: Monster %d x: %d y: %d\n", game->current_monster, j, i);
+		game->exit_pos.x = j;
+		game->exit_pos.y = i;
+	}
+	else if ((img == &game->monster_left || img == &game->monster_right) \
+	&& game->current_monster < game->monster_count)
+	{
 		game->monsters[game->current_monster].x = j;
 		game->monsters[game->current_monster].y = i;
-		ft_printf("2draw_img: Monster %d x: %d y: %d\n", game->current_monster, j, i);
 		game->current_monster++;
 	}
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, img->img_ptr, x, y);

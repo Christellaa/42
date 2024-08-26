@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:43:39 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 11:47:58 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 15:04:55 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		exit_game(&game, USAGE, ERROR);
 	if (ft_strncmp(av[1] + ft_strlen(av[1]) - 4, ".ber", 4) != 0)
-		exit_game(&game, "Invalid map extension\n", ERROR);
+		exit_game(&game, "Invalid map extension", ERROR);
 	if (init_game(&game, av[1]) != 0)
-		exit_game(&game, "Unable to initialize game\n", ERROR);
+		exit_game(&game, "Unable to initialize game", ERROR);
 	parse_map(&game, av[1]);
 	check_map_validity(&game);
 	render_map(&game);
