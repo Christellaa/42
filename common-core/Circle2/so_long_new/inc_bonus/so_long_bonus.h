@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 14:54:31 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 16:53:20 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ t_img	*get_tile(t_game *game, char tile);
 t_img	*get_tile2(t_game *game, char tile);
 int		render_map(t_game *game);
 // draw_bonus.c
+void	display_moves_on_screen(t_game *game);
 void	draw_base(t_game *game);
 void	draw_img(t_game *game, t_img *img, int i, int j);
 int		blend_transparency(t_game *game, t_img *img, int x, int y);

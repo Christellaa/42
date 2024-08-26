@@ -6,11 +6,22 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:50:20 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 15:33:31 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 17:01:06 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc_bonus/so_long_bonus.h"
+
+void	display_moves_on_screen(t_game *game)
+{
+	char	*move_count;
+
+	move_count = ft_itoa(game->move_count);
+	mlx_string_put(game->mlx_ptr, game->win_ptr, 10, 20, 255, "Moves:");
+	mlx_string_put(game->mlx_ptr, game->win_ptr, 50, 21, 255, move_count);
+	if (move_count)
+		free(move_count);
+}
 
 void	draw_base(t_game *game)
 {

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 13:42:44 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 15:38:01 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 17:02:25 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	move_player(t_game *game, int x, int y)
 	move_counter = game->move_count;
 	if (check_player_move(game, new_x, new_y))
 	{
+		game->move_count++;
 		game->player_pos.x = new_x;
 		game->player_pos.y = new_y;
 		game->map.grid[game->player_pos.y][game->player_pos.x] = PLAYER;

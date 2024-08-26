@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:21:28 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 15:52:52 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 16:44:43 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ int	press_key(int key, t_game *game)
 	game->current_monster = 0;
 	if (game->player_pos.is_moving)
 	{
-		game->move_count++;
-		ft_printf("is_moving: %d\n", game->player_pos.is_moving);
 		while (game->current_monster < game->monster_count)
 		{
 			new_x = game->monsters[game->current_monster].x;

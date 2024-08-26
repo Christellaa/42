@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 14:17:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 15:40:25 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 16:55:17 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,6 @@ int	render_map(t_game *game)
 		}
 		i++;
 	}
+	display_moves_on_screen(game);
 	return (0);
 }
