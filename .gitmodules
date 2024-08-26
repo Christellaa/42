@@ -1,0 +1,3 @@
+[submodule "common-core/Circle2/so_long/mlx"]
+	path = common-core/Circle2/so_long/mlx
+	url = https://github.com/42Paris/minilibx-linux.git
