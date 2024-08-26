@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 13:42:44 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 17:02:25 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 20:36:17 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_player_move(t_game *game, int x, int y)
 		return (0);
 	}
 	if (game->map.grid[y][x] == MONSTER)
-		exit_game(game, "You were beaten to death by the chicken!", INFO);
+		exit_game(game, "You were beaten to death by the chickens!", INFO);
 	game->map.grid[game->player_pos.y][game->player_pos.x] = FLOOR;
 	if (game->map.grid[y][x] == COLLECTIBLE)
 	{
@@ -44,7 +44,7 @@ int	check_monster_move(t_game *game, int x, int y, int i)
 		|| game->map.grid[y][x] == COLLECTIBLE)
 		return (0);
 	if (game->map.grid[y][x] == PLAYER)
-		exit_game(game, "You were beaten to death by the chicken!", INFO);
+		exit_game(game, "You were beaten to death by the chickens!", INFO);
 	game->map.grid[game->monsters[i].y][game->monsters[i].x] = FLOOR;
 	return (1);
 }
