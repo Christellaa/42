@@ -6,11 +6,11 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:21:28 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/24 16:13:23 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 10:32:53 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long_bonus.h"
+#include "../inc_bonus/so_long_bonus.h"
 
 void	get_key(int key, t_game *game)
 {
@@ -42,12 +42,12 @@ int	press_key(int key, t_game *game)
 	game->current_monster = 0;
 	while (game->current_monster < game->monster_count)
 	{
-		ft_printf("monster count: %d, current monster: %d\n", game->monster_count, game->current_monster);
-		move_monsters(game, game->monsters[game->current_monster].x, \
-		game->monsters[game->current_monster].y, game->current_monster);
+		//ft_printf("monster count: %d, current monster: %d\n", game->monster_count, game->current_monster);
+		move_monsters(game);
 		game->current_monster++;
 	}
-	ft_printf("current monster: %d\n", game->current_monster);
+	render_map(game);
+	//ft_printf("current monster: %d\n", game->current_monster);
 	return (0);
 }
 

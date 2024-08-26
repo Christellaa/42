@@ -6,11 +6,11 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:30:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/24 11:09:15 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 09:35:46 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long_bonus.h"
+#include "../inc_bonus/so_long_bonus.h"
 
 int	handle_error(char *msg, int fd, t_game *game_free, char **to_free)
 {

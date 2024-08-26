@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:52:53 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/25 17:57:01 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 11:47:42 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,13 @@ char	**init_checked(t_game *game)
 
 	checked = ft_calloc(sizeof(char *), game->height);
 	if (!checked)
-		exit_game(game, "Error while allocating memory to checked\n", ERROR);
+		exit_game(game, "Unable to allocate memory to checked\n", ERROR);
 	i = 0;
 	while (i < game->height)
 	{
 		checked[i] = ft_calloc(sizeof(char), game->width);
 		if (!checked[i])
-			exit_game(game, "Error while allocating memory to checked\n", \
-			ERROR);
+			exit_game(game, "Unable to allocate memory to checked\n", ERROR);
 		i++;
 	}
 	return (checked);

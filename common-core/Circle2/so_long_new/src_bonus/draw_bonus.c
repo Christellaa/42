@@ -6,11 +6,11 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:50:20 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/24 16:14:25 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 09:35:09 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long_bonus.h"
+#include "../inc_bonus/so_long_bonus.h"
 
 void	draw_base(t_game *game)
 {
@@ -31,7 +31,6 @@ void	draw_base(t_game *game)
 		i++;
 	}
 }
-
 
 void	draw_img(t_game *game, t_img *img, int i, int j)
 {

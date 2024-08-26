@@ -6,11 +6,11 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 13:42:44 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/24 15:54:58 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 11:36:33 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long_bonus.h"
+#include "../inc_bonus/so_long_bonus.h"
 
 void	get_number_monsters(t_game *game)
 {
@@ -69,12 +69,12 @@ void	check_player_move(t_game *game, int x, int y)
 	}
 }
 
-void	check_monster_move(t_game *game, int x, int y, int m_count)
+int	check_monster_move(t_game *game, int x, int y, int m_count)
 {
 	if (game->map.grid[y][x] == WALL || game->map.grid[y][x] == OBSTACLE \
 		|| game->map.grid[y][x] == MONSTER || game->map.grid[y][x] == EXIT \
 		|| game->map.grid[y][x] == COLLECTIBLE)
-		return ;
+		return (0);
 	if (game->map.grid[y][x] == PLAYER)
 	{
 		ft_printf("You were beaten to death by the chicken!\n");
@@ -82,8 +82,7 @@ void	check_monster_move(t_game *game, int x, int y, int m_count)
 	}
 	game->map.grid[game->monsters[m_count].y][game->monsters[m_count].x] = \
 	FLOOR;
-	game->monsters[m_count].x = x;
-	game->monsters[m_count].y = y;
+	return (1);
 }
 
 void	move_player(t_game *game, int x, int y)
@@ -102,28 +101,29 @@ void	move_player(t_game *game, int x, int y)
 	render_map(game);
 }
 
-void	move_monsters(t_game *game, int x, int y, int i)
+void	move_monsters(t_game *game)
 {
 	int	new_x;
 	int	new_y;
 	int	move;
+	int	i;
 
+	i = game->current_monster;
 	new_x = game->monsters[i].x;
 	new_y = game->monsters[i].y;
-	ft_printf("Monster %d x: %d y: %d\n", i, new_x, new_y);
-	move = ft_rand(0, 3);
-	if (move == 0)
+	move = ft_rand(0, 200);
+	if (move < 50)
 		new_x += 1;
-	else if (move == 1)
+	else if (move < 100)
 		new_x -= 1;
-	else if (move == 2)
+	else if (move < 150)
 		new_y += 1;
-	else if (move == 3)
+	else
 		new_y -= 1;
-	game->monsters[i].x = new_x + x;
-	game->monsters[i].y = new_y + y;
-	ft_printf("Monster %d new_x: %d new_y: %d\n", i, new_x, new_y);
-	check_monster_move(game, game->monsters[i].x, game->monsters[i].y, i);
-	game->map.grid[game->monsters[i].y][game->monsters[i].x] = MONSTER;
-	render_map(game);
+	if (check_monster_move(game, new_x, new_y, i))
+	{
+		game->monsters[i].x = new_x;
+		game->monsters[i].y = new_y;
+		game->map.grid[game->monsters[i].y][game->monsters[i].x] = MONSTER;
+	}
 }

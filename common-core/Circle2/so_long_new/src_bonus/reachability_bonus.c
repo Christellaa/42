@@ -6,11 +6,11 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:52:53 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/24 11:09:45 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 09:35:46 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long_bonus.h"
+#include "../inc_bonus/so_long_bonus.h"
 
 void	flood_fill(t_game *game, int i, int j, char **checked)
 {

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 14:17:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/25 19:33:18 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 11:47:24 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	parse_map(t_game *game, char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		exit_game(game, "Error during map opening\n", ERROR);
+		exit_game(game, "Unable to open map file\n", ERROR);
 	game->map.grid = ft_calloc(sizeof(char *), (game->height + 1));
 	if (!game->map.grid)
 	{
 		close(fd);
-		exit_game(game, "Error while allocating memory to grid\n", ERROR);
+		exit_game(game, "Unable to allocate memory to grid\n", ERROR);
 	}
 	i = 0;
 	line = gnl_newline(fd);

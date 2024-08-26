@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/25 19:45:09 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 11:41:55 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 # include "keys.h"
 # include "imgs.h"
 
-# define ERROR "Error\n"
-# define WIN "Win\n"
-# define INFO "Info\n"
+# define ERROR "Error"
+# define WIN "Win"
+# define INFO "Info"
 # define USAGE "Usage: ./so_long [map.ber]\n"
 
 # define FLOOR '0'
@@ -128,6 +128,8 @@ char	**init_checked(t_game *game);
 void	flood_fill(t_game *game, int y, int x, char **checked);
 void	check_reachability(t_game *game);
 // interactions.c
+int		check_move(t_game *game, int x, int y);
+void	change_player_direction(t_game *game, int direction);
 void	move_player(t_game *game, int x, int y);
 int		press_key(int key, t_game *game);
 int		win_game(t_game *game);

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/25 16:23:36 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 11:31:41 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include "../X11/X.h"
 # include "../X11/keysym.h"
 # include "../libft/libft.h"
-# include "../libft/ft_printf/ft_printf.h"
-# include "../libft/get_next_line/get_next_line.h"
 # include <fcntl.h>
 
 # define FLOOR '0'
@@ -148,8 +146,8 @@ int		win_game(t_game *game);
 // moves.c
 void	get_number_monsters(t_game *game);
 void	check_player_move(t_game *game, int x, int y);
-void	check_monster_move(t_game *game, int x, int y, int m_count);
+int		check_monster_move(t_game *game, int x, int y, int m_count);
 void	move_player(t_game *game, int x, int y);
-void	move_monsters(t_game *game, int x, int y, int i);
+void	move_monsters(t_game *game);
 
 #endif

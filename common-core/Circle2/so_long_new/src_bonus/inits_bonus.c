@@ -6,11 +6,11 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:50:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/24 15:55:23 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/26 09:35:46 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/so_long_bonus.h"
+#include "../inc_bonus/so_long_bonus.h"
 
 char	*gnl_newline(int fd)
 {
