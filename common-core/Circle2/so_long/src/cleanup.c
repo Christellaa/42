@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:30:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 21:33:29 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/27 15:24:29 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int	exit_game(t_game *game, char *msg, char *exit_type)
 		free_group(game, game->map.grid);
 	}
 	print_msg(msg, exit_type);
+	if (ft_strncmp(exit_type, ERROR, 5) == 0)
+		exit(EXIT_FAILURE);
 	exit(EXIT_SUCCESS);
 }
 
