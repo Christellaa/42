@@ -6,40 +6,69 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:56:13 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/23 11:19:53 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/27 15:54:31 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	handle_error(char *msg, char *to_free, int fd1, int fd2)
+void	print_msg(char *msg, char *exit_type)
 {
-	if (msg)
-		perror(msg);
-	if (to_free)
-		free(to_free);
-	if (fd1 != -1)
-		close(fd1);
-	if (fd2 != -1)
-		close(fd2);
-	exit(EXIT_FAILURE);
+	char	*color;
+
+	if (ft_strncmp(msg, ERROR, 5) == 0)
+		color = RED;
+	else
+		color = YELLOW;
+	ft_printf("%s%s: %s\n%s", color, exit_type, msg, RESET);
 }
 
-void	free_group(char **group)
+void	exit_program(t_pipex *pipex, char *msg, char *exit_type)
+{
+	if (pipex)
+	{
+		if (pipex->envp)
+			free(pipex->envp);
+		if (pipex->is_here_doc == 1)
+		{
+			//free(pipex->here_doc);
+			unlink(pipex->here_doc);
+			pipex->here_doc = NULL;
+		}
+		if (pipex->infile > 0)
+			close(pipex->infile);
+		if (pipex->outfile > 0)
+			close(pipex->outfile);
+	}
+	print_msg(msg, exit_type);
+	if (ft_strncmp(exit_type, ERROR, 5) == 0)
+		exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
+}
+
+void	free_groups(char **group1, char **group2)
 {
 	int	i;
 
 	i = 0;
-	if (group)
+	if (group1)
 	{
-		while (group[i])
+		while (group1[i])
 		{
-			free(group[i]);
-			group[i] = NULL;
+			free(group1[i]);
 			i++;
 		}
-		free(group);
-		group = NULL;
+		free(group1);
+	}
+	i = 0;
+	if (group2)
+	{
+		while (group2[i])
+		{
+			free(group2[i]);
+			i++;
+		}
+		free(group2);
 	}
 }
 
@@ -47,7 +76,7 @@ void	close_here_doc(t_pipex pipex)
 {
 	if (pipex.is_here_doc == 1)
 	{
-		if (unlink(pipex.here_doc) != 0)
-			handle_error("Error: unlink here_doc", NULL, 0, 0);
+		close(pipex.infile);
+		unlink(pipex.here_doc);
 	}
 }

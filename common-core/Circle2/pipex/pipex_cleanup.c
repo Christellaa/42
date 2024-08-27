@@ -6,26 +6,49 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:56:13 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/07 16:05:12 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:57:28 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	handle_error(char *msg, char *to_free, int fd1, int fd2)
+void	print_msg(char *msg, char *exit_type)
 {
-	if (msg)
-		perror(msg);
-	if (to_free)
-		free(to_free);
-	if (fd1 != -1)
-		close(fd1);
-	if (fd2 != -1)
-		close(fd2);
-	exit(EXIT_FAILURE);
+	char	*color;
+	char	*err;
+
+	if (ft_strncmp(msg, ERROR, 5) == 0)
+	{
+		color = RED;
+		err = strerror(errno);
+	}
+	else
+		color = YELLOW;
+	if (ft_strncmp(exit_type, ERROR, 5) == 0)
+		ft_printf("%s%s: %s\n%s", color, exit_type, err, RESET);
+	else if (ft_strncmp(exit_type, INFO, 4) == 0)
+		ft_printf("%s%s: %s\n%s", color, exit_type, msg, RESET);
 }
 
-void	free_group(char **group1, char **group2)
+void	exit_program(t_pipex *pipex, char *msg, char *exit_type)
+{
+	if (pipex)
+	{
+		if (pipex->envp)
+			free(pipex->envp);
+		if (pipex->infile > 0)
+			close(pipex->infile);
+		if (pipex->outfile > 0)
+			close(pipex->outfile);
+	}
+	print_msg(msg, exit_type);
+	if (ft_strncmp(exit_type, ERROR, 5) == 0 \
+	|| ft_strncmp(exit_type, INFO, 4) == 0)
+		exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
+}
+
+void	free_groups(char **group1, char **group2)
 {
 	int	i;
 

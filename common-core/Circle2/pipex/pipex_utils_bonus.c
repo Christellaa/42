@@ -6,38 +6,31 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:30:58 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/23 11:27:39 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/27 15:51:10 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	check_files(int nb_args, int idx, int idx2, char **av)
+void	check_files(int nb_args, int idx, int idx2, t_pipex *pipex)
 {
 	if (nb_args < idx && idx2 == 1)
-	{
-		ft_printf("Usage: %s infile cmd1 cmd2... cmdN outfile\n", av[0]);
-		exit(EXIT_FAILURE);
-	}
+		exit_program(pipex, USAGE, ERROR);
 	if (nb_args < idx && idx2 == 2)
-	{
-		ft_printf("Usage: %s here_doc LIMITER cmd1 cmd2... cmdN outfile\n", \
-				av[0]);
-		exit(EXIT_FAILURE);
-	}
+		exit_program(pipex, USAGE_HERE_DOC, ERROR);
 }
 
-char	*name_here_doc(void)
+char	*name_here_doc(t_pipex *pipex)
 {
 	int		fd;
 	char	*name;
 
 	fd = open("/dev/random", O_RDONLY);
 	if (fd < 0)
-		handle_error("Error: open /dev/random", NULL, 0, 0);
+		exit_program(pipex, "open /dev/random", ERROR);
 	name = ft_calloc(10, sizeof(char));
 	if (!name)
-		handle_error("Error: calloc name", NULL, 0, 0);
+		exit_program(pipex, "calloc name", ERROR);
 	read(fd, name, 10);
 	close(fd);
 	return (name);
@@ -84,15 +77,11 @@ int	get_files(char **av, int idx, int flag, t_pipex *pipex)
 	else if (flag == 3)
 		file = open(av[idx], O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (file < 0 && (flag == 0 || flag == 2))
-	{
-		if (flag == 2)
-			unlink(pipex->here_doc);
-		handle_error("Error: open file", NULL, 0, 0);
-	}
+		exit_program(pipex, "open file", ERROR);
 	return (file);
 }
 
-int	count_cmd(int ac, char **av)
+int	count_cmd(t_pipex *pipex, int ac, char **av)
 {
 	int	nb_cmd;
 	int	i;
@@ -105,9 +94,6 @@ int	count_cmd(int ac, char **av)
 		i++;
 	}
 	if (nb_cmd == 0)
-	{
-		ft_printf("Error: find commands");
-		exit(EXIT_FAILURE);
-	}
+		exit_program(pipex, "No command to execute", ERROR);
 	return (nb_cmd);
 }

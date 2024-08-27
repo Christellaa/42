@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:55:35 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/23 10:44:17 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/27 13:50:12 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,14 @@ char	**get_paths(t_pipex pipex)
 		i++;
 	}
 	if (!paths)
-	{
-		ft_printf("Error: get paths");
-		exit(EXIT_FAILURE);
-	}
+		exit_program(&pipex, "PATH not found", ERROR);
 	split_paths = ft_split(paths, ':');
 	if (!split_paths)
-		handle_error("Error: split paths", NULL, 0, 0);
+		exit_program(&pipex, "split PATH", ERROR);
 	return (split_paths);
 }
 
-char	*find_cmd_path(char *cmd, char **paths)
+char	*find_cmd_path(t_pipex *pipex, char *cmd, char **paths)
 {
 	int		i;
 	char	*tmp;
@@ -53,10 +50,10 @@ char	*find_cmd_path(char *cmd, char **paths)
 	{
 		tmp = ft_strjoin(paths[i], "/");
 		if (!tmp)
-			handle_error("Error: join '/' to path", NULL, 0, 0);
+			exit_program(pipex, "join '/' to path", ERROR);
 		cmd_path = ft_strjoin_free_s1(tmp, cmd);
 		if (!cmd_path)
-			handle_error("Error: join command to path", NULL, 0, 0);
+			exit_program(pipex, "join cmd to path", ERROR);
 		if (access(cmd_path, F_OK | X_OK) == 0)
 			return (cmd_path);
 		free(cmd_path);
