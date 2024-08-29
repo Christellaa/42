@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:55:35 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/27 13:50:12 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/29 17:51:19 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ char	**get_paths(t_pipex pipex)
 		i++;
 	}
 	if (!paths)
-		exit_program(&pipex, "PATH not found", ERROR);
+		exit_program(&pipex, "PATH not found in envp", ERROR);
 	split_paths = ft_split(paths, ':');
 	if (!split_paths)
-		exit_program(&pipex, "split PATH", ERROR);
+		exit_program(&pipex, "split paths", ERROR);
 	return (split_paths);
 }
 

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 18:29:55 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/27 16:52:31 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/29 18:03:47 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,23 @@ typedef struct s_pipex
 	int		infile;
 	int		outfile;
 	char	**envp;
+	int		current_cmd;
 }	t_pipex;
 
-// paths.c
+// utils_bonus.c
+void	check_files(int nb_args, int idx, int idx2, t_pipex *pipex);
+void	name_here_doc(t_pipex *pipex);
+int		handle_here_doc(char *delimiter, t_pipex *pipex);
+int		get_files(char **av, int idx, int flag, t_pipex *pipex);
+int		count_cmd(t_pipex *pipex, int ac, char **av);
+// paths_bonus.c
 char	**get_paths(t_pipex pipex);
 char	*find_cmd_path(t_pipex *pipex, char *cmd, char **paths);
-// cleanup.c
+// cleanup_bonus.c
+void	init_values(t_pipex *pipex);
 void	print_msg(char *msg, char *exit_type);
 void	exit_program(t_pipex *pipex, char *msg, char *exit_type);
 void	free_groups(char **group1, char **group2);
+void	close_here_doc(t_pipex pipex);
 
 #endif
