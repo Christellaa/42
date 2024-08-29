@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:52:08 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/13 19:32:12 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:12:10 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ static char	*extract_line(char **buf)
 	ptr_buf = ft_strdup(ptr_buf);
 	free(*buf);
 	*buf = ptr_buf;
+	if (!**buf)
+	{
+		free(*buf);
+		*buf = NULL;
+	}
 	return (line);
 }
 

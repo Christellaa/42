@@ -6,37 +6,51 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:56:13 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/27 15:54:31 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:35:07 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
+void	init_values(t_pipex *pipex)
+{
+	pipex->is_here_doc = 0;
+	pipex->here_doc = NULL;
+	pipex->infile = -1;
+	pipex->outfile = -1;
+	pipex->envp = NULL;
+	pipex->nb_cmd = 0;
+	pipex->current_cmd = 0;
+}
+
 void	print_msg(char *msg, char *exit_type)
 {
 	char	*color;
+	char	*err;
 
-	if (ft_strncmp(msg, ERROR, 5) == 0)
+	color = RESET;
+	if (ft_strncmp(exit_type, ERROR, 5) == 0)
+	{
 		color = RED;
-	else
+		err = strerror(errno);
+	}
+	else if (ft_strncmp(exit_type, INFO, 4) == 0)
 		color = YELLOW;
-	ft_printf("%s%s: %s\n%s", color, exit_type, msg, RESET);
+	if (ft_strncmp(exit_type, ERROR, 5) == 0 && errno != 0)
+		ft_printf("%s%s: %s\n%s", color, exit_type, err, RESET);
+	else
+		ft_printf("%s%s: %s\n%s", color, exit_type, msg, RESET);
 }
 
 void	exit_program(t_pipex *pipex, char *msg, char *exit_type)
 {
 	if (pipex)
 	{
-		if (pipex->envp)
-			free(pipex->envp);
-		if (pipex->is_here_doc == 1)
-		{
-			//free(pipex->here_doc);
-			unlink(pipex->here_doc);
-			pipex->here_doc = NULL;
-		}
 		if (pipex->infile > 0)
+		{
+			close_here_doc(*pipex);
 			close(pipex->infile);
+		}
 		if (pipex->outfile > 0)
 			close(pipex->outfile);
 	}
@@ -76,7 +90,7 @@ void	close_here_doc(t_pipex pipex)
 {
 	if (pipex.is_here_doc == 1)
 	{
-		close(pipex.infile);
 		unlink(pipex.here_doc);
+		free(pipex.here_doc);
 	}
 }
