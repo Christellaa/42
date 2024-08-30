@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:05:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/29 16:32:20 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/30 15:57:51 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,49 +19,45 @@ void	exec_child(char **av, char **paths, t_pipex pipex)
 
 	args = ft_split(av[pipex.current_cmd], ' ');
 	if (!args)
-		exit_program(&pipex, "split command", ERROR);
-	path = find_cmd_path(&pipex, args[0], paths);
+		print_msg("split args", ERROR);
+	path = find_cmd_path(args[0], paths);
 	if (!path)
 	{
-		free_groups(args, paths);
-		exit_program(&pipex, "find command path", ERROR);
+		//free_groups(args, paths);
+		exit_program(&pipex, "find cmd path", ERROR);
 	}
 	if (execve(path, args, pipex.envp) == -1)
 	{
 		free_groups(args, paths);
-		exit_program(&pipex, "execute execve", ERROR);
+		exit_program(&pipex, "execve", ERROR);
 	}
 }
 
-void	dup_files(int ac, char **av, t_pipex *pipex, int *pipefd)
+void	dup_files(t_pipex *pipex, int *pipefd)
 {
-	if (av[1])
+	if ((pipex->is_here_doc == 0 && pipex->current_cmd == 2) \
+		|| (pipex->is_here_doc == 1 && pipex->current_cmd == 3))
 	{
-		if (dup2(pipex->infile, STDIN_FILENO) == -1)
-			exit_program(pipex, "dup2 infile", ERROR);
+		check_dup2(pipefd, pipex->infile, STDIN_FILENO, pipex);
+	}
+	else
+		check_dup2(pipefd, pipefd[0], STDIN_FILENO, pipex);
+	if (pipex->infile > 0)
 		close(pipex->infile);
-	}
-	else
-	{
-		if (dup2(pipefd[0], STDIN_FILENO) == -1)
-			exit_program(pipex, "dup2 pipefd[0]", ERROR);
-	}
 	close(pipefd[0]);
-	if (av[ac - 2])
+	if ((pipex->current_cmd == pipex->nb_cmd + 1 && pipex->is_in_out.out == 0) \
+	|| (pipex->current_cmd == pipex->nb_cmd + 2 && pipex->is_in_out.out == 1))
 	{
-		if (dup2(pipex->outfile, STDOUT_FILENO) == -1)
-			exit_program(pipex, "dup2 outfile", ERROR);
-		close(pipex->outfile);
+		check_dup2(pipefd, pipex->outfile, STDOUT_FILENO, pipex);
 	}
 	else
-	{
-		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-			exit_program(pipex, "dup2 pipefd[1]", ERROR);
-	}
+		check_dup2(pipefd, pipefd[1], STDOUT_FILENO, pipex);
+	if (pipex->outfile > 0)
+		close(pipex->outfile);
 	close(pipefd[1]);
 }
 
-void	child(int ac, char **av, char **paths, t_pipex pipex)
+int	child(char **av, char **paths, t_pipex pipex)
 {
 	pid_t	pid;
 	int		pipefd[2];
@@ -70,14 +66,18 @@ void	child(int ac, char **av, char **paths, t_pipex pipex)
 		exit_program(&pipex, "create pipe", ERROR);
 	pid = fork();
 	if (pid < 0)
-		exit_program(&pipex, "fork child process", ERROR);
+	{
+		print_msg("fork child process", ERROR);
+		return (0);
+	}
 	else if (pid == 0)
 	{
-		dup_files(ac, av, &pipex, pipefd);
+		dup_files(&pipex, pipefd);
 		exec_child(av, paths, pipex);
 	}
 	close(pipefd[0]);
 	close(pipefd[1]);
+	return (1);
 }
 
 void	parent(int ac, char **av, t_pipex *pipex)
@@ -88,14 +88,24 @@ void	parent(int ac, char **av, t_pipex *pipex)
 		name_here_doc(pipex);
 		pipex->infile = get_files(av, 1, 2, pipex);
 		pipex->outfile = get_files(av, ac - 1, 3, pipex);
-		pipex->current_cmd = 3;
 	}
 	else
 	{
 		check_files(ac, 5, 1, pipex);
 		pipex->infile = get_files(av, 1, 0, pipex);
 		pipex->outfile = get_files(av, ac - 1, 1, pipex);
-		pipex->current_cmd = 2;
+	}
+	if (pipex->infile < 0)
+	{
+		pipex->current_cmd++;
+		pipex->is_in_out.in = 1;
+		print_msg("infile", ERROR);
+	}
+	if (pipex->outfile < 0)
+	{
+		pipex->nb_cmd--;
+		pipex->is_in_out.out = 1;
+		print_msg("outfile", ERROR);
 	}
 }
 
@@ -110,18 +120,20 @@ int	main(int ac, char **av, char **env)
 		pipex.is_here_doc = 1;
 	else
 		pipex.is_here_doc = 0;
+	pipex.nb_cmd = count_cmd(ac, av);
 	parent(ac, av, &pipex);
-	pipex.nb_cmd = count_cmd(&pipex, ac, av);
 	pipex.envp = env;
 	paths = get_paths(pipex);
 	if (!paths)
-		exit_program(&pipex, "get paths", ERROR);
-	while (pipex.current_cmd < ac - 1)
+		print_msg("get paths", ERROR);
+	while (pipex.current_cmd <= pipex.nb_cmd + 1)
 	{
-		child(ac, av, paths, pipex);
+		ft_printf("current_cmd: %d\n", pipex.current_cmd);
+		child(av, paths, pipex);
 		pipex.current_cmd++;
 	}
-	free_groups(paths, NULL);
+	if (paths)
+		free_groups(paths, NULL);
 	while (wait(NULL) > 0)
 		;
 	exit_program(&pipex, "Success", INFO);

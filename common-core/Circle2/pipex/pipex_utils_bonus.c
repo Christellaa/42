@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:30:58 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/29 16:31:04 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/30 11:54:18 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,26 +77,23 @@ int	get_files(char **av, int idx, int flag, t_pipex *pipex)
 	int	file;
 
 	if (flag == 0)
+	{
 		file = open(av[idx], O_RDONLY);
+		pipex->current_cmd = 2;
+	}
 	else if (flag == 1)
 		file = open(av[idx], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (flag == 2)
+	{
 		file = handle_here_doc(av[idx + 1], pipex);
+		pipex->current_cmd = 3;
+	}
 	else if (flag == 3)
 		file = open(av[idx], O_CREAT | O_WRONLY | O_APPEND, 0644);
-	if (file < 0 && (flag == 0 || flag == 2))
-	{
-		/* if (flag == 0)
-			// do not do first cmd only
-		else */
-		exit_program(pipex, "open infile", ERROR);
-	}
-	if (file < 0 && (flag == 1 || flag == 3))
-		exit_program(pipex, "open outfile", ERROR);
 	return (file);
 }
 
-int	count_cmd(t_pipex *pipex, int ac, char **av)
+int	count_cmd(int ac, char **av)
 {
 	int	nb_cmd;
 	int	i;
@@ -108,8 +105,5 @@ int	count_cmd(t_pipex *pipex, int ac, char **av)
 		nb_cmd++;
 		i++;
 	}
-	if (nb_cmd == 0)
-		exit_program(pipex, "No command to execute", ERROR);
 	return (nb_cmd);
 }
-

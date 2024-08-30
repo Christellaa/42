@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:55:35 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/27 15:46:47 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/30 11:48:15 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ char	**get_paths(t_pipex pipex)
 		i++;
 	}
 	if (!paths)
-		exit_program(&pipex, "PATH not found in envp", ERROR);
+		return (NULL);
 	split_paths = ft_split(paths, ':');
 	if (!split_paths)
-		exit_program(&pipex, "split paths", ERROR);
+		return (NULL);
 	return (split_paths);
 }
 
-char	*find_cmd_path(t_pipex *pipex, char *cmd, char **paths)
+char	*find_cmd_path(char *cmd, char **paths)
 {
 	int		i;
 	char	*tmp;
@@ -50,10 +50,10 @@ char	*find_cmd_path(t_pipex *pipex, char *cmd, char **paths)
 	{
 		tmp = ft_strjoin(paths[i], "/");
 		if (!tmp)
-			exit_program(pipex, "join '/' to path", ERROR);
+			return (NULL);
 		cmd_path = ft_strjoin_free_s1(tmp, cmd);
 		if (!cmd_path)
-			exit_program(pipex, "join cmd to path", ERROR);
+			return (NULL);
 		if (access(cmd_path, F_OK | X_OK) == 0)
 			return (cmd_path);
 		free(cmd_path);

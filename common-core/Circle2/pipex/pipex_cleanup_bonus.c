@@ -6,22 +6,11 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:56:13 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/29 16:35:07 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/30 11:52:40 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-
-void	init_values(t_pipex *pipex)
-{
-	pipex->is_here_doc = 0;
-	pipex->here_doc = NULL;
-	pipex->infile = -1;
-	pipex->outfile = -1;
-	pipex->envp = NULL;
-	pipex->nb_cmd = 0;
-	pipex->current_cmd = 0;
-}
 
 void	print_msg(char *msg, char *exit_type)
 {
