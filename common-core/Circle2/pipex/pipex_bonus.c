@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 11:05:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/30 15:57:51 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/31 12:37:33 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exec_child(char **av, char **paths, t_pipex pipex)
 	path = find_cmd_path(args[0], paths);
 	if (!path)
 	{
-		//free_groups(args, paths);
+		free_groups(args, paths);
 		exit_program(&pipex, "find cmd path", ERROR);
 	}
 	if (execve(path, args, pipex.envp) == -1)
@@ -128,7 +128,6 @@ int	main(int ac, char **av, char **env)
 		print_msg("get paths", ERROR);
 	while (pipex.current_cmd <= pipex.nb_cmd + 1)
 	{
-		ft_printf("current_cmd: %d\n", pipex.current_cmd);
 		child(av, paths, pipex);
 		pipex.current_cmd++;
 	}

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 18:29:55 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/30 15:36:30 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/31 12:38:07 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PIPEX_BONUS_H
 
 # include <unistd.h>
-# include <string.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <sys/wait.h>

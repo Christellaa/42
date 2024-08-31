@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:56:13 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/30 11:52:40 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/31 12:37:50 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,23 @@
 
 void	print_msg(char *msg, char *exit_type)
 {
-	char	*color;
-	char	*err;
+	/* char	*color;
+	//char	*err;
 
 	color = RESET;
 	if (ft_strncmp(exit_type, ERROR, 5) == 0)
 	{
 		color = RED;
-		err = strerror(errno);
+		ft_printf("AAAAAA");
+		perror(msg);
+		//ft_printf("%s%s: %s\n%s", color, exit_type, err, RESET);
 	}
 	else if (ft_strncmp(exit_type, INFO, 4) == 0)
 		color = YELLOW;
-	if (ft_strncmp(exit_type, ERROR, 5) == 0 && errno != 0)
-		ft_printf("%s%s: %s\n%s", color, exit_type, err, RESET);
-	else
-		ft_printf("%s%s: %s\n%s", color, exit_type, msg, RESET);
+	ft_printf("%s%s: %s\n%s", color, exit_type, msg, RESET);
+	else */
+	(void)exit_type;
+	perror(msg);
 }
 
 void	exit_program(t_pipex *pipex, char *msg, char *exit_type)
