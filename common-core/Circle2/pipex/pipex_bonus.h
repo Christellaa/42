@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 18:29:55 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/31 12:38:07 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/31 13:36:13 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,6 @@
 
 # define USAGE "Usage: ./pipex file1 cmd1 cmd2 file2"
 # define USAGE_HERE_DOC "Usage: ./pipex here_doc LIMITER cmd1 cmd2 file2"
-# define ERROR	"Error"
-# define INFO	"Info"
-# define RED	"\033[0;31m"
-# define YELLOW	"\033[0;33m"
-# define RESET	"\033[0m"
 
 typedef struct s_file
 {
@@ -63,8 +58,8 @@ void	check_dup2(int *pipefd, int fd, int target, t_pipex *pipex);
 char	**get_paths(t_pipex pipex);
 char	*find_cmd_path(char *cmd, char **paths);
 // cleanup_bonus.c
-void	print_msg(char *msg, char *exit_type);
-void	exit_program(t_pipex *pipex, char *msg, char *exit_type);
+void	print_msg(char *msg);
+void	exit_program(t_pipex *pipex, char *msg, int flag);
 void	free_groups(char **group1, char **group2);
 void	close_here_doc(t_pipex pipex);
 

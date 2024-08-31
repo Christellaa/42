@@ -6,34 +6,18 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:56:13 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/31 13:14:06 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/31 14:01:56 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	print_msg(char *msg, char *exit_type)
+void	print_msg(char *msg)
 {
-	/* char	*color;
-	//char	*err;
-
-	color = RESET;
-	if (ft_strncmp(exit_type, ERROR, 5) == 0)
-	{
-		color = RED;
-		ft_printf("AAAAAA");
-		perror(msg);
-		//ft_printf("%s%s: %s\n%s", color, exit_type, err, RESET);
-	}
-	else if (ft_strncmp(exit_type, INFO, 4) == 0)
-		color = YELLOW;
-	ft_printf("%s%s: %s\n%s", color, exit_type, msg, RESET);
-	else */
-	(void)exit_type;
 	perror(msg);
 }
 
-void	exit_program(t_pipex *pipex, char *msg, char *exit_type)
+void	exit_program(t_pipex *pipex, char *msg, int flag)
 {
 	if (pipex)
 	{
@@ -45,10 +29,14 @@ void	exit_program(t_pipex *pipex, char *msg, char *exit_type)
 		if (pipex->outfile > 0)
 			close(pipex->outfile);
 	}
-	print_msg(msg, exit_type);
-	if (ft_strncmp(exit_type, ERROR, 5) == 0)
+	if (flag == 1)
+	{
+		if (msg)
+			print_msg(msg);
 		exit(EXIT_FAILURE);
-	exit(EXIT_SUCCESS);
+	}
+	else if (flag == 0)
+		exit(EXIT_SUCCESS);
 }
 
 void	free_groups(char **group1, char **group2)
