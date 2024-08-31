@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:56:13 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/31 12:37:50 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/08/31 13:14:06 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ void	free_groups(char **group1, char **group2)
 		while (group1[i])
 		{
 			free(group1[i]);
-			i++;
+			group1[i++] = NULL;
 		}
 		free(group1);
+		group1 = NULL;
 	}
 	i = 0;
 	if (group2)
@@ -71,9 +72,10 @@ void	free_groups(char **group1, char **group2)
 		while (group2[i])
 		{
 			free(group2[i]);
-			i++;
+			group2[i++] = NULL;
 		}
 		free(group2);
+		group2 = NULL;
 	}
 }
 
