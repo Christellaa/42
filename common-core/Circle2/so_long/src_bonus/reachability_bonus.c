@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:52:53 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 14:55:52 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/02 21:08:38 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	flood_fill(t_game *game, int i, int j, char **checked)
 	|| checked[i][j])
 		return ;
 	if (game->map.grid[i][j] == EXIT)
+	{
 		game->map.validator.e_reachable = 1;
+		return ;
+	}
 	if (game->map.grid[i][j] == COLLECTIBLE)
 		game->map.validator.c_reachable++;
 	checked[i][j] = 1;
