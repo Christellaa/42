@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/02 21:04:17 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:59:47 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ void	draw_base(t_game *game);
 void	draw_img(t_game *game, t_img *img, int i, int j);
 int		blend_transparency(t_game *game, t_img *img, int x, int y);
 // checks_bonus.c
-void	check_params(t_game *game, char *line);
-void	check_map_edges(t_game *game, char *line, int idx);
+void	count_chars(t_game *game, char *line, int i, int j);
+void	check_params(t_game *game, char *line, int i);
+void	check_map_edges(t_game *game, char *line, int i);
 void	check_map_rectangular(t_game *game);
 int		check_map_validity(t_game *game);
-int		check_chars(t_game *game, char *line, int idx);
 // reachability_bonus.c
 void	flood_fill(t_game *game, int y, int x, char **checked);
 char	**init_checked(t_game *game);
