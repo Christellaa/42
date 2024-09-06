@@ -5,77 +5,54 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 10:52:08 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/13 19:32:12 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/09/06 19:59:11 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/09/06 20:51:48 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*extract_line(char **buf)
-{
-	char	*line;
-	char	*ptr_buf;
-
-	ptr_buf = *buf;
-	while (*ptr_buf != '\n' && *ptr_buf != '\0')
-		ptr_buf++;
-	ptr_buf += (*ptr_buf == '\n');
-	line = ft_substr(*buf, 0, (size_t)(ptr_buf - *buf));
-	if (!line)
-	{
-		free(*buf);
-		return (NULL);
-	}
-	ptr_buf = ft_strdup(ptr_buf);
-	free(*buf);
-	*buf = ptr_buf;
-	return (line);
-}
-
-static char	*read_line(int fd, char *buf, char *line)
-{
-	ssize_t	bytes_read;
-
-	bytes_read = read(fd, line, BUFFER_SIZE);
-	while (bytes_read > 0)
-	{
-		line[bytes_read] = '\0';
-		buf = ft_strjoin_free_s1(buf, line);
-		if (ft_strchr(line, '\n') || ft_strchr(line, '\0'))
-			break ;
-		bytes_read = read(fd, line, BUFFER_SIZE);
-	}
-	free(line);
-	if (bytes_read < 0)
-	{
-		free(buf);
-		return (NULL);
-	}
-	return (buf);
-}
-
 char	*get_next_line(int fd)
 {
-	static char	*buf[OPEN_MAX];
+	static char	buf[OPEN_MAX][BUFFER_SIZE];
 	char		*line;
+	ssize_t		bytes_read;
+	ssize_t		i;
+	size_t		total_len;
 
 	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!buf[fd])
-		buf[fd] = ft_strdup("");
-	line = malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (!line)
+	line = NULL;
+	total_len = 0;
+	while (1)
 	{
-		free(buf[fd]);
-		return (NULL);
+		if (buf[fd][0] == '\0')
+		{
+			bytes_read = read(fd, buf[fd], BUFFER_SIZE);
+			if (bytes_read <= 0)
+			{
+				if (line && *line)
+					return (line);
+				free(line);
+				return (NULL);
+			}
+			buf[fd][bytes_read] = '\0';
+		}
+		i = 0;
+		while (buf[fd][i] != '\0')
+		{
+			if (buf[fd][i] == '\n')
+			{
+				line = ft_strnjoin_free_s1(line, buf[fd], i + 1);
+				ft_memmove(buf[fd], buf[fd] + i + 1, BUFFER_SIZE - i - 1);
+				buf[fd][BUFFER_SIZE - i - 1] = '\0';
+				return (line);
+			}
+			i++;
+		}
+		line = ft_strnjoin_free_s1(line, buf[fd], i);
+		total_len += i;
+		buf[fd][0] = '\0';
 	}
-	buf[fd] = read_line(fd, buf[fd], line);
-	if (!buf[fd] || !*buf[fd])
-	{
-		free(buf[fd]);
-		buf[fd] = NULL;
-		return (NULL);
-	}
-	return (extract_line(&buf[fd]));
+	return (line);
 }

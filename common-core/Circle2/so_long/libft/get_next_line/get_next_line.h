@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 10:52:34 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/13 19:14:39 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/06 20:21:08 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <unistd.h>
 # include "../libft.h"
 
-char		*ft_strjoin_free_s1(char *s1, char const *s2);
+char		*ft_strnjoin_free_s1(char *s1, char const *s2, size_t len);
 char		*get_next_line(int fd);
 
 #endif
