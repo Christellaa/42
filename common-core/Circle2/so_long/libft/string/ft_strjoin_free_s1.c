@@ -1,41 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin_free_s1.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 14:57:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/06 16:12:03 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/09/05 15:00:53 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/09/05 15:00:58 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** Copy from string s to a new string
-** Returns a pointer to the new string, or NULL if the allocation fails
-** 
-*/
+#include "../libft.h"
 
-#include "libft.h"
-
-char	*ft_strdup(const char *s)
+char	*ft_strjoin_free_s1(char *s1, char const *s2)
 {
-	char	*new;
-	int		size;
-	int		i;
+	char	*s3;
+	char	*ptr3;
+	char	*ptr1;
 
-	if (!s)
-		return (NULL);
-	size = ft_strlen(s);
-	new = malloc((size + 1) * sizeof(char));
-	if (!new)
-		return (NULL);
-	i = 0;
-	while (s[i])
+	s3 = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(*s3));
+	if (!s3)
 	{
-		new[i] = s[i];
-		i++;
+		free(s1);
+		return (NULL);
 	}
-	new[i] = '\0';
-	return (new);
+	ptr3 = s3;
+	ptr1 = s1;
+	while (*ptr1)
+		*ptr3++ = *ptr1++;
+	while (*s2)
+		*ptr3++ = *s2++;
+	*ptr3 = '\0';
+	free(s1);
+	return (s3);
 }

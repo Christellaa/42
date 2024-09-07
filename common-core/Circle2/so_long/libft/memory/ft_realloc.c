@@ -1,41 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 14:57:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/06 16:12:03 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/09/06 14:37:34 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/09/06 14:37:42 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** Copy from string s to a new string
-** Returns a pointer to the new string, or NULL if the allocation fails
-** 
-*/
+#include "../libft.h"
 
-#include "libft.h"
-
-char	*ft_strdup(const char *s)
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {
-	char	*new;
-	int		size;
-	int		i;
+	void	*new_ptr;
 
-	if (!s)
-		return (NULL);
-	size = ft_strlen(s);
-	new = malloc((size + 1) * sizeof(char));
-	if (!new)
-		return (NULL);
-	i = 0;
-	while (s[i])
+	if (new_size == 0 && ptr)
 	{
-		new[i] = s[i];
-		i++;
+		free(ptr);
+		return (NULL);
 	}
-	new[i] = '\0';
-	return (new);
+	if (!ptr)
+		return (malloc(new_size));
+	new_ptr = malloc(new_size);
+	if (!new_ptr)
+		return (NULL);
+	if (new_size > old_size)
+		ft_memcpy(new_ptr, ptr, old_size);
+	else
+		ft_memcpy(new_ptr, ptr, new_size);
+	free(ptr);
+	return (new_ptr);
 }

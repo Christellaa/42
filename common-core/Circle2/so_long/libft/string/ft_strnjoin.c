@@ -1,41 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strnjoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 14:57:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/06 16:12:03 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/09/05 15:21:53 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/09/05 16:20:02 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** Copy from string s to a new string
-** Returns a pointer to the new string, or NULL if the allocation fails
-** 
-*/
+#include "../libft.h"
 
-#include "libft.h"
-
-char	*ft_strdup(const char *s)
+char	*ft_strnjoin(char *s1, char *s2, size_t n)
 {
-	char	*new;
-	int		size;
-	int		i;
+	size_t	s1_len;
+	size_t	i;
+	char	*s3;
 
-	if (!s)
-		return (NULL);
-	size = ft_strlen(s);
-	new = malloc((size + 1) * sizeof(char));
-	if (!new)
+	s1_len = ft_strlen(s1);
+	s3 = malloc(s1_len + n + 1);
+	if (!s3)
 		return (NULL);
 	i = 0;
-	while (s[i])
+	if (s1)
 	{
-		new[i] = s[i];
-		i++;
+		while (*s1)
+			s3[i++] = *(s1++);
 	}
-	new[i] = '\0';
-	return (new);
+	if (s2)
+	{
+		while (*s2 && i - s1_len < n)
+			s3[i++] = *(s2++);
+	}
+	s3[i] = '\0';
+	return (s3);
 }
