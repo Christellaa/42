@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 08:03:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/06 14:38:08 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 19:45:40 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ size_t			ft_strlcat(char *dst, const char *src, size_t siz);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strjoin_free_s1(char *s1, const char *s2);
 char			*ft_strnjoin(char *s1, char *s2, size_t n);
+char			*ft_strnjoin_free_s1(char *s1, char const *s2, size_t len);
 char			*ft_strdup(const char *s);
 char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
