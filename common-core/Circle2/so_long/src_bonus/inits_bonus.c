@@ -6,64 +6,22 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:50:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 15:30:15 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 09:53:53 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc_bonus/so_long_bonus.h"
 
-void	get_map_dimensions(t_game *game, char *filename)
+void	init_and_locate_monsters(t_game *game, int i, int j)
 {
-	int		fd;
-	char	*line;
-
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		exit_game(game, "Unable to open map file", ERROR);
-	game->width = 0;
-	game->height = 0;
-	line = gnl_newline(fd);
-	while (line)
-	{
-		if (game->width <= 0)
-			game->width = ft_strlen(line);
-		game->height++;
-		free(line);
-		line = gnl_newline(fd);
-	}
-	free(line);
-	close(fd);
-	if (game->width <= 0 || game->height <= 0)
-		exit_game(game, "Invalid map dimensions", ERROR);
-}
-
-void	get_number_monsters(t_game *game)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < game->height)
-	{
-		j = 0;
-		while (j < game->width)
-		{
-			if (game->map.grid[i][j] == MONSTER)
-				game->monster_count++;
-			j++;
-		}
-		i++;
-	}
-	game->monsters = ft_calloc(sizeof(t_monster), game->monster_count);
+	game->monsters = ft_realloc(game->monsters, \
+			sizeof(t_monster) * game->monster_count, \
+			sizeof(t_monster) * (game->monster_count + 1));
 	if (!game->monsters)
 		exit_game(game, "Unable to allocate memory to monsters", ERROR);
-	i = -1;
-	while (++i < game->monster_count)
-	{
-		game->monsters[i].x = -1;
-		game->monsters[i].y = -1;
-		game->monsters[i].direction = 1;
-	}
+	game->monsters[game->monster_count].x = j;
+	game->monsters[game->monster_count].y = i;
+	game->monsters[game->monster_count].direction = 1;
 }
 
 int	init_img(t_game *game, t_img *img, char *path)
@@ -96,9 +54,8 @@ void	init_imgs(t_game *game)
 		exit_game(game, "Unable to initialize image", ERROR);
 }
 
-int	init_game(t_game *game, char *filename)
+void	init_game(t_game *game)
 {
-	get_map_dimensions(game, filename);
 	game->mlx_ptr = mlx_init();
 	if (!game->mlx_ptr)
 		exit_game(game, "Unable to initialize mlx", ERROR);
@@ -107,6 +64,10 @@ int	init_game(t_game *game, char *filename)
 	if (!game->win_ptr)
 		exit_game(game, "Unable to initialize window", ERROR);
 	init_imgs(game);
+}
+
+void	init_values(t_game *game)
+{
 	game->player_pos.x = -1;
 	game->player_pos.y = -1;
 	game->exit_pos.x = -1;
@@ -121,5 +82,12 @@ int	init_game(t_game *game, char *filename)
 	game->map.validator.e_reachable = 0;
 	game->map.validator.c_reachable = 0;
 	game->move_count = 0;
-	return (0);
+	game->width = 0;
+	game->height = 0;
+	game->map.grid = ft_calloc(sizeof(char *), 1);
+	if (!game->map.grid)
+		exit_game(game, "Unable to allocate memory to grid", ERROR);
+	game->monsters = ft_calloc(sizeof(t_monster), 1);
+	if (!game->monsters)
+		exit_game(game, "Unable to allocate memory to monsters", ERROR);
 }

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:30:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 15:41:02 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/06 15:52:38 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,14 @@ int	exit_game(t_game *game, char *msg, char *exit_type)
 				mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 			mlx_destroy_display(game->mlx_ptr);
 			free(game->mlx_ptr);
+			game->mlx_ptr = NULL;
 		}
 		free_group(game, game->map.grid);
 		if (game->monsters)
+		{
 			free(game->monsters);
+			game->monsters = NULL;
+		}
 	}
 	color = RESET;
 	if (ft_strncmp(exit_type, ERROR, 5) == 0)

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/03 15:59:47 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 09:41:36 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # define ERROR "Error"
 # define INFO "Info"
-# define USAGE "Usage: ./so_long [map.ber]\n"
+# define USAGE "Usage: ./so_long [map.ber]"
 
 # define FLOOR '0'
 # define WALL '1'
@@ -44,11 +44,11 @@ void	free_imgs(t_game *game);
 int		exit_game(t_game *game, char *msg, char *exit_type);
 int		close_game(t_game *game);
 // inits_bonus.c
-void	get_map_dimensions(t_game *game, char *filename);
-void	get_number_monsters(t_game *game);
+void	init_and_locate_monsters(t_game *game, int i, int j);
 int		init_img(t_game *game, t_img *img, char *path);
 void	init_imgs(t_game *game);
-int		init_game(t_game *game, char *filename);
+void	init_game(t_game *game);
+void	init_values(t_game *game);
 // map_bonus.c
 char	*gnl_newline(int fd);
 void	parse_map(t_game *game, char *filename);
@@ -60,10 +60,13 @@ void	display_moves_on_screen(t_game *game);
 void	draw_base(t_game *game);
 void	draw_img(t_game *game, t_img *img, int i, int j);
 int		blend_transparency(t_game *game, t_img *img, int x, int y);
+// so_long_utils_bonus.c
+int		open_fd(t_game *game, char *filename);
+void	check_map_line(t_game *game, int i);
 // checks_bonus.c
-void	count_chars(t_game *game, char *line, int i, int j);
-void	check_params(t_game *game, char *line, int i);
-void	check_map_edges(t_game *game, char *line, int i);
+void	count_and_locate_chars(t_game *game, int i, int j);
+void	check_params(t_game *game, int i);
+void	check_map_edges(t_game *game, int i);
 void	check_map_rectangular(t_game *game);
 int		check_map_validity(t_game *game);
 // reachability_bonus.c

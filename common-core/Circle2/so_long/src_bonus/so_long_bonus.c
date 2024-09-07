@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:43:39 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/03 15:23:49 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 09:41:06 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,12 @@ int	main(int ac, char **av)
 		exit_game(&game, USAGE, ERROR);
 	if (ft_strncmp(av[1] + ft_strlen(av[1]) - 4, ".ber", 4) != 0)
 		exit_game(&game, "Invalid map extension", ERROR);
-	if (init_game(&game, av[1]) != 0)
-		exit_game(&game, "Unable to initialize game", ERROR);
-	game.map.grid = ft_calloc(sizeof(char *), (game.height + 1));
-	if (!game.map.grid)
-		exit_game(&game, "Unable to allocate memory to grid", ERROR);
+	init_values(&game);
 	parse_map(&game, av[1]);
+	if (game.width <= 0 || game.height <= 0)
+		exit_game(&game, "Invalid map dimensions", ERROR);
 	check_map_validity(&game);
-	get_number_monsters(&game);
+	init_game(&game);
 	render_map(&game);
 	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, press_key, &game);
 	mlx_hook(game.win_ptr, DestroyNotify, ButtonPressMask, close_game, &game);
