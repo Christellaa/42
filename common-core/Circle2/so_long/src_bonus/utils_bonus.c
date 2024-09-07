@@ -6,11 +6,21 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 13:34:25 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 15:31:27 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 19:30:25 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc_bonus/so_long_bonus.h"
+
+char	*gnl_newline(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	if (line && line[ft_strlen(line) - 1] == '\n')
+		line[ft_strlen(line) - 1] = '\0';
+	return (line);
+}
 
 int	open_fd(t_game *game, char *filename)
 {
@@ -37,5 +47,5 @@ void	print_msg(char *msg, char *exit_type)
 		color = RED;
 	else if (ft_strncmp(exit_type, INFO, 4) == 0)
 		color = YELLOW;
-	ft_printf("%s%s: %s\n%s", color, exit_type, msg, RESET);
+	ft_printf("%s%s%s\n%s", color, exit_type, msg, RESET);
 }

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 15:30:53 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 18:57:02 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	init_imgs(t_game *game);
 void	init_game(t_game *game);
 void	init_values(t_game *game);
 // map_bonus.c
-char	*gnl_newline(int fd);
 void	parse_map(t_game *game, char *filename);
 t_img	*get_tile(t_game *game, char tile);
 t_img	*get_tile2(t_game *game, char tile);
@@ -60,7 +59,8 @@ void	display_moves_on_screen(t_game *game);
 void	put_pixel_to_img(t_game *game, t_img *img, int x, int y);
 void	draw_base(t_game *game);
 void	draw_img(t_game *game, t_img *img, int i, int j);
-// so_long_utils_bonus.c
+// utils_bonus.c
+char	*gnl_newline(int fd);
 int		open_fd(t_game *game, char *filename);
 void	check_map_line(t_game *game, int i);
 void	print_msg(char *msg, char *exit_type);
@@ -75,8 +75,6 @@ void	flood_fill(t_game *game, int y, int x, char **checked);
 char	**init_checked(t_game *game);
 void	check_reachability(t_game *game);
 // interactions_bonus.c
-void	change_player_direction(t_game *game, int direction);
-void	change_monsters_direction(t_game *game, int direction);
 void	get_key(int key, t_game *game);
 int		press_key(int key, t_game *game);
 int		win_game(t_game *game);

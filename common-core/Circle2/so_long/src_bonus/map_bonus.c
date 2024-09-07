@@ -6,21 +6,11 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 14:17:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 12:17:08 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 18:56:39 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc_bonus/so_long_bonus.h"
-
-char	*gnl_newline(int fd)
-{
-	char	*line;
-
-	line = get_next_line(fd);
-	if (line && line[ft_strlen(line) - 1] == '\n')
-		line[ft_strlen(line) - 1] = '\0';
-	return (line);
-}
 
 void	parse_map(t_game *game, char *filename)
 {

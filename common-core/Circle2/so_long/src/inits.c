@@ -6,21 +6,11 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:50:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 15:15:20 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 18:53:58 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
-
-char	*gnl_newline(int fd)
-{
-	char	*line;
-
-	line = get_next_line(fd);
-	if (line && line[ft_strlen(line) - 1] == '\n' && ft_strlen(line) > 1)
-		line[ft_strlen(line) - 1] = '\0';
-	return (line);
-}
 
 int	init_img(t_game *game, t_img *img, char *path)
 {

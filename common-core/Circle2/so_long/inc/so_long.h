@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 15:40:57 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 18:54:17 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	free_imgs(t_game *game);
 int		exit_game(t_game *game, char *msg, char *exit_type);
 int		close_game(t_game *game);
 // inits.c
-char	*gnl_newline(int fd);
 int		init_img(t_game *game, t_img *img, char *path);
 void	init_imgs(t_game *game);
 void	init_game(t_game *game);
@@ -56,6 +55,7 @@ void	put_pixel_to_img(t_game *game, t_img *img, int x, int y);
 void	draw_base(t_game *game);
 void	draw_img(t_game *game, t_img *img, int i, int j);
 // utils.c
+char	*gnl_newline(int fd);
 int		open_fd(t_game *game, char *filename);
 void	check_map_line(t_game *game, int i);
 void	print_msg(char *msg, char *exit_type);
@@ -71,7 +71,6 @@ char	**init_checked(t_game *game);
 void	check_reachability(t_game *game);
 // interactions.c
 int		check_move(t_game *game, int x, int y);
-void	change_player_direction(t_game *game, int direction);
 void	move_player(t_game *game, int x, int y);
 int		press_key(int key, t_game *game);
 int		win_game(t_game *game);
