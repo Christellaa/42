@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:30:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/27 15:24:29 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 15:30:26 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,40 +29,27 @@ void	free_group(t_game *game, char **group)
 	group = NULL;
 }
 
+void	safe_free_img(t_game *game, t_img *img)
+{
+	if (img->img_ptr)
+		mlx_destroy_image(game->mlx_ptr, img->img_ptr);
+	img->img_ptr = NULL;
+}
+
 void	free_imgs(t_game *game)
 {
 	if (!game->mlx_ptr)
 		return ;
-	mlx_destroy_image(game->mlx_ptr, game->wall.img_ptr);
-	mlx_destroy_image(game->mlx_ptr, game->floor.img_ptr);
-	mlx_destroy_image(game->mlx_ptr, game->collectible.img_ptr);
-	mlx_destroy_image(game->mlx_ptr, game->exit_close.img_ptr);
-	mlx_destroy_image(game->mlx_ptr, game->exit_open.img_ptr);
-	mlx_destroy_image(game->mlx_ptr, game->player_down.img_ptr);
-	mlx_destroy_image(game->mlx_ptr, game->player_up.img_ptr);
-	mlx_destroy_image(game->mlx_ptr, game->player_left.img_ptr);
-	mlx_destroy_image(game->mlx_ptr, game->player_right.img_ptr);
-	game->wall.img_ptr = NULL;
-	game->floor.img_ptr = NULL;
-	game->collectible.img_ptr = NULL;
-	game->exit_close.img_ptr = NULL;
-	game->exit_open.img_ptr = NULL;
-	game->player_down.img_ptr = NULL;
-	game->player_up.img_ptr = NULL;
-	game->player_left.img_ptr = NULL;
-	game->player_right.img_ptr = NULL;
-}
-
-void	print_msg(char *msg, char *exit_type)
-{
-	char	*color;
-
-	color = RESET;
-	if (ft_strncmp(exit_type, ERROR, 5) == 0)
-		color = RED;
-	else if (ft_strncmp(exit_type, INFO, 4) == 0)
-		color = YELLOW;
-	ft_printf("%s%s: %s\n%s", color, exit_type, msg, RESET);
+	safe_free_img(game, &game->wall);
+	safe_free_img(game, &game->floor);
+	safe_free_img(game, &game->collectible);
+	safe_free_img(game, &game->exit_close);
+	safe_free_img(game, &game->exit_open);
+	safe_free_img(game, &game->player_down);
+	safe_free_img(game, &game->player_up);
+	safe_free_img(game, &game->player_left);
+	safe_free_img(game, &game->player_right);
+	safe_free_img(game, &game->main_img);
 }
 
 int	exit_game(t_game *game, char *msg, char *exit_type)
@@ -76,6 +63,7 @@ int	exit_game(t_game *game, char *msg, char *exit_type)
 				mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 			mlx_destroy_display(game->mlx_ptr);
 			free(game->mlx_ptr);
+			game->mlx_ptr = NULL;
 		}
 		free_group(game, game->map.grid);
 	}

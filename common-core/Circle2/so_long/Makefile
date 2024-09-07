@@ -6,7 +6,7 @@
 #    By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 18:26:25 by cde-sous          #+#    #+#              #
-#    Updated: 2024/09/06 14:12:30 by cde-sous         ###   ########.fr        #
+#    Updated: 2024/09/07 15:25:45 by cde-sous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ INCLUDES_B := inc_bonus/so_long_bonus.h inc_bonus/colors_bonus.h \
 			inc_bonus/keys_bonus.h inc_bonus/imgs_bonus.h
 SRC_DIR := src
 SRC := so_long.c inits.c map.c draw.c checks.c reachability.c interactions.c \
-		cleanup.c
+		cleanup.c utils.c
 SRC_DIR_B := src_bonus
 SRC_B := so_long_bonus.c inits_bonus.c map_bonus.c draw_bonus.c checks_bonus.c \
 		reachability_bonus.c interactions_bonus.c moves_bonus.c cleanup_bonus.c \

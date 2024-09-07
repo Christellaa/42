@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 11:58:02 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 11:58:30 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 15:22:19 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_player
 	int	x;
 	int	y;
 	int	direction;
+	int	is_moving;
 }	t_player;
 
 typedef struct s_exit
@@ -63,14 +64,15 @@ typedef struct s_game
 	t_img		player_up;
 	t_img		player_left;
 	t_img		player_right;
+	t_img		main_img;
 	t_map		map;
 	int			height;
 	int			width;
 	void		*mlx_ptr;
 	void		*win_ptr;
+	int			move_count;
 	t_player	player_pos;
 	t_exit		exit_pos;
-	int			move_count;
 }	t_game;
 
 #endif

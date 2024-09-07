@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 14:17:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 15:04:45 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 15:24:59 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,23 @@ void	parse_map(t_game *game, char *filename)
 	int		i;
 	char	*line;
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		exit_game(game, "Unable to open map file", ERROR);
-	game->map.grid = ft_calloc(sizeof(char *), (game->height + 1));
-	if (!game->map.grid)
-	{
-		close(fd);
-		exit_game(game, "Unable to allocate memory to grid", ERROR);
-	}
+	fd = open_fd(game, filename);
 	i = 0;
 	line = gnl_newline(fd);
-	while (line)
+	while (line && line[0] != '\0' && line[0] != '\n')
 	{
+		game->map.grid = ft_realloc(game->map.grid, sizeof(char *) * i,
+				sizeof(char *) * (i + 2));
+		if (!game->map.grid)
+			exit_game(game, "Unable to allocate memory to grid", ERROR);
 		game->map.grid[i] = ft_strdup(line);
 		free(line);
-		line = gnl_newline(fd);
+		if (i == 0)
+			game->width = ft_strlen(game->map.grid[i]);
+		game->height++;
+		check_map_line(game, i);
 		i++;
+		line = gnl_newline(fd);
 	}
 	free(line);
 	close(fd);
@@ -70,7 +70,7 @@ t_img	*get_tile(t_game *game, char tile)
 	return (NULL);
 }
 
-int	render_map(t_game *game)
+void	render_map(t_game *game)
 {
 	int		i;
 	int		j;
@@ -87,10 +87,10 @@ int	render_map(t_game *game)
 			if (!img)
 				exit_game(game, "Invalid map tile", ERROR);
 			draw_img(game, img, i, j);
-			blend_transparency(game, img, j * TILESIZE, i * TILESIZE);
 			j++;
 		}
 		i++;
 	}
-	return (0);
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
+		game->main_img.img_ptr, 0, 0);
 }

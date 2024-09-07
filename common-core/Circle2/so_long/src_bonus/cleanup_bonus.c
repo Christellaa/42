@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:30:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 10:55:10 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 15:31:15 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ void	free_imgs(t_game *game)
 
 int	exit_game(t_game *game, char *msg, char *exit_type)
 {
-	char	*color;
-
 	if (game)
 	{
 		free_imgs(game);
@@ -77,12 +75,9 @@ int	exit_game(t_game *game, char *msg, char *exit_type)
 			game->monsters = NULL;
 		}
 	}
-	color = RESET;
+	print_msg(msg, exit_type);
 	if (ft_strncmp(exit_type, ERROR, 5) == 0)
-		color = RED;
-	else if (ft_strncmp(exit_type, INFO, 4) == 0)
-		color = YELLOW;
-	ft_printf("%s%s: %s\n%s", color, exit_type, msg, RESET);
+		exit(EXIT_FAILURE);
 	exit(EXIT_SUCCESS);
 }
 

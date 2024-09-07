@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long_utils_bonus.c                              :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 13:34:25 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/06 15:18:05 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 15:31:27 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,20 @@ int	open_fd(t_game *game, char *filename)
 	return (fd);
 }
 
-
 void	check_map_line(t_game *game, int i)
 {
 	check_params(game, i);
 	check_map_edges(game, i);
+}
+
+void	print_msg(char *msg, char *exit_type)
+{
+	char	*color;
+
+	color = RESET;
+	if (ft_strncmp(exit_type, ERROR, 5) == 0)
+		color = RED;
+	else if (ft_strncmp(exit_type, INFO, 4) == 0)
+		color = YELLOW;
+	ft_printf("%s%s: %s\n%s", color, exit_type, msg, RESET);
 }

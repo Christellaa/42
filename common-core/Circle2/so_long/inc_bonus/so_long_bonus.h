@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 13:48:47 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 15:30:53 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include "imgs_bonus.h"
 # include "structs_bonus.h"
 
-# define ERROR "Error"
-# define INFO "Info"
+# define ERROR "Error\n"
+# define INFO "Info\n"
 # define USAGE "Usage: ./so_long [map.ber]"
 
 # define FLOOR '0'
@@ -60,10 +60,10 @@ void	display_moves_on_screen(t_game *game);
 void	put_pixel_to_img(t_game *game, t_img *img, int x, int y);
 void	draw_base(t_game *game);
 void	draw_img(t_game *game, t_img *img, int i, int j);
-void	blend_pixel(char *dest, char *color, uint32_t transparent_color);
 // so_long_utils_bonus.c
 int		open_fd(t_game *game, char *filename);
 void	check_map_line(t_game *game, int i);
+void	print_msg(char *msg, char *exit_type);
 // checks_bonus.c
 void	count_and_locate_chars(t_game *game, int i, int j);
 void	check_params(t_game *game, int i);
