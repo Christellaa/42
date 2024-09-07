@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 13:42:44 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 20:36:17 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 18:49:13 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,6 @@ int	check_player_move(t_game *game, int x, int y)
 	{
 		game->map.grid[y][x] = FLOOR;
 		game->map.validator.c_count--;
-		if (game->map.validator.c_count == 0)
-			mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
-				game->exit_open.img_ptr, game->exit_pos.x * TILESIZE,
-				game->exit_pos.y * TILESIZE);
 	}
 	return (1);
 }
@@ -77,12 +73,12 @@ void	move_monsters(t_game *game, int new_x, int new_y, int i)
 	move = ft_rand(0, 200);
 	if (move < 50)
 	{
-		change_monsters_direction(game, 1);
+		game->monsters->direction = 1;
 		new_x += 1;
 	}
 	else if (move < 100)
 	{
-		change_monsters_direction(game, 2);
+		game->monsters->direction = 2;
 		new_x -= 1;
 	}
 	else if (move < 150)
