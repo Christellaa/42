@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 15:18:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 18:54:03 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 19:52:16 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ void	print_msg(char *msg, char *exit_type)
 		color = RED;
 	else if (ft_strncmp(exit_type, INFO, 4) == 0)
 		color = YELLOW;
-	ft_printf("%s%s: %s\n%s", color, exit_type, msg, RESET);
+	ft_printf("%s%s%s\n%s", color, exit_type, msg, RESET);
 }
