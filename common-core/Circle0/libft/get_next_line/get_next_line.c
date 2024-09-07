@@ -5,77 +5,59 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 10:52:08 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/13 19:32:12 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/09/06 19:59:11 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/09/07 15:40:23 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*extract_line(char **buf)
+char	*extract_line(int fd, char buf[OPEN_MAX][BUFFER_SIZE], char *line)
 {
-	char	*line;
-	char	*ptr_buf;
+	ssize_t		i;
 
-	ptr_buf = *buf;
-	while (*ptr_buf != '\n' && *ptr_buf != '\0')
-		ptr_buf++;
-	ptr_buf += (*ptr_buf == '\n');
-	line = ft_substr(*buf, 0, (size_t)(ptr_buf - *buf));
-	if (!line)
+	i = 0;
+	while (buf[fd][i] != '\0')
 	{
-		free(*buf);
-		return (NULL);
+		if (buf[fd][i] == '\n')
+		{
+			line = ft_strnjoin_free_s1(line, buf[fd], i + 1);
+			ft_memmove(buf[fd], buf[fd] + i + 1, BUFFER_SIZE - i - 1);
+			buf[fd][BUFFER_SIZE - i - 1] = '\0';
+			return (line);
+		}
+		i++;
 	}
-	ptr_buf = ft_strdup(ptr_buf);
-	free(*buf);
-	*buf = ptr_buf;
+	line = ft_strnjoin_free_s1(line, buf[fd], i);
+	buf[fd][0] = '\0';
 	return (line);
-}
-
-static char	*read_line(int fd, char *buf, char *line)
-{
-	ssize_t	bytes_read;
-
-	bytes_read = read(fd, line, BUFFER_SIZE);
-	while (bytes_read > 0)
-	{
-		line[bytes_read] = '\0';
-		buf = ft_strjoin_free_s1(buf, line);
-		if (ft_strchr(line, '\n') || ft_strchr(line, '\0'))
-			break ;
-		bytes_read = read(fd, line, BUFFER_SIZE);
-	}
-	free(line);
-	if (bytes_read < 0)
-	{
-		free(buf);
-		return (NULL);
-	}
-	return (buf);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*buf[OPEN_MAX];
+	static char	buf[OPEN_MAX][BUFFER_SIZE];
 	char		*line;
+	ssize_t		bytes_read;
 
 	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!buf[fd])
-		buf[fd] = ft_strdup("");
-	line = malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (!line)
+	line = NULL;
+	while (1)
 	{
-		free(buf[fd]);
-		return (NULL);
+		if (buf[fd][0] == '\0')
+		{
+			bytes_read = read(fd, buf[fd], BUFFER_SIZE);
+			if (bytes_read <= 0)
+			{
+				if (line && *line)
+					return (line);
+				free(line);
+				return (NULL);
+			}
+			buf[fd][bytes_read] = '\0';
+		}
+		line = extract_line(fd, buf, line);
+		if (line)
+			return (line);
 	}
-	buf[fd] = read_line(fd, buf[fd], line);
-	if (!buf[fd] || !*buf[fd])
-	{
-		free(buf[fd]);
-		buf[fd] = NULL;
-		return (NULL);
-	}
-	return (extract_line(&buf[fd]));
 }

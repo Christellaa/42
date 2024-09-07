@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*   ft_strjoin_free_s1.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 10:52:34 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 19:45:23 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/09/05 15:00:53 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/09/05 15:00:58 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_BONUS_H
-# define GET_NEXT_LINE_BONUS_H
+#include "../libft.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
-# if BUFFER_SIZE < 1
-#  undef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
+char	*ft_strjoin_free_s1(char *s1, char const *s2)
+{
+	char	*s3;
+	char	*ptr3;
+	char	*ptr1;
 
-# ifndef OPEN_MAX
-#  define OPEN_MAX 1024
-# endif
-
-# include <stdlib.h>
-# include <unistd.h>
-# include "../libft.h"
-
-char		*get_next_line(int fd);
-
-#endif
+	s3 = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(*s3));
+	if (!s3)
+	{
+		free(s1);
+		return (NULL);
+	}
+	ptr3 = s3;
+	ptr1 = s1;
+	while (*ptr1)
+		*ptr3++ = *ptr1++;
+	while (*s2)
+		*ptr3++ = *s2++;
+	*ptr3 = '\0';
+	free(s1);
+	return (s3);
+}
