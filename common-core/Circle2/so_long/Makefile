@@ -6,7 +6,7 @@
 #    By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 18:26:25 by cde-sous          #+#    #+#              #
-#    Updated: 2024/08/25 21:54:06 by cde-sous         ###   ########.fr        #
+#    Updated: 2024/09/06 14:12:30 by cde-sous         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ SRC := so_long.c inits.c map.c draw.c checks.c reachability.c interactions.c \
 		cleanup.c
 SRC_DIR_B := src_bonus
 SRC_B := so_long_bonus.c inits_bonus.c map_bonus.c draw_bonus.c checks_bonus.c \
-		reachability_bonus.c interactions_bonus.c moves_bonus.c cleanup_bonus.c
+		reachability_bonus.c interactions_bonus.c moves_bonus.c cleanup_bonus.c \
+		so_long_utils_bonus.c
 OBJ_DIR := obj
 OBJ := $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_B := $(SRC_B:%.c=$(OBJ_DIR)/%.o)

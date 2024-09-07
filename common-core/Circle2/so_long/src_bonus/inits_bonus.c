@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:50:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 09:53:53 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 12:32:28 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,16 @@ void	init_and_locate_monsters(t_game *game, int i, int j)
 
 int	init_img(t_game *game, t_img *img, char *path)
 {
-	img->img_ptr = mlx_xpm_file_to_image(game->mlx_ptr, path,
-			&img->width, &img->height);
+	if (img == &game->main_img)
+	{
+		img->img_ptr = mlx_new_image(game->mlx_ptr, game->width * TILESIZE, \
+				game->height * TILESIZE);
+		img->width = game->width * TILESIZE;
+		img->height = game->height * TILESIZE;
+	}
+	else
+		img->img_ptr = mlx_xpm_file_to_image(game->mlx_ptr, path,
+				&img->width, &img->height);
 	if (!img->img_ptr)
 		exit_game(game, "Unable to initialize image", ERROR);
 	img->data = mlx_get_data_addr(img->img_ptr, &img->bpp,
@@ -50,7 +58,8 @@ void	init_imgs(t_game *game)
 		!init_img(game, &game->player_right, PLAYER_RIGHT_XPM) || \
 		!init_img(game, &game->monster_left, MONSTER_LEFT_XPM) || \
 		!init_img(game, &game->monster_right, MONSTER_RIGHT_XPM) || \
-		!init_img(game, &game->obstacle, OBSTACLE_XPM))
+		!init_img(game, &game->obstacle, OBSTACLE_XPM) || \
+		!init_img(game, &game->main_img, NULL))
 		exit_game(game, "Unable to initialize image", ERROR);
 }
 

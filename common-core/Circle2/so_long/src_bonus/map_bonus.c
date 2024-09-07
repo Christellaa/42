@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 14:17:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 10:14:29 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 12:17:08 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	parse_map(t_game *game, char *filename)
 				sizeof(char *) * (i + 2));
 		if (!game->map.grid)
 			exit_game(game, "Unable to allocate memory to grid", ERROR);
-		ft_printf("'%s'\n", line);
 		game->map.grid[i] = ft_strdup(line);
 		free(line);
 		if (i == 0)
@@ -96,7 +95,7 @@ t_img	*get_tile2(t_game *game, char tile)
 	return (NULL);
 }
 
-int	render_map(t_game *game)
+void	render_map(t_game *game)
 {
 	int		i;
 	int		j;
@@ -116,11 +115,11 @@ int	render_map(t_game *game)
 			if (!img)
 				exit_game(game, "Invalid map tile", ERROR);
 			draw_img(game, img, i, j);
-			blend_transparency(game, img, j * TILESIZE, i * TILESIZE);
 			j++;
 		}
 		i++;
 	}
 	display_moves_on_screen(game);
-	return (0);
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
+		game->main_img.img_ptr, 0, 0);
 }

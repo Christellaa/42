@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 09:41:36 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 13:48:47 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,13 @@ char	*gnl_newline(int fd);
 void	parse_map(t_game *game, char *filename);
 t_img	*get_tile(t_game *game, char tile);
 t_img	*get_tile2(t_game *game, char tile);
-int		render_map(t_game *game);
+void	render_map(t_game *game);
 // draw_bonus.c
 void	display_moves_on_screen(t_game *game);
+void	put_pixel_to_img(t_game *game, t_img *img, int x, int y);
 void	draw_base(t_game *game);
 void	draw_img(t_game *game, t_img *img, int i, int j);
-int		blend_transparency(t_game *game, t_img *img, int x, int y);
+void	blend_pixel(char *dest, char *color, uint32_t transparent_color);
 // so_long_utils_bonus.c
 int		open_fd(t_game *game, char *filename);
 void	check_map_line(t_game *game, int i);

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 14:30:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/06 15:52:38 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 10:55:10 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	free_imgs(t_game *game)
 	safe_free_img(game, &game->monster_left);
 	safe_free_img(game, &game->monster_right);
 	safe_free_img(game, &game->obstacle);
+	safe_free_img(game, &game->main_img);
 }
 
 int	exit_game(t_game *game, char *msg, char *exit_type)

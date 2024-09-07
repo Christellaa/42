@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 11:58:50 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/26 15:29:38 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/07 10:26:10 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_game
 	t_img		monster_left;
 	t_img		monster_right;
 	t_img		obstacle;
+	t_img		main_img;
 	t_map		map;
 	int			height;
 	int			width;
