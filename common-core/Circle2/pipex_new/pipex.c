@@ -12,36 +12,21 @@
 
 #include "pipex.h"
 
-void	wait_pids(t_cmd *cmds, int *pid_status)
-{
-	int	status;
-
-	*pid_status = -1;
-	while (cmds && cmds->next)
-	{
-		if (waitpid(cmds->pid, &status, 0) == -1)
-		{
-			if (errno != ECHILD)
-				perror("Waitpid");
-		}
-		cmds = cmds->next;
-	}
-	*pid_status = WEXITSTATUS(status);
-}
-
 int	children(t_pipex *pipex)
 {
 	int		pid_status;
 	t_cmd	*tmp;
+	pid_t	pid;
 
 	tmp = pipex->cmds;
 	create_pipes(tmp);
 	while (tmp)
 	{
 		tmp->pid = child(tmp, pipex);
+		pid = tmp->pid;
 		tmp = tmp->next;
 	}
-	wait_pids(pipex->cmds, &pid_status);
+	waitpid(pid, &pid_status, 0);
 	free_cmds(pipex->cmds);
 	free_groups(pipex->paths);
 	return (pid_status);
