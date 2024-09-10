@@ -1,34 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*   ft_strnjoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 10:52:34 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 19:45:23 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/09/05 15:21:53 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/09/05 16:20:02 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_BONUS_H
-# define GET_NEXT_LINE_BONUS_H
+#include "../libft.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
-# if BUFFER_SIZE < 1
-#  undef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
+char	*ft_strnjoin(char *s1, char *s2, size_t n)
+{
+	size_t	s1_len;
+	size_t	i;
+	char	*s3;
 
-# ifndef OPEN_MAX
-#  define OPEN_MAX 1024
-# endif
-
-# include <stdlib.h>
-# include <unistd.h>
-# include "../libft.h"
-
-char		*get_next_line(int fd);
-
-#endif
+	s1_len = ft_strlen(s1);
+	s3 = malloc(s1_len + n + 1);
+	if (!s3)
+		return (NULL);
+	i = 0;
+	if (s1)
+	{
+		while (*s1)
+			s3[i++] = *(s1++);
+	}
+	if (s2)
+	{
+		while (*s2 && i - s1_len < n)
+			s3[i++] = *(s2++);
+	}
+	s3[i] = '\0';
+	return (s3);
+}

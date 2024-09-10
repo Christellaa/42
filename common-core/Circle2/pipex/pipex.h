@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/20 18:29:55 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/08/29 18:03:47 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/09/01 10:49:44 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/09/01 19:56:01 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,54 @@
 # define PIPEX_H
 
 # include <unistd.h>
-# include <string.h>
-# include <stdlib.h>
+# include <stdio.h>
 # include <fcntl.h>
-# include <sys/wait.h>
-# include <sys/types.h>
+# include <stdlib.h>
 # include <errno.h>
+# include <sys/wait.h>
 # include "libft/libft.h"
-# include "libft/ft_printf/ft_printf.h"
-# include "libft/get_next_line/get_next_line.h"
 
 # define USAGE "Usage: ./pipex file1 cmd1 cmd2 file2"
-# define ERROR	"Error"
-# define INFO	"Info"
-# define RED	"\033[0;31m"
-# define YELLOW	"\033[0;33m"
-# define RESET	"\033[0m"
+
+typedef struct s_cmd
+{
+	char			*name;
+	char			**args;
+	int				in;
+	int				out;
+	int				is_first;
+	int				is_last;
+	pid_t			pid;
+	struct s_cmd	*next;
+}	t_cmd;
 
 typedef struct s_pipex
 {
+	char	**env;
+	char	**paths;
 	int		infile;
 	int		outfile;
-	char	**envp;
-	int		current_cmd;
+	t_cmd	*cmds;
 }	t_pipex;
 
-// utils_bonus.c
-void	check_files(int nb_args, int idx, int idx2, t_pipex *pipex);
-void	name_here_doc(t_pipex *pipex);
-int		handle_here_doc(char *delimiter, t_pipex *pipex);
-int		get_files(char **av, int idx, int flag, t_pipex *pipex);
-int		count_cmd(t_pipex *pipex, int ac, char **av);
-// paths_bonus.c
-char	**get_paths(t_pipex pipex);
-char	*find_cmd_path(t_pipex *pipex, char *cmd, char **paths);
-// cleanup_bonus.c
-void	init_values(t_pipex *pipex);
-void	print_msg(char *msg, char *exit_type);
-void	exit_program(t_pipex *pipex, char *msg, char *exit_type);
-void	free_groups(char **group1, char **group2);
-void	close_here_doc(t_pipex pipex);
+// pipex_cleanup.c
+void	free_groups(char **groups);
+void	free_cmds(t_cmd *cmd);
+void	print_msg(char *msg);
+void	exit_process(t_pipex *pipex, t_cmd *cmds, char *msg);
+void	init_pipex(t_pipex *pipex);
+// pipex_paths.c
+char	**get_paths(char **env);
+char	*get_cmd_path(char *cmd, char **paths);
+// pipex_cmds.c
+char	**copy_args(char **args);
+t_cmd	*create_cmd(char *cmd_path, char **args);
+void	cmd_add_back(t_cmd **head, t_cmd *new);
+t_cmd	*get_cmds(char **cmd, char **paths);
+// pipex_children.c
+void	create_pipes(t_cmd *cmd);
+void	check_dup2(t_pipex *pipex, int fd, int std);
+void	dup_files(t_cmd *cmd, t_pipex *pipex);
+pid_t	child(t_cmd *cmd, t_pipex *pipex);
 
 #endif

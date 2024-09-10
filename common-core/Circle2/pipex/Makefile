@@ -1,7 +1,7 @@
 NAME := pipex
 NAMEB := pipex_bonus
-SRCFILES := pipex.c pipex_paths.c pipex_cleanup.c
-SRCFILESB := pipex_bonus.c pipex_utils_bonus.c pipex_utils2_bonus.c pipex_paths_bonus.c pipex_cleanup_bonus.c
+SRCFILES := pipex.c pipex_children.c pipex_cmds.c pipex_paths.c pipex_cleanup.c
+SRCFILESB := pipex_bonus.c
 OBJS := $(SRCFILES:.c=.o)
 OBJSB := $(SRCFILESB:.c=.o)
 INCLUDES := pipex.h

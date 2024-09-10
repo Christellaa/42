@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*   ft_strnjoin_free_s1.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 10:52:34 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 19:45:23 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/09/07 19:44:25 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/09/07 19:44:51 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_BONUS_H
-# define GET_NEXT_LINE_BONUS_H
+#include "../libft.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
-# if BUFFER_SIZE < 1
-#  undef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
+char	*ft_strnjoin_free_s1(char *s1, char const *s2, size_t len)
+{
+	char	*new_s;
+	size_t	len_s1;
 
-# ifndef OPEN_MAX
-#  define OPEN_MAX 1024
-# endif
-
-# include <stdlib.h>
-# include <unistd.h>
-# include "../libft.h"
-
-char		*get_next_line(int fd);
-
-#endif
+	if (s1)
+		len_s1 = ft_strlen(s1);
+	else
+		len_s1 = 0;
+	new_s = malloc(len_s1 + len + 1);
+	if (!new_s)
+		return (NULL);
+	if (s1)
+	{
+		ft_memcpy(new_s, s1, len_s1);
+		free(s1);
+	}
+	if (s2)
+		ft_memcpy(new_s + len_s1, s2, len);
+	new_s[len_s1 + len] = '\0';
+	return (new_s);
+}
