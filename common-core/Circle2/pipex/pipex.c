@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 20:06:35 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/10 15:02:36 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:22:06 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ int	main(int ac, char **av, char **env)
 	parent(ac, av, &pipex);
 	av[ac - 1] = NULL;
 	pipex.paths = get_paths(env);
-	//if (!pipex.paths)
-	//	exit_process(&pipex, NULL, "No PATH in env");
 	cmds = get_cmds(&av[2], pipex.paths);
 	pipex.cmds = cmds;
 	return (children(&pipex));

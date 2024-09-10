@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 20:06:35 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/10 14:34:49 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:23:21 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ int	main(int ac, char **av, char **env)
 	pipex.env = env;
 	av[ac - 1] = NULL;
 	pipex.paths = get_paths(env);
-	//if (!pipex.paths)
-	//	exit_process(&pipex, NULL, "No PATH in env");
 	if (pipex.is_here_doc)
 		cmds = get_cmds(&av[3], pipex.paths);
 	else
