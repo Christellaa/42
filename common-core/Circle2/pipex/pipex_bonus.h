@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 10:49:44 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/10 12:55:17 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:17:38 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "libft/libft.h"
 
 # define USAGE "Usage: ./pipex file1 cmd1 cmd2 file2"
+# define USAGE_HERE_DOC "Usage: ./pipex_bonus here_doc LIMITER cmd1 cmd2 file2"
 
 typedef struct s_cmd
 {
@@ -39,6 +40,8 @@ typedef struct s_pipex
 {
 	char	**env;
 	char	**paths;
+	char	*here_doc;
+	int		is_here_doc;
 	int		infile;
 	int		outfile;
 	t_cmd	*cmds;
@@ -63,5 +66,9 @@ void	create_pipes(t_cmd *cmd);
 void	check_dup2(t_pipex *pipex, int fd, int std);
 void	dup_files(t_cmd *cmd, t_pipex *pipex);
 pid_t	child(t_cmd *cmd, t_pipex *pipex);
+// pipex_utils_bonus.c
+void	check_files(int nb_args, int idx, int idx2, t_pipex *pipex);
+void	name_here_doc(t_pipex *pipex);
+int		handle_here_doc(char *delimiter, t_pipex *pipex);
 
 #endif

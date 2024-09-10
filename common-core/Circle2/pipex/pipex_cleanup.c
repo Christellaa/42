@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:59:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/01 16:21:22 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:25:34 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,11 @@ void	free_cmds(t_cmd *cmd)
 void	print_msg(char *msg)
 {
 	write(2, msg, ft_strlen(msg));
-	write(2, ": ", 2);
-	perror("");
+	if (errno)
+	{
+		write(2, ": ", 2);
+		perror("");
+	}
 }
 
 void	exit_process(t_pipex *pipex, t_cmd *cmds, char *msg)
