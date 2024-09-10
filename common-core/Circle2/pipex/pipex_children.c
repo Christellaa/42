@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:02:24 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/01 21:11:52 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:01:40 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,20 @@ void	dup_files(t_cmd *cmd, t_pipex *pipex)
 		close(pipex->infile);
 	}
 	else
-	{
 		check_dup2(pipex, cmd->in, STDIN_FILENO);
-		close(cmd->in);
-	}
 	if (cmd->is_last)
 		check_dup2(pipex, pipex->outfile, STDOUT_FILENO);
 	else
-	{
 		check_dup2(pipex, cmd->out, STDOUT_FILENO);
-		close(cmd->out);
-	}
 	if (pipex->outfile > 0)
 		close(pipex->outfile);
+	while (cmd->next)
+	{
+		if (!cmd->is_first)
+			close(cmd->in);
+		close(cmd->out);
+		cmd = cmd->next;
+	}
 }
 
 pid_t	child(t_cmd *cmd, t_pipex *pipex)

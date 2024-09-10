@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 20:06:35 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/01 21:20:55 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:02:36 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int ac, char **av, char **env)
 	t_cmd	*cmds;
 
 	init_pipex(&pipex);
-	if (ac < 5)
+	if (ac != 5)
 	{
 		ft_printf("%s\n", USAGE);
 		exit_process(&pipex, NULL, NULL);
