@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 14:17:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/11 12:00:26 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:26:41 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	parse_map(t_game *game, char *filename)
 	fd = open_fd(game, filename);
 	i = 0;
 	line = gnl_newline(fd);
-	while (line && line[0] != '\0' && line[0] != '\n')
+	while (line)
 	{
 		game->map.grid = ft_realloc(game->map.grid, sizeof(char *) * i,
 				sizeof(char *) * (i + 2));

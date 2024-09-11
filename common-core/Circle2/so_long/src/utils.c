@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 15:18:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/11 10:08:42 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:29:20 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,21 @@
 char	*gnl_newline(int fd)
 {
 	char	*line;
+	char	*trimmed_line;
 
 	line = get_next_line(fd);
+	while (line && line[0] == '\n')
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	if (!line)
+		return (NULL);
 	if (line && line[ft_strlen(line) - 1] == '\n' && ft_strlen(line) > 1)
 		line[ft_strlen(line) - 1] = '\0';
-	return (line);
+	trimmed_line = ft_strtrim(line, " ");
+	free(line);
+	return (trimmed_line);
 }
 
 int	open_fd(t_game *game, char *filename)
