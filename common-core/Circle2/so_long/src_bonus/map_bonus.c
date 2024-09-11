@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 14:17:10 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 18:56:39 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/11 12:00:26 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	render_map(t_game *game)
 		}
 		i++;
 	}
-	display_moves_on_screen(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
 		game->main_img.img_ptr, 0, 0);
+	display_moves_on_screen(game);
 }

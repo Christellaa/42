@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:50:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 18:57:02 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/11 13:45:27 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,19 @@ void	display_moves_on_screen(t_game *game);
 void	put_pixel_to_img(t_game *game, t_img *img, int x, int y);
 void	draw_base(t_game *game);
 void	draw_img(t_game *game, t_img *img, int i, int j);
+void	redraw_changes(t_game *game);
 // utils_bonus.c
 char	*gnl_newline(int fd);
 int		open_fd(t_game *game, char *filename);
-void	check_map_line(t_game *game, int i);
 void	print_msg(char *msg, char *exit_type);
+void	check_map_line(t_game *game, int i);
+int		check_map_validity(t_game *game);
 // checks_bonus.c
 void	count_and_locate_chars(t_game *game, int i, int j);
 void	check_params(t_game *game, int i);
 void	check_map_edges(t_game *game, int i);
+void	check_last_line(t_game *game);
 void	check_map_rectangular(t_game *game);
-int		check_map_validity(t_game *game);
 // reachability_bonus.c
 void	flood_fill(t_game *game, int y, int x, char **checked);
 char	**init_checked(t_game *game);

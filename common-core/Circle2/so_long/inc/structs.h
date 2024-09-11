@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 11:58:02 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 15:22:19 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/11 13:55:39 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,11 @@ typedef struct s_img
 
 typedef struct s_player
 {
-	int	x;
-	int	y;
+	int	prev_x;
+	int	prev_y;
+	int	new_x;
+	int	new_y;
 	int	direction;
-	int	is_moving;
 }	t_player;
 
 typedef struct s_exit

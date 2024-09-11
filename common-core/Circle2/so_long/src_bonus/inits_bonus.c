@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:50:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 12:32:28 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/11 12:01:58 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void	init_and_locate_monsters(t_game *game, int i, int j)
 			sizeof(t_monster) * (game->monster_count + 1));
 	if (!game->monsters)
 		exit_game(game, "Unable to allocate memory to monsters", ERROR);
-	game->monsters[game->monster_count].x = j;
-	game->monsters[game->monster_count].y = i;
+	game->monsters[game->monster_count].pos.prev_x = j;
+	game->monsters[game->monster_count].pos.prev_y = i;
+	game->monsters[game->monster_count].pos.new_x = j;
+	game->monsters[game->monster_count].pos.new_y = i;
 	game->monsters[game->monster_count].direction = 1;
 }
 
@@ -77,8 +79,10 @@ void	init_game(t_game *game)
 
 void	init_values(t_game *game)
 {
-	game->player_pos.x = -1;
-	game->player_pos.y = -1;
+	game->player_pos.pos.new_x = -1;
+	game->player_pos.pos.new_y = -1;
+	game->player_pos.pos.prev_x = -1;
+	game->player_pos.pos.prev_y = -1;
 	game->exit_pos.x = -1;
 	game->exit_pos.y = -1;
 	game->player_pos.direction = 4;

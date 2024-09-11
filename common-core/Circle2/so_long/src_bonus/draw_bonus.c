@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:50:20 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 15:13:30 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/11 13:32:34 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ void	draw_img(t_game *game, t_img *img, int i, int j)
 	if (img == &game->player_down || img == &game->player_up || \
 	img == &game->player_left || img == &game->player_right)
 	{
-		game->player_pos.x = j;
-		game->player_pos.y = i;
+		game->player_pos.pos.new_x = j;
+		game->player_pos.pos.new_y = i;
 	}
-	if (img == &game->exit_close)
+	else if (img == &game->exit_close)
 	{
 		game->exit_pos.x = j;
 		game->exit_pos.y = i;
@@ -94,8 +94,36 @@ void	draw_img(t_game *game, t_img *img, int i, int j)
 	else if ((img == &game->monster_left || img == &game->monster_right) \
 	&& game->current_monster < game->monster_count)
 	{
-		game->monsters[game->current_monster].x = j;
-		game->monsters[game->current_monster].y = i;
+		game->monsters[game->current_monster].pos.new_x = j;
+		game->monsters[game->current_monster].pos.new_y = i;
 		game->current_monster++;
 	}
+}
+
+void	redraw_changes(t_game *game)
+{
+	t_img	*player_img;
+	t_img	*monster_img;
+	t_img	*exit_img;
+
+	draw_img(game, &game->floor, game->player_pos.pos.prev_y, \
+	game->player_pos.pos.prev_x);
+	if (game->player_pos.is_moving)
+	{
+		draw_img(game, &game->floor, game->player_pos.pos.new_y, \
+		game->player_pos.pos.new_x);
+		exit_img = get_tile(game, EXIT);
+		draw_img(game, exit_img, game->exit_pos.y, game->exit_pos.x);
+		while (game->current_monster < game->monster_count)
+		{
+			draw_img(game, &game->floor, game->monsters[game->current_monster].\
+			pos.prev_y, game->monsters[game->current_monster].pos.prev_x);
+			monster_img = get_tile2(game, MONSTER);
+			draw_img(game, monster_img, game->monsters[game->current_monster].\
+			pos.new_y, game->monsters[game->current_monster].pos.new_x);
+		}
+	}
+	player_img = get_tile2(game, PLAYER);
+	draw_img(game, player_img, game->player_pos.pos.new_y, \
+	game->player_pos.pos.new_x);
 }

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:43:39 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 15:08:59 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/11 10:29:31 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(int ac, char **av)
 	render_map(&game);
 	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, press_key, &game);
 	mlx_hook(game.win_ptr, DestroyNotify, ButtonPressMask, close_game, &game);
-	mlx_hook(game.win_ptr, ClientMessage, StructureNotifyMask, win_game, &game);
 	mlx_loop(game.mlx_ptr);
 	return (-1);
 }

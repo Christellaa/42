@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 11:58:50 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 10:26:10 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/11 11:02:29 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,25 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
+typedef struct s_pos
+{
+	int	new_x;
+	int	new_y;
+	int	prev_x;
+	int	prev_y;
+}	t_pos;
+
 typedef struct s_monster
 {
-	int	x;
-	int	y;
-	int	direction;
+	t_pos	pos;
+	int		direction;
 }	t_monster;
 
 typedef struct s_player
 {
-	int	x;
-	int	y;
-	int	direction;
-	int	is_moving;
+	t_pos	pos;
+	int		direction;
+	int		is_moving;
 }	t_player;
 
 typedef struct s_exit

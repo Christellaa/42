@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:50:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 18:53:58 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/11 13:55:47 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,13 @@ void	init_game(t_game *game)
 
 void	init_values(t_game *game)
 {
-	game->player_pos.x = -1;
-	game->player_pos.y = -1;
+	game->player_pos.new_x = -1;
+	game->player_pos.new_y = -1;
+	game->player_pos.prev_x = -1;
+	game->player_pos.prev_y = -1;
 	game->exit_pos.x = -1;
 	game->exit_pos.y = -1;
 	game->player_pos.direction = 4;
-	game->player_pos.is_moving = 0;
 	game->map.validator.p_count = 0;
 	game->map.validator.e_count = 0;
 	game->map.validator.c_count = 0;
