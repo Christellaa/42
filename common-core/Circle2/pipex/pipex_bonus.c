@@ -6,27 +6,46 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 20:06:35 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/10 15:23:21 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/14 18:40:13 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
+int	wait_pids(t_cmd *cmd)
+{
+	int	status_info;
+	int	exit_code;
+
+	exit_code = -1;
+	while (errno != ECHILD && cmd)
+	{
+		if (waitpid(cmd->pid, &status_info, WNOHANG) != -1)
+		{
+			if (WIFEXITED(status_info))
+				exit_code = WEXITSTATUS(status_info);
+			else
+				exit_code = 128 + WTERMSIG(status_info);
+		}
+		cmd = cmd->next;
+	}
+	return (exit_code);
+}
+
 int	children(t_pipex *pipex)
 {
 	int		pid_status;
 	t_cmd	*tmp;
-	pid_t	pid;
 
 	tmp = pipex->cmds;
 	create_pipes(tmp);
 	while (tmp)
 	{
-		tmp->pid = child(tmp, pipex);
-		pid = tmp->pid;
+		if (tmp->name != NULL)
+			tmp->pid = child(tmp, pipex);
 		tmp = tmp->next;
 	}
-	waitpid(pid, &pid_status, 0);
+	pid_status = wait_pids(pipex->cmds);
 	free_cmds(pipex->cmds);
 	free_groups(pipex->paths);
 	if (pipex->is_here_doc)
