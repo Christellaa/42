@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:58:05 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/10 13:50:42 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:21:08 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,30 +44,43 @@ void	name_here_doc(t_pipex *pipex)
 	pipex->here_doc = name;
 }
 
+int	process_line(char *line, char *delimiter, int tmp_file, int *line_nb)
+{
+	if (line[ft_strlen(line) - 1] == '\n')
+		line[ft_strlen(line) - 1] = '\0';
+	if (ft_strequ(line, delimiter))
+		return (0);
+	ft_putstr_fd(line, tmp_file);
+	ft_putstr_fd("\n", tmp_file);
+	free(line);
+	(*line_nb)++;
+	return (1);
+}
+
 int	handle_here_doc(char *delimiter, t_pipex *pipex)
 {
 	int		tmp_file;
 	char	*line;
+	int		line_nb;
 
 	tmp_file = open(pipex->here_doc, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (tmp_file < 0)
 		exit_process(pipex, NULL, "open here_doc");
+	line_nb = 1;
 	while (1)
 	{
 		ft_putchar_fd('>', STDOUT_FILENO);
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
+		{
+			ft_printf("\nwarning: here-document at line %d ", line_nb);
+			ft_printf("delimited by end of file (wanted '%s')\n", delimiter);
 			break ;
-		if (line[ft_strlen(line) - 1] == '\n')
-			line[ft_strlen(line) - 1] = '\0';
-		if (ft_strequ(line, delimiter))
+		}
+		if (!process_line(line, delimiter, tmp_file, &line_nb))
 			break ;
-		ft_putstr_fd(line, tmp_file);
-		ft_putstr_fd("\n", tmp_file);
-		free(line);
 	}
 	free(line);
 	close(tmp_file);
-	tmp_file = open(pipex->here_doc, O_RDONLY);
-	return (tmp_file);
+	return (open(pipex->here_doc, O_RDONLY));
 }
