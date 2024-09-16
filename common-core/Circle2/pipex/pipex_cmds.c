@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 11:10:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/14 18:41:12 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:22:06 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	**copy_args(char **args)
 	i = 0;
 	while (args[i])
 	{
+		//ft_printf("args[%d]: %s\n", i, args[i]);
 		copy[i] = ft_strdup(args[i]);
 		if (!copy[i])
 			return (NULL);
@@ -98,8 +99,8 @@ t_cmd	*get_cmds(char **cmd, char **paths)
 		if (!args)
 			return (NULL);
 		tmp = create_cmd(get_cmd_path(args[0], paths), args);
-		free_groups(args);
 		cmd_add_back(&cmds, tmp);
+		free_groups(args);
 		++next;
 	}
 	return (cmds);
