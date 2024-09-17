@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 20:06:35 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/17 14:09:14 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:38:15 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,16 @@ void	parent(int ac, char **av, t_pipex *pipex)
 {
 	pipex->infile = open(av[1], O_RDONLY);
 	if (pipex->infile < 0)
+	{
 		print_msg(av[1]);
+		pipex->cmd_start++;
+	}
 	pipex->outfile = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (pipex->outfile < 0)
+	{
+		pipex->cmd_end--;
 		print_msg(av[ac - 1]);
+	}
 }
 
 int	main(int ac, char **av, char **env)
@@ -62,7 +68,7 @@ int	main(int ac, char **av, char **env)
 	t_pipex	pipex;
 	t_cmd	*cmds;
 
-	init_pipex(&pipex);
+	init_pipex(&pipex, ac);
 	if (ac != 5)
 	{
 		ft_printf("%s\n", USAGE);
@@ -72,7 +78,7 @@ int	main(int ac, char **av, char **env)
 	parent(ac, av, &pipex);
 	av[ac - 1] = NULL;
 	pipex.paths = get_paths(env);
-	cmds = get_cmds(&av[2], pipex.paths);
+	cmds = get_cmds(&av[pipex.cmd_start], pipex.paths, &pipex);
 	pipex.cmds = cmds;
 	return (children(&pipex));
 }

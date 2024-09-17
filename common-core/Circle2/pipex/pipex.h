@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 10:49:44 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/17 14:09:18 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:33:23 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef struct s_pipex
 	int		infile;
 	int		outfile;
 	t_cmd	*cmds;
+	int		cmd_start;
+	int		cmd_end;
 }	t_pipex;
 
 // pipex_cleanup.c
@@ -49,7 +51,7 @@ void	free_groups(char **groups);
 void	free_cmds(t_cmd *cmd);
 void	print_msg(char *msg);
 void	exit_process(t_pipex *pipex, char *msg);
-void	init_pipex(t_pipex *pipex);
+void	init_pipex(t_pipex *pipex, int ac);
 // pipex_paths.c
 char	**get_paths(char **env);
 char	*get_cmd_path(char *cmd, char **paths);
@@ -57,7 +59,7 @@ char	*get_cmd_path(char *cmd, char **paths);
 char	**copy_args(char **args);
 t_cmd	*create_cmd(char *cmd_path, char **args);
 void	cmd_add_back(t_cmd **head, t_cmd *new);
-t_cmd	*get_cmds(char **cmd, char **paths);
+t_cmd	*get_cmds(char **cmd, char **paths, t_pipex *pipex);
 // pipex_children.c
 void	create_pipes(t_cmd *cmd);
 void	close_fds(t_cmd *cmd, t_pipex *pipex);

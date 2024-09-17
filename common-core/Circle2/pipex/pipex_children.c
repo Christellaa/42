@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:02:24 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/17 14:09:07 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:27:48 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ void	check_dup2(t_pipex *pipex, int fd, int std)
 
 void	dup_files(t_cmd *cmd, t_pipex *pipex)
 {
-	if (cmd->is_first)
+	if (cmd->is_first && pipex->infile > 0)
 		check_dup2(pipex, pipex->infile, STDIN_FILENO);
 	else
 		check_dup2(pipex, cmd->in, STDIN_FILENO);
-	if (cmd->is_last)
+	if (cmd->is_last && pipex->outfile > 0)
 		check_dup2(pipex, pipex->outfile, STDOUT_FILENO);
 	else
 		check_dup2(pipex, cmd->out, STDOUT_FILENO);

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:59:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/17 14:09:12 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:35:58 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,13 @@ void	exit_process(t_pipex *pipex, char *msg)
 	exit(127);
 }
 
-void	init_pipex(t_pipex *pipex)
+void	init_pipex(t_pipex *pipex, int ac)
 {
 	pipex->env = NULL;
 	pipex->paths = NULL;
 	pipex->infile = -1;
 	pipex->outfile = -1;
 	pipex->cmds = NULL;
+	pipex->cmd_start = 2;
+	pipex->cmd_end = ac - 2;
 }
