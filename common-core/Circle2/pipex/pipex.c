@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 20:06:35 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/17 14:00:26 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:09:14 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	main(int ac, char **av, char **env)
 	if (ac != 5)
 	{
 		ft_printf("%s\n", USAGE);
-		exit_process(&pipex, NULL, NULL);
+		exit_process(&pipex, NULL);
 	}
 	pipex.env = env;
 	parent(ac, av, &pipex);

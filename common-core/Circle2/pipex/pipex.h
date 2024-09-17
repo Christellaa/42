@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 10:49:44 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/17 13:58:30 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:09:18 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_pipex
 void	free_groups(char **groups);
 void	free_cmds(t_cmd *cmd);
 void	print_msg(char *msg);
-void	exit_process(t_pipex *pipex, t_cmd *cmds, char *msg);
+void	exit_process(t_pipex *pipex, char *msg);
 void	init_pipex(t_pipex *pipex);
 // pipex_paths.c
 char	**get_paths(char **env);
