@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 20:06:35 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/17 14:38:15 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:50:41 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ int	main(int ac, char **av, char **env)
 		ft_printf("%s\n", USAGE);
 		exit_process(&pipex, NULL);
 	}
-	pipex.env = env;
 	parent(ac, av, &pipex);
+	pipex.env = env;
 	av[ac - 1] = NULL;
 	pipex.paths = get_paths(env);
 	cmds = get_cmds(&av[pipex.cmd_start], pipex.paths, &pipex);

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 11:07:01 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/10 15:22:43 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:47:52 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ char	*get_cmd_path(char *cmd, char **paths)
 	char	*tmp;
 	char	*path;
 
+	if (!cmd || !paths)
+		return (NULL);
 	if ((ft_strncmp(cmd, "/", 1) == 0 || ft_strncmp(cmd, "./", 2) == 0) \
 	&& access(cmd, F_OK | X_OK) == 0)
-		return (cmd);
+		return (ft_strdup(cmd));
 	i = 0;
-	if (!paths)
-		return (NULL);
 	while (paths[i])
 	{
 		tmp = ft_strjoin(paths[i], "/");

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 11:10:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/14 18:41:55 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:55:09 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	cmd_add_back(t_cmd **head, t_cmd *new)
 	new->next = NULL;
 }
 
-t_cmd	*get_cmds(char **cmd, char **paths)
+t_cmd	*get_cmds(char **cmd, char **paths, t_pipex *pipex)
 {
 	t_cmd	*cmds;
 	t_cmd	*tmp;
@@ -92,7 +92,7 @@ t_cmd	*get_cmds(char **cmd, char **paths)
 	next = cmd;
 	if (!next)
 		return (NULL);
-	while (*next)
+	while (*next && pipex->cmd_start <= pipex->cmd_end)
 	{
 		args = ft_split(*next, ' ');
 		if (!args)
@@ -101,6 +101,7 @@ t_cmd	*get_cmds(char **cmd, char **paths)
 		free_groups(args);
 		cmd_add_back(&cmds, tmp);
 		++next;
+		++pipex->cmd_start;
 	}
 	return (cmds);
 }

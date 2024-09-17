@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:58:05 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/14 19:21:08 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:54:35 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	check_files(int nb_args, int idx, int idx2, t_pipex *pipex)
 {
 	if (nb_args < idx && idx2 == 1)
-		exit_process(pipex, NULL, USAGE);
+		exit_process(pipex, USAGE);
 	if (nb_args < idx && idx2 == 2)
-		exit_process(pipex, NULL, USAGE_HERE_DOC);
+		exit_process(pipex, USAGE_HERE_DOC);
 }
 
 void	name_here_doc(t_pipex *pipex)
@@ -27,18 +27,18 @@ void	name_here_doc(t_pipex *pipex)
 
 	fd = open("/dev/urandom", O_RDONLY);
 	if (fd < 0)
-		exit_process(pipex, NULL, "open /dev/urandom");
+		exit_process(pipex, "open /dev/urandom");
 	name = ft_calloc(11, sizeof(char));
 	if (!name)
 	{
 		close(fd);
-		exit_process(pipex, NULL, "calloc here_doc name");
+		exit_process(pipex, "calloc here_doc name");
 	}
 	if (read(fd, name, 10) < 0)
 	{
 		free(name);
 		close(fd);
-		exit_process(pipex, NULL, "read /dev/urandom");
+		exit_process(pipex, "read /dev/urandom");
 	}
 	close(fd);
 	pipex->here_doc = name;
@@ -65,7 +65,7 @@ int	handle_here_doc(char *delimiter, t_pipex *pipex)
 
 	tmp_file = open(pipex->here_doc, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (tmp_file < 0)
-		exit_process(pipex, NULL, "open here_doc");
+		exit_process(pipex, "open here_doc");
 	line_nb = 1;
 	while (1)
 	{

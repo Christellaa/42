@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:02:24 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/10 14:56:37 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:53:16 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,44 +18,47 @@ void	create_pipes(t_cmd *cmd)
 	int		pipefd[2];
 
 	current = cmd;
-	while (current && current->next)
+	while (current)
 	{
 		if (pipe(pipefd) == -1)
-			exit_process(NULL, current, "Pipe");
+			exit_process(NULL, "Pipe");
+		current->in = pipefd[0];
 		current->out = pipefd[1];
-		current->next->in = pipefd[0];
 		current = current->next;
 	}
+}
+
+void	close_fds(t_cmd *cmd, t_pipex *pipex)
+{
+	while (cmd)
+	{
+		close(cmd->in);
+		close(cmd->out);
+		cmd = cmd->next;
+	}
+	if (pipex->infile > 0)
+		close(pipex->infile);
+	if (pipex->outfile > 0)
+		close(pipex->outfile);
 }
 
 void	check_dup2(t_pipex *pipex, int fd, int std)
 {
 	if (dup2(fd, std) == -1)
-		exit_process(pipex, NULL, NULL);
+		exit_process(pipex, NULL);
 }
 
 void	dup_files(t_cmd *cmd, t_pipex *pipex)
 {
-	if (cmd->is_first)
-	{
+	if (cmd->is_first && pipex->infile > 0)
 		check_dup2(pipex, pipex->infile, STDIN_FILENO);
-		close(pipex->infile);
-	}
 	else
 		check_dup2(pipex, cmd->in, STDIN_FILENO);
-	if (cmd->is_last)
+	if (cmd->is_last && pipex->outfile > 0)
 		check_dup2(pipex, pipex->outfile, STDOUT_FILENO);
 	else
 		check_dup2(pipex, cmd->out, STDOUT_FILENO);
-	if (pipex->outfile > 0)
-		close(pipex->outfile);
-	while (cmd->next)
-	{
-		if (!cmd->is_first)
-			close(cmd->in);
-		close(cmd->out);
-		cmd = cmd->next;
-	}
+	close_fds(pipex->cmds, pipex);
 }
 
 pid_t	child(t_cmd *cmd, t_pipex *pipex)
@@ -64,20 +67,14 @@ pid_t	child(t_cmd *cmd, t_pipex *pipex)
 
 	pid = fork();
 	if (pid == -1)
-		exit_process(pipex, cmd, "Fork");
+		exit_process(pipex, "Fork");
 	if (pid == 0)
 	{
 		dup_files(cmd, pipex);
+		if (cmd->name == NULL)
+			exit_process(pipex, cmd->name);
 		if (execve(cmd->name, cmd->args, pipex->env) == -1)
-			exit_process(pipex, cmd, cmd->name);
+			exit_process(pipex, cmd->name);
 	}
-	if (cmd->is_first && pipex->infile > 0)
-		close(pipex->infile);
-	if (cmd->is_last && pipex->outfile > 0)
-		close(pipex->outfile);
-	if (!cmd->is_first)
-		close(cmd->in);
-	if (!cmd->is_last)
-		close(cmd->out);
 	return (pid);
 }

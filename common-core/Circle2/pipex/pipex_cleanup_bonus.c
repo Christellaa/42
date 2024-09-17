@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:59:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/10 14:05:30 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:55:18 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ void	free_groups(char **groups)
 	while (groups[i])
 	{
 		free(groups[i]);
+		groups[i] = NULL;
 		++i;
 	}
 	free(groups);
+	groups = NULL;
 }
 
 void	free_cmds(t_cmd *cmd)
@@ -51,7 +53,7 @@ void	print_msg(char *msg)
 	}
 }
 
-void	exit_process(t_pipex *pipex, t_cmd *cmds, char *msg)
+void	exit_process(t_pipex *pipex, char *msg)
 {
 	if (pipex->infile > 0)
 	{
@@ -64,16 +66,16 @@ void	exit_process(t_pipex *pipex, t_cmd *cmds, char *msg)
 	}
 	if (pipex->outfile > 0)
 		close(pipex->outfile);
-	if (cmds)
-		free_cmds(cmds);
+	if (pipex->cmds)
+		free_cmds(pipex->cmds);
 	if (pipex->paths)
 		free_groups(pipex->paths);
 	if (msg)
 		print_msg(msg);
-	exit(EXIT_FAILURE);
+	exit(127);
 }
 
-void	init_pipex(t_pipex *pipex)
+void	init_pipex(t_pipex *pipex, int ac)
 {
 	pipex->env = NULL;
 	pipex->paths = NULL;
@@ -82,4 +84,6 @@ void	init_pipex(t_pipex *pipex)
 	pipex->infile = -1;
 	pipex->outfile = -1;
 	pipex->cmds = NULL;
+	pipex->cmd_start = 2;
+	pipex->cmd_end = ac - 2;
 }
