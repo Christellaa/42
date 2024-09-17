@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 10:49:44 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/01 19:56:01 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/17 13:58:30 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	cmd_add_back(t_cmd **head, t_cmd *new);
 t_cmd	*get_cmds(char **cmd, char **paths);
 // pipex_children.c
 void	create_pipes(t_cmd *cmd);
+void	close_fds(t_cmd *cmd, t_pipex *pipex);
 void	check_dup2(t_pipex *pipex, int fd, int std);
 void	dup_files(t_cmd *cmd, t_pipex *pipex);
 pid_t	child(t_cmd *cmd, t_pipex *pipex);

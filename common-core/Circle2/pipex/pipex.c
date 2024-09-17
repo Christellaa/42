@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 20:06:35 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/16 12:20:25 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:00:26 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,11 @@ int	wait_pids(t_cmd *cmd)
 	int	status_info;
 	int	exit_code;
 
-	exit_code = -1;
-	while (errno != ECHILD && cmd)
+	exit_code = 0;
+	while (errno != ECHILD && cmd && waitpid(cmd->pid, &status_info, 0) != -1)
 	{
-		if (waitpid(cmd->pid, &status_info, WNOHANG) != -1)
-		{
-			if (WIFEXITED(status_info))
-				exit_code = WEXITSTATUS(status_info);
-			else
-				exit_code = 128 + WTERMSIG(status_info);
-		}
+		if (WIFEXITED(status_info))
+			exit_code = WEXITSTATUS(status_info);
 		cmd = cmd->next;
 	}
 	return (exit_code);
@@ -41,10 +36,11 @@ int	children(t_pipex *pipex)
 	create_pipes(tmp);
 	while (tmp)
 	{
-		if (tmp->name != NULL)
-			tmp->pid = child(tmp, pipex);
+		tmp->pid = child(tmp, pipex);
 		tmp = tmp->next;
 	}
+	tmp = pipex->cmds;
+	close_fds(tmp, pipex);
 	pid_status = wait_pids(pipex->cmds);
 	free_cmds(pipex->cmds);
 	free_groups(pipex->paths);
