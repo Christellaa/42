@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:02:24 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/18 16:12:02 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:18:08 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	close_fds(t_cmd *cmd, t_pipex *pipex)
 {
 	while (cmd->next)
 	{
-		close(cmd->next->in);
 		close(cmd->out);
+		close(cmd->next->in);
 		cmd = cmd->next;
 	}
 	if (pipex->infile > 0)
