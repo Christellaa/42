@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:02:24 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/19 11:45:15 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/19 12:05:06 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	dup_files(t_cmd *cmd, t_pipex *pipex)
 		if (cmd->is_last && (pipex->outfile < 0 || cmd->name == NULL))
 		{
 			check_dup2(pipex, STDERR_FILENO, STDOUT_FILENO);
-			ft_printf("%s: command not found\n", cmd->args[0]);
+			ft_printf("command not found or outfile error\n");
 		}
 		else
 			check_dup2(pipex, cmd->out, STDOUT_FILENO);
