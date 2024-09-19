@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:02:24 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/18 16:18:08 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/19 11:45:15 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	create_pipes(t_cmd *cmd)
 
 void	close_fds(t_cmd *cmd, t_pipex *pipex)
 {
-	while (cmd->next)
+	while (cmd && cmd->next)
 	{
 		close(cmd->out);
 		close(cmd->next->in);
@@ -54,10 +54,18 @@ void	dup_files(t_cmd *cmd, t_pipex *pipex)
 		check_dup2(pipex, pipex->infile, STDIN_FILENO);
 	else
 		check_dup2(pipex, cmd->in, STDIN_FILENO);
-	if (cmd->is_last && pipex->outfile > 0)
+	if (cmd->is_last && cmd->name != NULL && pipex->outfile > 0)
 		check_dup2(pipex, pipex->outfile, STDOUT_FILENO);
 	else
-		check_dup2(pipex, cmd->out, STDOUT_FILENO);
+	{
+		if (cmd->is_last && (pipex->outfile < 0 || cmd->name == NULL))
+		{
+			check_dup2(pipex, STDERR_FILENO, STDOUT_FILENO);
+			ft_printf("%s: command not found\n", cmd->args[0]);
+		}
+		else
+			check_dup2(pipex, cmd->out, STDOUT_FILENO);
+	}
 	close_fds(pipex->cmds, pipex);
 }
 

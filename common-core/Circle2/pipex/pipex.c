@@ -6,23 +6,22 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 20:06:35 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/17 14:50:41 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/19 10:19:38 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	wait_pids(t_cmd *cmd)
+int	wait_pids(void)
 {
 	int	status_info;
 	int	exit_code;
 
 	exit_code = 0;
-	while (errno != ECHILD && cmd && waitpid(cmd->pid, &status_info, 0) != -1)
+	while (errno != ECHILD && waitpid(-1, &status_info, 0) != -1)
 	{
 		if (WIFEXITED(status_info))
 			exit_code = WEXITSTATUS(status_info);
-		cmd = cmd->next;
 	}
 	return (exit_code);
 }
@@ -41,7 +40,7 @@ int	children(t_pipex *pipex)
 	}
 	tmp = pipex->cmds;
 	close_fds(tmp, pipex);
-	pid_status = wait_pids(pipex->cmds);
+	pid_status = wait_pids();
 	free_cmds(pipex->cmds);
 	free_groups(pipex->paths);
 	return (pid_status);
@@ -70,10 +69,7 @@ int	main(int ac, char **av, char **env)
 
 	init_pipex(&pipex, ac);
 	if (ac != 5)
-	{
-		ft_printf("%s\n", USAGE);
-		exit_process(&pipex, NULL);
-	}
+		exit_process(&pipex, USAGE);
 	parent(ac, av, &pipex);
 	pipex.env = env;
 	av[ac - 1] = NULL;
