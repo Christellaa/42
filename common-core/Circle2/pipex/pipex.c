@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 20:06:35 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/17 14:50:41 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/21 17:23:39 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	parent(int ac, char **av, t_pipex *pipex)
 		pipex->cmd_end--;
 		print_msg(av[ac - 1]);
 	}
+	if (pipex->cmd_end < pipex->cmd_start)
+		exit_process(pipex, NULL);
 }
 
 int	main(int ac, char **av, char **env)
