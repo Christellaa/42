@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 20:06:35 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/21 19:55:13 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:19:30 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	children(t_pipex *pipex)
 	pid_status = wait_pids();
 	free_cmds(pipex->cmds);
 	free_groups(pipex->paths);
+	if (pipex->outfile < 0)
+		pid_status = 1;
 	return (pid_status);
 }
 

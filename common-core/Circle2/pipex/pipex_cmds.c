@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 11:10:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/17 14:32:57 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/22 13:10:52 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ t_cmd	*create_cmd(char *cmd_path, char **args)
 		return (NULL);
 	if (!cmd_path)
 	{
+		ft_dprintf(2, "%s: Command not found\n", args[0]);
 		cmd->name = NULL;
 		cmd->args = NULL;
 		cmd->next = NULL;
 		cmd->pid = -1;
-		ft_printf("%s: Command not found\n", args[0]);
 		return (cmd);
 	}
 	cmd->name = cmd_path;
