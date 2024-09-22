@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 11:07:01 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/22 16:28:12 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/22 17:49:46 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,26 @@ char	*is_valid_relative_path(char *cmd, char **paths)
 
 char	*get_cmd_path(char *cmd, char **paths)
 {
+	char	*relative_path;
+
 	if (!cmd)
 		return (NULL);
 	if (paths)
 	{
 		if (is_valid_absolute_path(cmd))
 			return (ft_strdup(cmd));
-		return (is_valid_relative_path(cmd, paths));
+		relative_path = is_valid_relative_path(cmd, paths);
+		if (relative_path)
+			return (relative_path);
 	}
 	else
 	{
 		if (is_valid_absolute_path(cmd))
 			return (ft_strdup(cmd));
 	}
+	if (ft_strncmp(cmd, "/", 1) == 0 || ft_strncmp(cmd, "./", 2) == 0)
+		ft_dprintf(2, "%s: No such file or directory\n", cmd);
+	else
+		ft_dprintf(2, "%s: Command not found\n", cmd);
 	return (NULL);
 }
