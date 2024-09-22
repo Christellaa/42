@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 11:07:01 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/16 14:47:14 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/22 16:28:12 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,20 @@ char	**get_paths(char **env)
 	return (NULL);
 }
 
-char	*get_cmd_path(char *cmd, char **paths)
+int	is_valid_absolute_path(char *cmd)
+{
+	if ((ft_strncmp(cmd, "/", 1) == 0 || ft_strncmp(cmd, "./", 2) == 0) \
+	&& access(cmd, F_OK | X_OK) == 0)
+		return (1);
+	return (0);
+}
+
+char	*is_valid_relative_path(char *cmd, char **paths)
 {
 	int		i;
 	char	*tmp;
 	char	*path;
 
-	if (!cmd || !paths)
-		return (NULL);
-	if ((ft_strncmp(cmd, "/", 1) == 0 || ft_strncmp(cmd, "./", 2) == 0) \
-	&& access(cmd, F_OK | X_OK) == 0)
-		return (ft_strdup(cmd));
 	i = 0;
 	while (paths[i])
 	{
@@ -59,6 +62,24 @@ char	*get_cmd_path(char *cmd, char **paths)
 			return (path);
 		free(path);
 		i++;
+	}
+	return (NULL);
+}
+
+char	*get_cmd_path(char *cmd, char **paths)
+{
+	if (!cmd)
+		return (NULL);
+	if (paths)
+	{
+		if (is_valid_absolute_path(cmd))
+			return (ft_strdup(cmd));
+		return (is_valid_relative_path(cmd, paths));
+	}
+	else
+	{
+		if (is_valid_absolute_path(cmd))
+			return (ft_strdup(cmd));
 	}
 	return (NULL);
 }

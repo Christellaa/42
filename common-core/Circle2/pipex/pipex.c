@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 20:06:35 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/22 13:19:30 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/22 15:15:08 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,13 @@ int	children(t_pipex *pipex)
 
 void	parent(int ac, char **av, t_pipex *pipex)
 {
-	pipex->infile = open(av[1], O_RDONLY);
+	pipex->infile = open_fd(av[1], O_RDONLY, 1, pipex);
 	if (pipex->infile < 0)
-	{
-		print_msg(av[1]);
 		pipex->cmd_start++;
-	}
-	pipex->outfile = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	pipex->outfile = open_fd(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, \
+	1, pipex);
 	if (pipex->outfile < 0)
-	{
 		pipex->cmd_end--;
-		print_msg(av[ac - 1]);
-	}
 	if (pipex->cmd_end < pipex->cmd_start)
 		exit_process(pipex, NULL);
 }

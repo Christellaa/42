@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:02:24 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/21 19:34:03 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/22 15:44:45 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,6 @@ void	create_pipes(t_cmd *cmd)
 	}
 }
 
-void	close_fds(t_cmd *cmd, t_pipex *pipex)
-{
-	while (cmd)
-	{
-		if (cmd->in > 0)
-			close(cmd->in);
-		if (cmd->out > 0)
-			close(cmd->out);
-		cmd = cmd->next;
-	}
-	if (pipex->infile > 0)
-		close(pipex->infile);
-	if (pipex->outfile > 0)
-		close(pipex->outfile);
-}
-
-void	check_dup2(t_pipex *pipex, int fd, int std)
-{
-	if (dup2(fd, std) == -1)
-		exit_process(pipex, NULL);
-}
-
 void	dup_files(t_cmd *cmd, t_pipex *pipex)
 {
 	int	null_fd;
@@ -64,9 +42,7 @@ void	dup_files(t_cmd *cmd, t_pipex *pipex)
 		check_dup2(pipex, pipex->infile, STDIN_FILENO);
 	else if (cmd->in == -1)
 	{
-		null_fd = open("/dev/null", O_RDONLY);
-		if (null_fd == -1)
-			exit_process(pipex, "Open /dev/null");
+		null_fd = open_fd("/dev/null", O_RDONLY, 2, pipex);
 		check_dup2(pipex, null_fd, STDIN_FILENO);
 		close(null_fd);
 	}
@@ -74,6 +50,12 @@ void	dup_files(t_cmd *cmd, t_pipex *pipex)
 		check_dup2(pipex, cmd->in, STDIN_FILENO);
 	if (cmd->is_last && pipex->outfile > 0)
 		check_dup2(pipex, pipex->outfile, STDOUT_FILENO);
+	else if (cmd->out == -1)
+	{
+		null_fd = open_fd("/dev/null", O_WRONLY, 2, pipex);
+		check_dup2(pipex, null_fd, STDOUT_FILENO);
+		close(null_fd);
+	}
 	else
 		check_dup2(pipex, cmd->out, STDOUT_FILENO);
 	close_fds(pipex->cmds, pipex);
