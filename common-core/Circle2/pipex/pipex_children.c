@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:02:24 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/22 15:44:45 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/23 09:57:08 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	create_pipes(t_cmd *cmd)
 		if (current->next)
 		{
 			if (pipe(pipefd) == -1)
-				exit_process(NULL, "Pipe");
+				exit_process(NULL, "Pipe", 2);
 			current->out = pipefd[1];
 			current->next->in = pipefd[0];
 		}
@@ -67,14 +67,14 @@ pid_t	child(t_cmd *cmd, t_pipex *pipex)
 
 	pid = fork();
 	if (pid == -1)
-		exit_process(pipex, "Fork");
+		exit_process(pipex, "Fork", 2);
 	if (pid == 0)
 	{
 		dup_files(cmd, pipex);
 		if (cmd->name == NULL)
-			exit_process(pipex, cmd->name);
+			exit_process(pipex, cmd->name, 1);
 		if (execve(cmd->name, cmd->args, pipex->env) == -1)
-			exit_process(pipex, cmd->name);
+			exit_process(pipex, cmd->name, 1);
 	}
 	return (pid);
 }

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 20:06:35 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/22 17:07:11 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/23 09:57:30 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	parent(int ac, char **av, t_pipex *pipex)
 	if (pipex->outfile < 0)
 		pipex->cmd_end--;
 	if (pipex->cmd_end < pipex->cmd_start)
-		exit_process(pipex, NULL);
+		exit_process(pipex, NULL, 2);
 }
 
 int	main(int ac, char **av, char **env)
@@ -79,7 +79,7 @@ int	main(int ac, char **av, char **env)
 
 	init_pipex(&pipex, ac);
 	if (ac != 5)
-		exit_process(&pipex, USAGE);
+		exit_process(&pipex, USAGE, 2);
 	parent(ac, av, &pipex);
 	pipex.env = env;
 	av[ac - 1] = NULL;

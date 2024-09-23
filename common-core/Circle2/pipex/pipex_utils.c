@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 15:08:47 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/22 15:11:02 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/23 09:57:18 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	open_fd(char *file, int flags, int idx, t_pipex *pipex)
 	{
 		fd = open(file, flags, 0644);
 		if (fd < 0)
-			exit_process(pipex, file);
+			exit_process(pipex, file, 2);
 		return (fd);
 	}
 	return (-1);
@@ -36,7 +36,7 @@ int	open_fd(char *file, int flags, int idx, t_pipex *pipex)
 void	check_dup2(t_pipex *pipex, int fd, int std)
 {
 	if (dup2(fd, std) == -1)
-		exit_process(pipex, NULL);
+		exit_process(pipex, NULL, 1);
 }
 
 void	close_fds(t_cmd *cmd, t_pipex *pipex)

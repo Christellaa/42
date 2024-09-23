@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 12:59:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/17 14:35:58 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/23 10:01:49 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	print_msg(char *msg)
 	}
 }
 
-void	exit_process(t_pipex *pipex, char *msg)
+void	exit_process(t_pipex *pipex, char *msg, int exit_type)
 {
 	if (pipex->infile > 0)
 		close(pipex->infile);
@@ -65,7 +65,10 @@ void	exit_process(t_pipex *pipex, char *msg)
 		free_groups(pipex->paths);
 	if (msg)
 		print_msg(msg);
-	exit(127);
+	if (exit_type == 1)
+		exit(127);
+	else if (exit_type == 2)
+		exit(1);
 }
 
 void	init_pipex(t_pipex *pipex, int ac)
