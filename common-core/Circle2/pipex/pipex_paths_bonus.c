@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 11:07:01 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/22 17:55:50 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/23 10:51:54 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ char	*get_cmd_path(char *cmd, char **paths)
 	char	*relative_path;
 
 	if (!cmd)
+	{
+		ft_dprintf(2, "%s: Command not found\n", cmd);
 		return (NULL);
+	}
 	if (paths)
 	{
 		if (is_valid_absolute_path(cmd))

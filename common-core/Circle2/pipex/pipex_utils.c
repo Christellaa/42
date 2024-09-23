@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 15:08:47 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/23 09:57:18 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/23 10:32:28 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	open_fd(char *file, int flags, int idx, t_pipex *pipex)
 			exit_process(pipex, file, 2);
 		return (fd);
 	}
-	return (-1);
+	return (1);
 }
 
 void	check_dup2(t_pipex *pipex, int fd, int std)

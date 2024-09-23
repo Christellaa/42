@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:58:05 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/23 09:59:17 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/23 10:32:43 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	open_fd(char *file, int flags, int idx, t_pipex *pipex)
 			exit_process(pipex, file, 2);
 		return (fd);
 	}
-	return (-1);
+	return (1);
 }
 
 void	check_files(int nb_args, int idx, int idx2, t_pipex *pipex)
