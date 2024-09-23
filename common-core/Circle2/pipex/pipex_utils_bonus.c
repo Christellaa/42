@@ -6,18 +6,39 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 12:58:05 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/17 14:54:35 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/23 09:59:17 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
+int	open_fd(char *file, int flags, int idx, t_pipex *pipex)
+{
+	int	fd;
+
+	if (idx == 1)
+	{
+		fd = open(file, flags, 0644);
+		if (fd < 0)
+			print_msg(file);
+		return (fd);
+	}
+	else if (idx == 2)
+	{
+		fd = open(file, flags, 0644);
+		if (fd < 0)
+			exit_process(pipex, file, 2);
+		return (fd);
+	}
+	return (-1);
+}
+
 void	check_files(int nb_args, int idx, int idx2, t_pipex *pipex)
 {
 	if (nb_args < idx && idx2 == 1)
-		exit_process(pipex, USAGE);
+		exit_process(pipex, USAGE, 2);
 	if (nb_args < idx && idx2 == 2)
-		exit_process(pipex, USAGE_HERE_DOC);
+		exit_process(pipex, USAGE_HERE_DOC, 2);
 }
 
 void	name_here_doc(t_pipex *pipex)
@@ -27,18 +48,18 @@ void	name_here_doc(t_pipex *pipex)
 
 	fd = open("/dev/urandom", O_RDONLY);
 	if (fd < 0)
-		exit_process(pipex, "open /dev/urandom");
+		exit_process(pipex, "open /dev/urandom", 2);
 	name = ft_calloc(11, sizeof(char));
 	if (!name)
 	{
 		close(fd);
-		exit_process(pipex, "calloc here_doc name");
+		exit_process(pipex, "calloc here_doc name", 2);
 	}
 	if (read(fd, name, 10) < 0)
 	{
 		free(name);
 		close(fd);
-		exit_process(pipex, "read /dev/urandom");
+		exit_process(pipex, "read /dev/urandom", 2);
 	}
 	close(fd);
 	pipex->here_doc = name;
@@ -65,7 +86,7 @@ int	handle_here_doc(char *delimiter, t_pipex *pipex)
 
 	tmp_file = open(pipex->here_doc, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (tmp_file < 0)
-		exit_process(pipex, "open here_doc");
+		exit_process(pipex, "open here_doc", 2);
 	line_nb = 1;
 	while (1)
 	{

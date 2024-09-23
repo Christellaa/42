@@ -6,15 +6,16 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 08:03:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/07 19:45:40 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/22 12:58:36 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include "../libft/ft_printf/ft_printf.h"
-# include "../libft/get_next_line/get_next_line.h"
+# include "ft_printf/ft_printf.h"
+# include "ft_dprintf/ft_dprintf.h"
+# include "get_next_line/get_next_line.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdint.h>
