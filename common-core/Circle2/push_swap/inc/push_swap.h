@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:07:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/26 14:03:30 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:54:34 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,27 @@
 # include <stddef.h>
 
 # define ERROR "Error\n"
+# define SMALL_THRESHOLD 50
 
 typedef struct s_stacks
 {
 	t_list	*stack_a;
 	t_list	*stack_b;
-	//int	size_a;
-	//int	size_b;
+	int		count;
+	int		range_min;
+	int		range_max;
 }	t_stacks;
 
+// test.c
+void	print_all(t_stacks *stacks, char *function_name);
+void	ft_test(t_stacks *stacks);
+// inits.c
+void	init_struct(t_stacks *stacks);
 // cleanup.c
 void	free_stack(t_list *stack);
 void	free_group(char **group);
-void	cleanup(t_list *stack_a, t_list *stack_b, char **numbers);
+void	cleanup(t_list *stack_a, t_list *stack_b, char **numbers, \
+		int exit_type);
 // push.c
 void	pa(t_stacks *stacks);
 void	pb(t_stacks *stacks);

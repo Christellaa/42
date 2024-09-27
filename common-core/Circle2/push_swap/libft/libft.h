@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 08:03:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/26 14:00:34 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:18:21 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void			ft_lstclear(t_list **lst, void (*del)(void*));
 void			ft_lstiter(t_list *lst, void (*f)(void*));
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
 										void (*del)(void *));
+void			ft_lstmin_max_int(t_list *lst, int *min, int *max);
 
 unsigned int	ft_rand(unsigned int min, unsigned int max);
 
