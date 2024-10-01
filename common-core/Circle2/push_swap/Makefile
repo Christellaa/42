@@ -1,7 +1,7 @@
 NAME := push_swap
 NAMEB := push_swap_bonus
 SRC_DIR := src
-SRC := push_swap.c push.c swap.c rotate.c reverse_rotate.c inits.c cleanup.c test.c algorithms.c
+SRC := push_swap.c push.c swap.c rotate.c reverse_rotate.c inits.c cleanup.c test.c algorithms.c simple_sort.c radix_sort.c
 SRC_DIRB := src_bonus
 SRCB := push_swap_bonus.c push_bonus.c swap_bonus.c rotate_bonus.c reverse_totate.c
 OBJS_DIR := obj

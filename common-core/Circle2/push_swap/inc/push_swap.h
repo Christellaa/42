@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:07:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/27 14:54:34 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:17:07 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,18 @@
 # include <stddef.h>
 
 # define ERROR "Error\n"
-# define SMALL_THRESHOLD 50
 
 typedef struct s_stacks
 {
 	t_list	*stack_a;
 	t_list	*stack_b;
 	int		count;
-	int		range_min;
-	int		range_max;
+	int		min;
+	int		max;
 }	t_stacks;
 
 // test.c
-void	print_all(t_stacks *stacks, char *function_name);
+void	print_all(t_stacks *stacks);
 void	ft_test(t_stacks *stacks);
 // inits.c
 void	init_struct(t_stacks *stacks);
@@ -53,6 +52,12 @@ void	sa(t_stacks *stacks);
 void	sb(t_stacks *stacks);
 void	ss(t_stacks *stacks);
 // algorithms.c
-void	algorithms();
+int		check_sorted(t_stacks *stacks);
+void	find_min_max(t_stacks *stacks);
+void	algorithms(t_stacks *stacks);
 
+// simple_sort.c
+void	sort_3_numbers(t_stacks *stacks);
+void	sort_4_numbers(t_stacks *stacks);
+void	simple_sort(t_stacks *stacks);
 #endif

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:16:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/27 14:55:00 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/01 11:13:21 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int	main(int ac, char **av)
 		init_struct(&stacks);
 		put_args_in_stack_a(av, &stacks);
 		algorithms(&stacks);
-		ft_test(&stacks);
-		cleanup(stacks.stack_a, stacks.stack_b, NULL, 1);
+		//ft_test(&stacks);
+		//cleanup(stacks.stack_a, stacks.stack_b, NULL, 1);
 	}
 	return (0);
 }

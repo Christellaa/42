@@ -6,44 +6,66 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 14:02:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/27 15:56:25 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:17:40 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/push_swap.h"
 
-void	algorithms(t_stacks *stacks)
+int	check_sorted(t_stacks *stacks)
 {
-	if (stacks->count > SMALL_THRESHOLD)
-		ft_printf("use radix sort: %d\n", stacks->count);
-	else
-		ft_printf("use insertion sort: %d\n", stacks->count);
+	t_list	*tmp;
+
+	tmp = stacks->stack_a;
+	while (tmp && tmp->next)
+	{
+		if (*(int *)tmp->content < *(int *)tmp->next->content)
+			tmp = tmp->next;
+		else
+			break ;
+	}
+	if (tmp && !tmp->next)
+		return (0);
+	return (1);
 }
 
-void	insertion_sort(t_stacks *stacks)
+void	find_min_max(t_stacks *stacks)
 {
-	t_list	*sorted;
 	t_list	*tmp;
-	t_list	*next;
+	int		pos;
+	int		nb_min;
+	int		nb_max;
 
-	sorted = NULL;
-	while (stacks->stack_a)
+	tmp = stacks->stack_a;
+	nb_min = *(int *)tmp->content;
+	nb_max = *(int *)tmp->content;
+	pos = 0;
+	stacks->min = pos;
+	stacks->max = pos;
+	while (tmp)
 	{
-		next = stacks->stack_a->next;
-		if (sorted == NULL || sorted->content >= stacks->stack_a->content)
+		if (*(int *)tmp->content < nb_min)
 		{
-			stacks->stack_a->next = sorted;
-			sorted = stacks->stack_a;
+			nb_min = *(int *)tmp->content;
+			stacks->min = pos;
 		}
-		else
+		if (*(int *)tmp->content > nb_max)
 		{
-			tmp = sorted;
-			while (tmp->next && tmp->next->content < stacks->stack_a->content)
-				tmp = tmp->next;
-			stacks->stack_a->next = tmp->next;
-			tmp->next = stacks->stack_a;
+			nb_max = *(int *)tmp->content;
+			stacks->max = pos;
 		}
-		stacks->stack_a = next;
+		tmp = tmp->next;
+		pos++;
 	}
-	stacks->stack_a = sorted;
+}
+
+void	algorithms(t_stacks *stacks)
+{
+	if (!check_sorted(stacks))
+		cleanup(stacks->stack_a, stacks->stack_b, NULL, 1);
+	if (stacks->count <= 5)
+		simple_sort(stacks);
+	else
+		radix_sort(stacks);
+	print_all(stacks);
 }
