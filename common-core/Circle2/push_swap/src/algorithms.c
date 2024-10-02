@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 14:02:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/02 14:00:41 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:02:49 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ void	find_min_max(t_stacks *stacks)
 	nb_min = *(int *)tmp->content;
 	nb_max = *(int *)tmp->content;
 	pos = 0;
-	stacks->min = pos;
-	stacks->max = pos;
 	while (tmp)
 	{
 		if (*(int *)tmp->content < nb_min)
