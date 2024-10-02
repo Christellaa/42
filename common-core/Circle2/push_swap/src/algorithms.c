@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 14:02:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/02 14:02:49 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/02 19:47:56 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	find_min_max(t_stacks *stacks)
 	tmp = stacks->stack_a;
 	nb_min = *(int *)tmp->content;
 	nb_max = *(int *)tmp->content;
+	re_init_values(stacks);
 	pos = 0;
 	while (tmp)
 	{
@@ -57,10 +58,10 @@ void	find_min_max(t_stacks *stacks)
 void	algorithms(t_stacks *stacks)
 {
 	if (!check_sorted(stacks))
-		cleanup(stacks->stack_a, stacks->stack_b, NULL, 1);
+		cleanup(stacks, NULL, 1);
 	if (stacks->count <= 5)
 		simple_sort(stacks);
 	/* else
 		radix_sort(stacks); */
-	print_all(stacks);
+	//print_all(stacks);
 }

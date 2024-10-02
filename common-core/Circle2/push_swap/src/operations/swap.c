@@ -6,11 +6,11 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:06:18 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/25 10:47:13 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/02 19:44:24 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/push_swap.h"
+#include "../../inc/push_swap.h"
 
 void	sa(t_stacks *stacks)
 {
@@ -25,6 +25,8 @@ void	sa(t_stacks *stacks)
 		tmp->next = tmp2->next;
 		tmp2->next = tmp;
 	}
+	if (!stacks->is_double_operations)
+		store_operation(stacks, "sa");
 }
 
 void	sb(t_stacks *stacks)
@@ -40,10 +42,14 @@ void	sb(t_stacks *stacks)
 		tmp->next = tmp2->next;
 		tmp2->next = tmp;
 	}
+	if (!stacks->is_double_operations)
+		store_operation(stacks, "sb");
 }
 
 void	ss(t_stacks *stacks)
 {
+	stacks->is_double_operations = 1;
 	sa(stacks);
 	sb(stacks);
+	store_operation(stacks, "ss");
 }

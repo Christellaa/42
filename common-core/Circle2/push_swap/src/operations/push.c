@@ -6,11 +6,11 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:15:34 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/25 12:37:00 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/02 19:44:11 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/push_swap.h"
+#include "../../inc/push_swap.h"
 
 void	pa(t_stacks *stacks)
 {
@@ -23,6 +23,7 @@ void	pa(t_stacks *stacks)
 		tmp->next = stacks->stack_a;
 		stacks->stack_a = tmp;
 	}
+	store_operation(stacks, "pa");
 }
 
 void	pb(t_stacks *stacks)
@@ -36,4 +37,5 @@ void	pb(t_stacks *stacks)
 		tmp->next = stacks->stack_b;
 		stacks->stack_b = tmp;
 	}
+	store_operation(stacks, "pb");
 }

@@ -1,7 +1,8 @@
 NAME := push_swap
 NAMEB := push_swap_bonus
 SRC_DIR := src
-SRC := push_swap.c push.c swap.c rotate.c reverse_rotate.c inits.c cleanup.c test.c algorithms.c simple_sort.c radix_sort.c
+SRC := algorithms.c cleanup.c inits.c push_swap.c radix_sort.c simple_sort.c \
+		$(addprefix operations/, push.c reverse_rotate.c rotate.c swap.c)
 SRC_DIRB := src_bonus
 SRCB := push_swap_bonus.c push_bonus.c swap_bonus.c rotate_bonus.c reverse_totate.c
 OBJS_DIR := obj
@@ -17,7 +18,7 @@ LIBFT := $(LIBFT_DIR)/libft.a
 all: $(OBJS_DIR) $(LIBFT) $(NAME)
 
 $(OBJS_DIR):
-	@mkdir -p $(OBJS_DIR)
+	@mkdir -p $(OBJS_DIR)/operations
 
 $(NAME): $(OBJS) $(INCLUDES)
 	@echo "Building $(NAME)"
@@ -28,6 +29,10 @@ $(NAMEB): $(LIBFT) $(OBJSB) $(INCLUDESB)
 	@$(CC) $(CFLAGS) $(OBJSB) $(LIBFT) -o $(NAMEB)
 
 $(OBJS_DIR)/%.o : $(SRC_DIR)/%.c
+	@echo "Compiling $<"
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJS_DIR)/%.o : $(SRC_DIR)/operations/%.c
 	@echo "Compiling $<"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
