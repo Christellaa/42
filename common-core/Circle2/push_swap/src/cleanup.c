@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:25:23 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/02 19:39:50 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/04 09:27:25 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ void	store_operation(t_stacks *stacks, char *operation)
 
 	tmp = ft_realloc(stacks->operations, \
 	sizeof(char *) * stacks->operation_count, \
-	sizeof(char *) * stacks->operation_count + 1);
+	sizeof(char *) * (stacks->operation_count + 2));
 	if (!tmp)
 		cleanup(stacks, NULL, 0);
 	stacks->operations = tmp;
 	stacks->operations[stacks->operation_count] = ft_strdup(operation);
 	stacks->operation_count++;
+	stacks->operations[stacks->operation_count] = NULL;
 	stacks->is_double_operations = 0;
 }
 
@@ -32,6 +33,8 @@ void	print_operations(t_stacks *stacks)
 	int	i;
 
 	i = 0;
+	if (!stacks->operations)
+		return ;
 	while (stacks->operations && i < stacks->operation_count)
 	{
 		ft_printf("%s\n", stacks->operations[i]);
@@ -86,13 +89,15 @@ void	cleanup(t_stacks *stacks, char **numbers, int exit_type)
 		free_stack(stacks);
 	if (numbers)
 		free_group(numbers);
-	if (stacks->operations)
-		free_group(stacks->operations);
 	if (exit_type == 1)
 	{
 		print_operations(stacks);
+		free_group(stacks->operations);
 		exit(EXIT_SUCCESS);
 	}
 	else
+	{
+		free_group(stacks->operations);
 		exit(EXIT_FAILURE);
+	}
 }
