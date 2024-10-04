@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:07:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/02 19:42:13 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:54:44 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,31 @@
 
 # define ERROR "Error\n"
 
+typedef struct s_stack
+{
+	void			*content;
+	int				idx;
+	struct s_stack	*next;
+}	t_stack;
+
 typedef struct s_stacks
 {
-	t_list	*stack_a;
-	t_list	*stack_b;
+	t_stack	*stack_a;
+	t_stack	*stack_b;
 	int		size_b;
 	int		count;
-	int		min;
-	int		max;
+	int		min_nb;
+	int		max_nb;
 	char	**operations;
 	int		operation_count;
 	int		is_double_operations;
 }	t_stacks;
 
-// test.c
-void	print_all(t_stacks *stacks);
-void	ft_test(t_stacks *stacks);
+// utils.c
+t_stack	*ft_stacknew(void *content);
+t_stack	*last_seen(t_stack *stack, t_stack *last);
+t_stack	*ft_stacklast(t_stack *stack);
+void	ft_stackadd_back(t_stack **stack, t_stack *new);
 // inits.c
 void	init_struct(t_stacks *stacks);
 void	re_init_values(t_stacks *stacks);
@@ -67,5 +76,7 @@ void	sort_3_numbers(t_stacks *stacks);
 void	sort_4_to_5_numbers(t_stacks *stacks);
 void	simple_sort(t_stacks *stacks);
 // radix_sort.c
+void	index_numbers(t_stacks *stacks);
+void	radix_sort(t_stacks *stacks);
 
 #endif

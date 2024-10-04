@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:06:18 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/02 19:44:24 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:19:12 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	sa(t_stacks *stacks)
 {
-	t_list	*tmp;
-	t_list	*tmp2;
+	t_stack	*tmp;
+	t_stack	*tmp2;
 
 	if (stacks->stack_a && stacks->stack_a->next)
 	{
@@ -31,8 +31,8 @@ void	sa(t_stacks *stacks)
 
 void	sb(t_stacks *stacks)
 {
-	t_list	*tmp;
-	t_list	*tmp2;
+	t_stack	*tmp;
+	t_stack	*tmp2;
 
 	if (stacks->stack_b && stacks->stack_b->next)
 	{

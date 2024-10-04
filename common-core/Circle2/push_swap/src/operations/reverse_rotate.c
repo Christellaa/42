@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 10:47:41 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/02 19:44:15 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:23:16 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	rra(t_stacks *stacks)
 {
-	t_list	*last;
-	t_list	*second_last;
+	t_stack	*last;
+	t_stack	*second_last;
 
 	if (stacks->stack_a && stacks->stack_a->next)
 	{
-		last = ft_lstlast(stacks->stack_a);
+		last = ft_stacklast(stacks->stack_a);
 		second_last = stacks->stack_a;
 		while (second_last->next->next)
 			second_last = second_last->next;
@@ -33,12 +33,12 @@ void	rra(t_stacks *stacks)
 
 void	rrb(t_stacks *stacks)
 {
-	t_list	*last;
-	t_list	*second_last;
+	t_stack	*last;
+	t_stack	*second_last;
 
 	if (stacks->stack_b && stacks->stack_b->next)
 	{
-		last = ft_lstlast(stacks->stack_b);
+		last = ft_stacklast(stacks->stack_b);
 		second_last = stacks->stack_b;
 		while (second_last->next->next)
 			second_last = second_last->next;

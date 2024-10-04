@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:25:23 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/04 09:27:25 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:19:12 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	print_operations(t_stacks *stacks)
 
 void	free_stack(t_stacks *stacks)
 {
-	t_list	*tmp;
+	t_stack	*tmp;
 
 	if (stacks->stack_a)
 	{

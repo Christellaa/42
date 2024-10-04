@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 14:02:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/02 19:47:56 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:19:12 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,43 @@
 
 int	check_sorted(t_stacks *stacks)
 {
-	t_list	*tmp;
+	t_stack	*tmp;
 
 	tmp = stacks->stack_a;
 	while (tmp && tmp->next)
 	{
 		if (*(int *)tmp->content > *(int *)tmp->next->content)
 			return (1);
+		tmp->idx = -1;
 		tmp = tmp->next;
 	}
+	tmp->idx = -1;
 	return (0);
 }
 
 void	find_min_max(t_stacks *stacks)
 {
-	t_list	*tmp;
+	t_stack	*tmp;
 	int		pos;
-	int		nb_min;
-	int		nb_max;
+	int		min_value;
+	int		max_value;
 
 	tmp = stacks->stack_a;
-	nb_min = *(int *)tmp->content;
-	nb_max = *(int *)tmp->content;
+	min_value = *(int *)tmp->content;
+	max_value = *(int *)tmp->content;
 	re_init_values(stacks);
 	pos = 0;
 	while (tmp)
 	{
-		if (*(int *)tmp->content < nb_min)
+		if (*(int *)tmp->content < min_value)
 		{
-			nb_min = *(int *)tmp->content;
-			stacks->min = pos;
+			min_value = *(int *)tmp->content;
+			stacks->min_nb = pos;
 		}
-		if (*(int *)tmp->content > nb_max)
+		if (*(int *)tmp->content > max_value)
 		{
-			nb_max = *(int *)tmp->content;
-			stacks->max = pos;
+			max_value = *(int *)tmp->content;
+			stacks->max_nb = pos;
 		}
 		tmp = tmp->next;
 		pos++;
@@ -61,7 +63,6 @@ void	algorithms(t_stacks *stacks)
 		cleanup(stacks, NULL, 1);
 	if (stacks->count <= 5)
 		simple_sort(stacks);
-	/* else
-		radix_sort(stacks); */
-	//print_all(stacks);
+	else
+		radix_sort(stacks);
 }

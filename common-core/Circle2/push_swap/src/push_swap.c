@@ -6,15 +6,15 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:16:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/02 19:40:17 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:23:05 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/push_swap.h"
 
-int	is_duplicate(t_list *stack, int *content)
+int	is_duplicate(t_stack *stack, int *content)
 {
-	t_list	*tmp;
+	t_stack	*tmp;
 
 	tmp = stack;
 	while (tmp)
@@ -34,7 +34,7 @@ int	split_args(char **av, char ***numbers, int i)
 	return (1);
 }
 
-int	create_node(t_list **stack, char **numbers, int j)
+int	create_node(t_stack **stack, char **numbers, int j)
 {
 	int	*content;
 
@@ -49,7 +49,7 @@ int	create_node(t_list **stack, char **numbers, int j)
 		free(content);
 		return (0);
 	}
-	ft_lstadd_back(stack, ft_lstnew((void *)content));
+	ft_stackadd_back(stack, ft_stacknew((void *)content));
 	return (1);
 }
 
@@ -86,7 +86,6 @@ int	main(int ac, char **av)
 		init_struct(&stacks);
 		put_args_in_stack_a(av, &stacks);
 		algorithms(&stacks);
-		//ft_test(&stacks);
 		cleanup(&stacks, NULL, 1);
 	}
 	return (0);

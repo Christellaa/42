@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:15:16 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/02 19:44:18 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/04 10:23:25 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	ra(t_stacks *stacks)
 {
-	t_list	*tmp;
+	t_stack	*tmp;
 
 	if (stacks->stack_a && stacks->stack_a->next)
 	{
 		tmp = stacks->stack_a;
 		stacks->stack_a = stacks->stack_a->next;
-		ft_lstadd_back(&stacks->stack_a, tmp);
+		ft_stackadd_back(&stacks->stack_a, tmp);
 		tmp->next = NULL;
 	}
 	if (!stacks->is_double_operations)
@@ -29,13 +29,13 @@ void	ra(t_stacks *stacks)
 
 void	rb(t_stacks *stacks)
 {
-	t_list	*tmp;
+	t_stack	*tmp;
 
 	if (stacks->stack_b && stacks->stack_b->next)
 	{
 		tmp = stacks->stack_b;
 		stacks->stack_b = stacks->stack_b->next;
-		ft_lstadd_back(&stacks->stack_b, tmp);
+		ft_stackadd_back(&stacks->stack_b, tmp);
 		tmp->next = NULL;
 	}
 	if (!stacks->is_double_operations)
