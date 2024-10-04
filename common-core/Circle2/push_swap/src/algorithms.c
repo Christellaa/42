@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 14:02:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/04 10:19:12 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:38:40 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,39 +21,47 @@ int	check_sorted(t_stacks *stacks)
 	{
 		if (*(int *)tmp->content > *(int *)tmp->next->content)
 			return (1);
-		tmp->idx = -1;
 		tmp = tmp->next;
 	}
-	tmp->idx = -1;
 	return (0);
+}
+
+void	index_numbers(t_stacks *stacks)
+{
+	t_stack	*tmp;
+	t_stack	*compare;
+	int		prev_count;
+
+	tmp = stacks->stack_a;
+	while (tmp)
+	{
+		prev_count = 0;
+		compare = stacks->stack_a;
+		while (compare)
+		{
+			if (*(int *)tmp->content > *(int *)compare->content)
+				prev_count++;
+			compare = compare->next;
+		}
+		tmp->idx = prev_count;
+		tmp = tmp->next;
+	}
 }
 
 void	find_min_max(t_stacks *stacks)
 {
 	t_stack	*tmp;
-	int		pos;
-	int		min_value;
-	int		max_value;
 
 	tmp = stacks->stack_a;
-	min_value = *(int *)tmp->content;
-	max_value = *(int *)tmp->content;
-	re_init_values(stacks);
-	pos = 0;
+	stacks->min_nb = tmp->idx;
+	stacks->max_nb = tmp->idx;
 	while (tmp)
 	{
-		if (*(int *)tmp->content < min_value)
-		{
-			min_value = *(int *)tmp->content;
-			stacks->min_nb = pos;
-		}
-		if (*(int *)tmp->content > max_value)
-		{
-			max_value = *(int *)tmp->content;
-			stacks->max_nb = pos;
-		}
+		if (tmp->idx < stacks->min_nb)
+			stacks->min_nb = tmp->idx;
+		if (tmp->idx > stacks->max_nb)
+			stacks->max_nb = tmp->idx;
 		tmp = tmp->next;
-		pos++;
 	}
 }
 
@@ -61,6 +69,7 @@ void	algorithms(t_stacks *stacks)
 {
 	if (!check_sorted(stacks))
 		cleanup(stacks, NULL, 1);
+	index_numbers(stacks);
 	if (stacks->count <= 5)
 		simple_sort(stacks);
 	else

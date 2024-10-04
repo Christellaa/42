@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:16:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/04 10:23:05 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/04 11:33:49 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,27 @@ int	split_args(char **av, char ***numbers, int i)
 
 int	create_node(t_stack **stack, char **numbers, int j)
 {
-	int	*content;
+	int		*content;
+	t_stack	*new_node;
 
 	content = malloc(sizeof(int));
 	if (!content)
 		return (0);
 	*content = ft_atoi(numbers[j]);
-	if (!is_duplicate(*stack, content))
-		return (0);
-	if (*content == 0 && numbers[j][0] != '0')
+	if (!is_duplicate(*stack, content) \
+		|| (*content == 0 && numbers[j][0] != '0'))
 	{
 		free(content);
 		return (0);
 	}
-	ft_stackadd_back(stack, ft_stacknew((void *)content));
+	new_node = ft_stacknew((void *)content);
+	if (!new_node)
+	{
+		free(content);
+		return (0);
+	}
+	new_node->idx = -1;
+	ft_stackadd_back(stack, new_node);
 	return (1);
 }
 

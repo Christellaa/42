@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:15:19 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/04 09:55:07 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/04 13:34:27 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,68 @@
 
 void	sort_3_numbers(t_stacks *stacks)
 {
+	t_stack	*i;
+	t_stack	*j;
+	t_stack	*k;
+
 	if (!check_sorted(stacks))
 		return ;
-	find_min_max(stacks);
-	if (stacks->min_nb == 1 && stacks->max_nb == 2)
+	i = stacks->stack_a;
+	j = i->next;
+	k = j->next;
+	if (i->idx > j->idx && j->idx < k->idx && i->idx < k->idx)
 		sa(stacks);
-	else if (stacks->min_nb == 1 && stacks->max_nb == 0)
+	else if (i->idx > j->idx && j->idx < k->idx && i->idx > k->idx)
 		ra(stacks);
-	else if (stacks->min_nb == 2 && stacks->max_nb == 1)
+	else if (i->idx < j->idx && j->idx > k->idx && i->idx > k->idx)
 		rra(stacks);
-	else if (stacks->min_nb == 2 && stacks->max_nb == 0)
+	else if (i->idx > j->idx && j->idx > k->idx && i->idx > k->idx)
 	{
 		ra(stacks);
 		sa(stacks);
 	}
-	else if (stacks->min_nb == 0)
+	else if (i->idx < j->idx && j->idx > k->idx && i->idx < k->idx)
 	{
 		rra(stacks);
 		sa(stacks);
 	}
 }
 
+int	get_pos_idx(t_stack *stack_a, int idx)
+{
+	int	pos;
+
+	pos = 0;
+	while (stack_a)
+	{
+		if (stack_a->idx == idx)
+			break ;
+		pos++;
+		stack_a = stack_a->next;
+	}
+	return (pos);
+}
+
 void	sort_4_to_5_numbers(t_stacks *stacks)
 {
+	int	pos;
+	int	idx;
+
+	idx = 0;
 	while (stacks->count > 3)
 	{
-		find_min_max(stacks);
-		while (stacks->min_nb != 0)
+		pos = get_pos_idx(stacks->stack_a, idx);
+		while (stacks->stack_a->idx != idx)
 		{
-			if (stacks->min_nb >= 2)
+			if (pos >= 2)
 				rra(stacks);
 			else
 				ra(stacks);
-			find_min_max(stacks);
 		}
 		pb(stacks);
 		stacks->size_b++;
 		stacks->count--;
+		idx++;
 	}
 	sort_3_numbers(stacks);
 	while (stacks->size_b > 0)
