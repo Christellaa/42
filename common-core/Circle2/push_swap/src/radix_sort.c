@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:55:20 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/05 14:38:44 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/05 15:32:29 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,23 @@ int	get_bits_max(t_stack *nb_max)
 	return (bits_max);
 }
 
+int	check_next_numbers_bit(t_stack *stack_a, int bit_pos)
+{
+	while ((*(int *)stack_a->content & (1 << bit_pos)) == 1)
+	{
+		stack_a = stack_a->next;
+		if (!stack_a)
+			return (0);
+	}
+	while ((*(int *)stack_a->content & (1 << bit_pos)) == 0)
+	{
+		stack_a = stack_a->next;
+		if (!stack_a || !stack_a->next->next)
+			return (0);
+	}
+	return (1);
+}
+
 void	compare_bits(t_stacks *stacks, int bit_pos)
 {
 	int	stack_a_size;
@@ -36,7 +53,8 @@ void	compare_bits(t_stacks *stacks, int bit_pos)
 
 	stack_a_size = ft_stacksize(stacks->stack_a);
 	i = 0;
-	while (i < stack_a_size)
+	while (i < stack_a_size \
+		&& check_next_numbers_bit(stacks->stack_a, bit_pos))
 	{
 		if ((*(int *)stacks->stack_a->content & (1 << bit_pos)) == 0)
 			pb(stacks);
@@ -56,6 +74,8 @@ void	radix_sort(t_stacks *stacks, t_stack *nb_max)
 	bit_pos = 0;
 	while (bit_pos < bits_max)
 	{
+		if (check_sorted(stacks))
+			break ;
 		compare_bits(stacks, bit_pos);
 		stack_b_size = ft_stacksize(stacks->stack_b);
 		while (stack_b_size--)
