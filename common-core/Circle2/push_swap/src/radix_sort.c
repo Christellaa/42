@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:55:20 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/05 11:29:26 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/05 14:38:44 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,37 @@ int	get_bits_max(t_stack *nb_max)
 	return (bits_max);
 }
 
-void	radix_sort(t_stacks *stacks, t_stack *nb_max)
+void	compare_bits(t_stacks *stacks, int bit_pos)
 {
-	int	bits_max;
 	int	stack_a_size;
 	int	i;
 
-	ft_printf("nbmax: %d: %d\n", *(int *)nb_max->content, nb_max->idx);
-	bits_max = get_bits_max(nb_max);
-	ft_printf("bits_max: %d\n", bits_max);
 	stack_a_size = ft_stacksize(stacks->stack_a);
 	i = 0;
 	while (i < stack_a_size)
 	{
-		ft_printf("stacka.content: %d\n", *(int *)stacks->stack_a->content);
-		stacks->stack_a = stacks->stack_a->next;
+		if ((*(int *)stacks->stack_a->content & (1 << bit_pos)) == 0)
+			pb(stacks);
+		else
+			ra(stacks);
 		i++;
 	}
-	cleanup(stacks, NULL, 1);
+}
+
+void	radix_sort(t_stacks *stacks, t_stack *nb_max)
+{
+	int		bit_pos;
+	int		bits_max;
+	int		stack_b_size;
+
+	bits_max = get_bits_max(nb_max);
+	bit_pos = 0;
+	while (bit_pos < bits_max)
+	{
+		compare_bits(stacks, bit_pos);
+		stack_b_size = ft_stacksize(stacks->stack_b);
+		while (stack_b_size--)
+			pa(stacks);
+		bit_pos++;
+	}
 }
