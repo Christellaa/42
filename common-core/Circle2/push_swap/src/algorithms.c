@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 14:02:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/04 12:38:40 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/05 10:44:33 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	index_numbers(t_stacks *stacks)
 	int		prev_count;
 
 	tmp = stacks->stack_a;
+	stacks->nb_max = tmp;
 	while (tmp)
 	{
 		prev_count = 0;
@@ -44,6 +45,8 @@ void	index_numbers(t_stacks *stacks)
 			compare = compare->next;
 		}
 		tmp->idx = prev_count;
+		if (tmp->idx > stacks->nb_max->idx)
+			stacks->nb_max = tmp;
 		tmp = tmp->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 10:23:52 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/04 10:27:37 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/05 10:42:08 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,17 @@ void	ft_stackadd_back(t_stack **stack, t_stack *new)
 	}
 	else
 		*stack = new;
+}
+
+int	ft_stacksize(t_stack *stack)
+{
+	int	i;
+
+	i = 0;
+	while (stack)
+	{
+		stack = stack->next;
+		i++;
+	}
+	return (i);
 }
