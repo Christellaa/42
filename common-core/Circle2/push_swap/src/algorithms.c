@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 14:02:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/05 10:44:33 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/05 11:13:44 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,15 @@ int	check_sorted(t_stacks *stacks)
 	return (0);
 }
 
-void	index_numbers(t_stacks *stacks)
+t_stack	*index_numbers(t_stacks *stacks)
 {
 	t_stack	*tmp;
 	t_stack	*compare;
+	t_stack	*nb_max;
 	int		prev_count;
 
 	tmp = stacks->stack_a;
-	stacks->nb_max = tmp;
+	nb_max = stacks->stack_a;
 	while (tmp)
 	{
 		prev_count = 0;
@@ -45,10 +46,11 @@ void	index_numbers(t_stacks *stacks)
 			compare = compare->next;
 		}
 		tmp->idx = prev_count;
-		if (tmp->idx > stacks->nb_max->idx)
-			stacks->nb_max = tmp;
+		if (tmp->idx > nb_max->idx)
+			nb_max = tmp;
 		tmp = tmp->next;
 	}
+	return (nb_max);
 }
 
 void	find_min_max(t_stacks *stacks)
@@ -70,11 +72,13 @@ void	find_min_max(t_stacks *stacks)
 
 void	algorithms(t_stacks *stacks)
 {
+	t_stack	*nb_max;
+
 	if (!check_sorted(stacks))
 		cleanup(stacks, NULL, 1);
-	index_numbers(stacks);
+	nb_max = index_numbers(stacks);
 	if (stacks->count <= 5)
 		simple_sort(stacks);
 	else
-		radix_sort(stacks);
+		radix_sort(stacks, nb_max);
 }
