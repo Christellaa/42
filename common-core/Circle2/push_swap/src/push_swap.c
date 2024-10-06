@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:16:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/04 11:33:49 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/06 17:18:04 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	is_duplicate(t_stack *stack, int *content)
 int	split_args(char **av, char ***numbers, int i)
 {
 	*numbers = ft_split(av[i], ' ');
-	if (!*numbers)
+	if (!*numbers || !**numbers)
 		return (0);
 	return (1);
 }

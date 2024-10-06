@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:25:23 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/04 10:19:12 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/06 16:45:58 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	cleanup(t_stacks *stacks, char **numbers, int exit_type)
 	else
 	{
 		free_group(stacks->operations);
+		write(2, ERROR, 6);
 		exit(EXIT_FAILURE);
 	}
 }
