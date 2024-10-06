@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:15:19 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/05 15:20:11 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/06 14:29:45 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	sort_3_numbers(t_stacks *stacks)
 	t_stack	*j;
 	t_stack	*k;
 
-	if (check_sorted(stacks))
+	if (check_sorted(stacks->stack_a))
 		return ;
 	i = stacks->stack_a;
 	j = i->next;

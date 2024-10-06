@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:07:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/05 21:44:44 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/06 15:33:45 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	sa(t_stacks *stacks);
 void	sb(t_stacks *stacks);
 void	ss(t_stacks *stacks);
 // algorithms.c
-int		check_sorted(t_stacks *stacks);
+int		check_sorted(t_stack *stack_a);
+int		check_inverse_sorted(t_stack *stack_b);
 t_stack	*index_numbers(t_stacks *stacks);
 void	find_min_max(t_stacks *stacks);
 void	algorithms(t_stacks *stacks);
