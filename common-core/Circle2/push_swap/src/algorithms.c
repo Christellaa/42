@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 14:02:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/06 15:33:38 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:21:36 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_sorted(t_stack *stack_a)
 	tmp = stack_a;
 	while (tmp && tmp->next)
 	{
-		if (*(int *)tmp->content > *(int *)tmp->next->content)
+		if (tmp->idx > tmp->next->idx)
 			return (0);
 		tmp = tmp->next;
 	}
@@ -88,9 +88,9 @@ void	algorithms(t_stacks *stacks)
 {
 	t_stack	*nb_max;
 
+	nb_max = index_numbers(stacks);
 	if (check_sorted(stacks->stack_a))
 		cleanup(stacks, NULL, 1);
-	nb_max = index_numbers(stacks);
 	if (stacks->count <= 5)
 		simple_sort(stacks);
 	else

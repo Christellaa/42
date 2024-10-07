@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:55:20 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/06 16:45:31 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:13:33 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	sort_stack_b(t_stacks *stacks, int stack_b_size, int bit_pos, \
 {
 	while (stack_b_size-- && bit_pos <= bits_max)
 	{
-		if ((*(int *)stacks->stack_b->content & (1 << bit_pos)) == 0)
+		if (((stacks->stack_b->idx >> bit_pos) & 1) == 0)
 			rb(stacks);
 		else
 			pa(stacks);
@@ -45,7 +45,7 @@ void	compare_bits(t_stacks *stacks, int bit_pos, int stack_a_size)
 {
 	while (stack_a_size-- && !check_sorted(stacks->stack_a))
 	{
-		if ((*(int *)stacks->stack_a->content & (1 << bit_pos)) == 0)
+		if (((stacks->stack_a->idx >> bit_pos) & 1) == 0)
 			pb(stacks);
 		else
 			ra(stacks);
@@ -73,4 +73,6 @@ void	radix_sort(t_stacks *stacks, t_stack *nb_max)
 	stack_b_size = ft_stacksize(stacks->stack_b);
 	while (stack_b_size--)
 		pa(stacks);
+	while (!check_sorted(stacks->stack_a))
+		ra(stacks);
 }
