@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 09:55:20 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/07 18:35:41 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:45:13 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ int	get_bits_max(t_stack *nb_max)
 void	sort_stack_b(t_stacks *stacks, int stack_b_size, int bit_pos, \
 		int bits_max)
 {
-	while (stack_b_size-- && bit_pos <= bits_max \
-			&& !check_sorted(stacks->stack_a))
-	{
-		if (((stacks->stack_b->idx >> bit_pos) & 1) == 0)
-			rb(stacks);
-		else
-			pa(stacks);
-	}
+	if (stack_b_size <= 0 || bit_pos > bits_max || \
+		check_sorted(stacks->stack_a))
+		return ;
+	if (((stacks->stack_b->idx >> bit_pos) & 1) == 0)
+		rb(stacks);
+	else
+		pa(stacks);
+	sort_stack_b(stacks, stack_b_size - 1, bit_pos, bits_max);
 	if (check_sorted(stacks->stack_a))
 	{
 		stack_b_size = ft_stacksize(stacks->stack_b);
@@ -50,13 +50,13 @@ void	sort_stack_b(t_stacks *stacks, int stack_b_size, int bit_pos, \
 
 void	compare_bits(t_stacks *stacks, int bit_pos, int stack_a_size)
 {
-	while (stack_a_size-- && !check_sorted(stacks->stack_a))
-	{
-		if (((stacks->stack_a->idx >> bit_pos) & 1) != 0)
-			ra(stacks);
-		else
-			pb(stacks);
-	}
+	if (stack_a_size <= 0 || check_sorted(stacks->stack_a))
+		return ;
+	if (((stacks->stack_a->idx >> bit_pos) & 1) != 0)
+		ra(stacks);
+	else
+		pb(stacks);
+	compare_bits(stacks, bit_pos, stack_a_size - 1);
 }
 
 void	recursive_radix_sort(t_stacks *stacks, int bit_pos, int bits_max)
