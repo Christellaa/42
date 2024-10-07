@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:07:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/06 15:33:45 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:39:24 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,6 @@ void	sort_3_numbers(t_stacks *stacks);
 int		get_pos_idx(t_stack *stack_a, int idx);
 void	sort_4_to_5_numbers(t_stacks *stacks);
 void	simple_sort(t_stacks *stacks);
-// insertion_sort.c
-t_stack	*find_largest_unsorted(t_stacks *stacks);
-int		get_pos(t_stack *stack, t_stack *nb_min_max);
-void	push_largest_unsorted_to_stack_a(t_stacks *stacks, \
-		int stack_b_size, int stack_a_size);
-t_stack	*find_smallest_sorted(t_stack *stack_a);
-void	push_smallest_unsorted_to_stack_b(t_stacks *stacks, int stack_a_size);
-void	insertion_sort(t_stacks *stacks, int stack_a_size);
 // radix_sort.c
 void	radix_sort(t_stacks *stacks, t_stack *nb_max);
 
