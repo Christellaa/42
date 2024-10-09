@@ -6,50 +6,38 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:06:18 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/04 10:19:12 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/09 21:09:49 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
 
-void	sa(t_stacks *stacks)
+void	swap(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
+			char *operation)
 {
-	t_stack	*tmp;
-	t_stack	*tmp2;
+	t_stack	*first;
+	t_stack	*second;
 
-	if (stacks->stack_a && stacks->stack_a->next)
+	if (stack1 && *stack1 && (*stack1)->next != *stack1)
 	{
-		tmp = stacks->stack_a;
-		tmp2 = stacks->stack_a->next;
-		stacks->stack_a = tmp2;
-		tmp->next = tmp2->next;
-		tmp2->next = tmp;
+		first = *stack1;
+		second = first->next;
+		first->next = second->next;
+		if (second->next)
+			second->next->prev = first;
+		second->next = first;
+		second->prev = first->prev;
+		if (first->prev)
+			first->prev->next = second;
+		first->prev = second;
+		*stack1 = second;
 	}
-	if (!stacks->is_double_operations)
-		store_operation(stacks, "sa");
-}
-
-void	sb(t_stacks *stacks)
-{
-	t_stack	*tmp;
-	t_stack	*tmp2;
-
-	if (stacks->stack_b && stacks->stack_b->next)
+	if (stack1 && *stack1 && stack2 && *stack2 && (*stack2)->next != *stack2)
 	{
-		tmp = stacks->stack_b;
-		tmp2 = stacks->stack_b->next;
-		stacks->stack_b = tmp2;
-		tmp->next = tmp2->next;
-		tmp2->next = tmp;
+		swap(stack2, NULL, stacks, operation);
+		return ;
 	}
-	if (!stacks->is_double_operations)
-		store_operation(stacks, "sb");
-}
-
-void	ss(t_stacks *stacks)
-{
-	stacks->is_double_operations = 1;
-	sa(stacks);
-	sb(stacks);
-	store_operation(stacks, "ss");
+	else if (stack2 && *stack2 && (*stack2)->next != *stack2)
+		swap(stack1, stack2, stacks, operation);
+	store_operation(stacks, operation);
 }

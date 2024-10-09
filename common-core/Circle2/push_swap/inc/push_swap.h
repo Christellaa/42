@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:07:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/09 13:08:54 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/09 20:29:51 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ typedef struct s_stacks
 
 // utils.c
 t_stack	*ft_stacknew(void *content);
-t_stack	*last_seen_stack(t_stack *stack, t_stack *last);
-t_stack	*ft_stacklast(t_stack *stack);
 void	ft_stackadd_back(t_stack **stack, t_stack *new);
 int		ft_stacksize(t_stack *stack);
 // inits.c
@@ -51,27 +49,23 @@ t_stack	*index_numbers(t_stack *stack_a);
 // cleanup.c
 void	store_operation(t_stacks *stacks, char *operation);
 void	print_operations(t_stacks *stacks);
-void	free_stack(t_stacks *stacks);
-void	free_group(char **group);
-void	cleanup(t_stacks *stacks, char **numbers, int exit_type);
+void	free_stack(t_stack *stack);
+void	free_group(char ***group);
+void	cleanup(t_stacks *stacks, char ***numbers, int exit_type);
 // push.c
-void	pa(t_stacks *stacks);
-void	pb(t_stacks *stacks);
+void	push(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
+			char *operation);
 // rotate.c
-void	ra(t_stacks *stacks);
-void	rb(t_stacks *stacks);
-void	rr(t_stacks *stacks);
+void	rotate(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
+			char *operation);
 // reverse_rotate.c
-void	rra(t_stacks *stacks);
-void	rrb(t_stacks *stacks);
-void	rrr(t_stacks *stacks);
+void	rev_rotate(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
+				char *operation);
 // swap.c
-void	sa(t_stacks *stacks);
-void	sb(t_stacks *stacks);
-void	ss(t_stacks *stacks);
+void	swap(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
+			char *operation);
 // algorithms.c
 int		check_sorted(t_stack *stack_a);
-int		check_inverse_sorted(t_stack *stack_b);
 void	find_min_max(t_stacks *stacks);
 void	algorithms(t_stacks *stacks);
 // simple_sort.c

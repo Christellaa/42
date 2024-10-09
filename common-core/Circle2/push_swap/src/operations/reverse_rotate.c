@@ -6,54 +6,34 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 10:47:41 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/04 10:23:16 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/09 21:22:47 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
 
-void	rra(t_stacks *stacks)
+void	rev_rotate(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
+				char *operation)
 {
-	t_stack	*last;
-	t_stack	*second_last;
+	t_stack	*tail;
+	t_stack	*head;
 
-	if (stacks->stack_a && stacks->stack_a->next)
+	if (stack1 && *stack1 && (*stack1)->next != *stack1)
 	{
-		last = ft_stacklast(stacks->stack_a);
-		second_last = stacks->stack_a;
-		while (second_last->next->next)
-			second_last = second_last->next;
-		second_last->next = NULL;
-		last->next = stacks->stack_a;
-		stacks->stack_a = last;
+		tail = (*stack1)->prev;
+		head = tail->prev;
+		tail->next = *stack1;
+		(*stack1)->prev = tail;
+		(*stack1)->next = head;
+		head->prev = *stack1;
+		(*stack1) = head;
 	}
-	if (!stacks->is_double_operations)
-		store_operation(stacks, "rra");
-}
-
-void	rrb(t_stacks *stacks)
-{
-	t_stack	*last;
-	t_stack	*second_last;
-
-	if (stacks->stack_b && stacks->stack_b->next)
+	if (stack1 && *stack1 && stack2 && *stack2 && (*stack2)->next != *stack2)
 	{
-		last = ft_stacklast(stacks->stack_b);
-		second_last = stacks->stack_b;
-		while (second_last->next->next)
-			second_last = second_last->next;
-		second_last->next = NULL;
-		last->next = stacks->stack_b;
-		stacks->stack_b = last;
+		rev_rotate(stack2, NULL, stacks, operation);
+		return ;
 	}
-	if (!stacks->is_double_operations)
-		store_operation(stacks, "rrb");
-}
-
-void	rrr(t_stacks *stacks)
-{
-	stacks->is_double_operations = 1;
-	rra(stacks);
-	rrb(stacks);
-	store_operation(stacks, "rrr");
+	else if (stack2 && *stack2 && (*stack2)->next != *stack2)
+		rev_rotate(stack1, stack2, stacks, operation);
+	store_operation(stacks, operation);
 }

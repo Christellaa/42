@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 10:23:52 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/09 10:47:31 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:34:14 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,6 @@ t_stack	*ft_stacknew(void *content)
 	return (new_content);
 }
 
-t_stack	*last_seen_stack(t_stack *stack, t_stack *last)
-{
-	if (!stack)
-		return (last);
-	return (last_seen_stack(stack->next, stack));
-}
-
-t_stack	*ft_stacklast(t_stack *stack)
-{
-	if (!stack)
-		return (NULL);
-	return (last_seen_stack(stack->next, stack));
-}
-
 void	ft_stackadd_back(t_stack **stack, t_stack *new)
 {
 	t_stack	*last;
@@ -47,22 +33,32 @@ void	ft_stackadd_back(t_stack **stack, t_stack *new)
 		return ;
 	if (*stack)
 	{
-		last = ft_stacklast(*stack);
+		last = (*stack)->prev;
 		last->next = new;
 		new->prev = last;
+		new->next = *stack;
+		(*stack)->prev = new;
 	}
 	else
+	{
+		new->next = new;
+		new->prev = new;
 		*stack = new;
+	}
 }
 
 int	ft_stacksize(t_stack *stack)
 {
-	int	i;
+	int		i;
+	t_stack	*start;
 
 	i = 0;
+	start = stack;
 	while (stack)
 	{
 		stack = stack->next;
+		if (stack == start)
+			break ;
 		i++;
 	}
 	return (i);

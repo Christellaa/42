@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:25:23 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/06 16:45:58 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/09 20:31:16 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,62 +42,62 @@ void	print_operations(t_stacks *stacks)
 	}
 }
 
-void	free_stack(t_stacks *stacks)
+void	free_stack(t_stack *stack)
 {
 	t_stack	*tmp;
+	t_stack	*start;
 
-	if (stacks->stack_a)
+	if (stack)
 	{
-		while (stacks->stack_a)
+		start = stack;
+		while (1)
 		{
-			tmp = stacks->stack_a;
-			stacks->stack_a = stacks->stack_a->next;
+			tmp = stack;
+			stack = stack->next;
 			free(tmp->content);
 			free(tmp);
-		}
-	}
-	if (stacks->stack_b)
-	{
-		while (stacks->stack_b)
-		{
-			tmp = stacks->stack_b;
-			stacks->stack_b = stacks->stack_b->next;
-			free(tmp->content);
-			free(tmp);
+			if (stack == start)
+				break ;
 		}
 	}
 }
 
-void	free_group(char **group)
+void	free_group(char ***group)
 {
 	int	i;
 
 	i = 0;
-	while (group[i])
+	if (group && *group)
 	{
-		free(group[i]);
-		group[i] = NULL;
-		i++;
+		while ((*group)[i])
+		{
+			free((*group)[i]);
+			(*group)[i] = NULL;
+			i++;
+		}
+		free((*group));
+		*group = NULL;
 	}
-	free(group);
-	group = NULL;
 }
 
-void	cleanup(t_stacks *stacks, char **numbers, int exit_type)
+void	cleanup(t_stacks *stacks, char ***numbers, int exit_type)
 {
 	if (stacks)
-		free_stack(stacks);
+	{
+		free_stack(stacks->stack_a);
+		free_stack(stacks->stack_b);
+	}
 	if (numbers)
 		free_group(numbers);
 	if (exit_type == 1)
 	{
 		print_operations(stacks);
-		free_group(stacks->operations);
+		free_group(&(stacks->operations));
 		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		free_group(stacks->operations);
+		free_group(&(stacks->operations));
 		write(2, ERROR, 6);
 		exit(EXIT_FAILURE);
 	}

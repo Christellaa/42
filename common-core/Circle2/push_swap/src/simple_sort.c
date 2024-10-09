@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 14:15:19 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/06 14:29:45 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/09 21:57:29 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,20 @@ void	sort_3_numbers(t_stacks *stacks)
 	j = i->next;
 	k = j->next;
 	if (i->idx > j->idx && j->idx < k->idx && i->idx < k->idx)
-		sa(stacks);
+		swap(&stacks->stack_a, NULL, stacks, "sa");
 	else if (i->idx > j->idx && j->idx < k->idx && i->idx > k->idx)
-		ra(stacks);
+		rotate(&stacks->stack_a, NULL, stacks, "ra");
 	else if (i->idx < j->idx && j->idx > k->idx && i->idx > k->idx)
-		rra(stacks);
+		rev_rotate(&stacks->stack_a, NULL, stacks, "rra");
 	else if (i->idx > j->idx && j->idx > k->idx && i->idx > k->idx)
 	{
-		ra(stacks);
-		sa(stacks);
+		rotate(&stacks->stack_a, NULL, stacks, "ra");
+		swap(&stacks->stack_a, NULL, stacks, "sa");
 	}
 	else if (i->idx < j->idx && j->idx > k->idx && i->idx < k->idx)
 	{
-		rra(stacks);
-		sa(stacks);
+		rev_rotate(&stacks->stack_a, NULL, stacks, "rra");
+		swap(&stacks->stack_a, NULL, stacks, "sa");
 	}
 }
 
@@ -68,11 +68,11 @@ void	sort_4_to_5_numbers(t_stacks *stacks)
 		while (stacks->stack_a->idx != idx)
 		{
 			if (pos >= 2)
-				rra(stacks);
+				rev_rotate(&stacks->stack_a, NULL, stacks, "rra");
 			else
-				ra(stacks);
+				rotate(&stacks->stack_a, NULL, stacks, "ra");
 		}
-		pb(stacks);
+		push(&stacks->stack_a, &stacks->stack_b, stacks, "pb");
 		stacks->size_b++;
 		stacks->count--;
 		idx++;
@@ -80,7 +80,7 @@ void	sort_4_to_5_numbers(t_stacks *stacks)
 	sort_3_numbers(stacks);
 	while (stacks->size_b > 0)
 	{
-		pa(stacks);
+		push(&stacks->stack_b, &stacks->stack_a, stacks, "pa");
 		stacks->size_b--;
 	}
 }
@@ -88,7 +88,7 @@ void	sort_4_to_5_numbers(t_stacks *stacks)
 void	simple_sort(t_stacks *stacks)
 {
 	if (stacks->count == 2)
-		sa(stacks);
+		swap(&stacks->stack_a, NULL, stacks, "sa");
 	else if (stacks->count == 3)
 		sort_3_numbers(stacks);
 	else if (stacks->count > 3)

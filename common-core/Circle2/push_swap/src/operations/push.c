@@ -6,36 +6,38 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:15:34 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/04 10:19:12 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/09 21:51:59 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
 
-void	pa(t_stacks *stacks)
+void	push(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
+			char *operation)
 {
 	t_stack	*tmp;
 
-	if (stacks->stack_b)
+	if (stack1 && *stack1)
 	{
-		tmp = stacks->stack_b;
-		stacks->stack_b = stacks->stack_b->next;
-		tmp->next = stacks->stack_a;
-		stacks->stack_a = tmp;
+		tmp = *stack1;
+		*stack1 = (*stack1)->next;
+		if (*stack1 && (*stack1) != tmp)
+			(*stack1)->prev = tmp->prev;
+		else
+			*stack1 = NULL;
+		tmp->next = *stack2;
+		if (stack2 && *stack2)
+		{
+			tmp->prev = (*stack2)->prev;
+			(*stack2)->prev->next = tmp;
+			(*stack2)->prev = tmp;
+		}
+		else
+		{
+			tmp->prev = tmp;
+			tmp->next = tmp;
+		}
+		*stack2 = tmp;
 	}
-	store_operation(stacks, "pa");
-}
-
-void	pb(t_stacks *stacks)
-{
-	t_stack	*tmp;
-
-	if (stacks->stack_a)
-	{
-		tmp = stacks->stack_a;
-		stacks->stack_a = stacks->stack_a->next;
-		tmp->next = stacks->stack_b;
-		stacks->stack_b = tmp;
-	}
-	store_operation(stacks, "pb");
+	store_operation(stacks, operation);
 }

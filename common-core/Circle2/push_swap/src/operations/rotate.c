@@ -6,46 +6,34 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:15:16 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/04 10:23:25 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/09 21:29:16 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/push_swap.h"
 
-void	ra(t_stacks *stacks)
+void	rotate(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
+			char *operation)
 {
-	t_stack	*tmp;
+	t_stack	*tail;
+	t_stack	*head;
 
-	if (stacks->stack_a && stacks->stack_a->next)
+	if (stack1 && *stack1 && (*stack1)->next != *stack1)
 	{
-		tmp = stacks->stack_a;
-		stacks->stack_a = stacks->stack_a->next;
-		ft_stackadd_back(&stacks->stack_a, tmp);
-		tmp->next = NULL;
+		tail = (*stack1)->prev;
+		head = tail->next;
+		tail->next = head;
+		head->prev = tail;
+		(*stack1)->next = head->next;
+		head->next->prev = *stack1;
+		*stack1 = head;
 	}
-	if (!stacks->is_double_operations)
-		store_operation(stacks, "ra");
-}
-
-void	rb(t_stacks *stacks)
-{
-	t_stack	*tmp;
-
-	if (stacks->stack_b && stacks->stack_b->next)
+	if (stack1 && *stack1 && stack2 && *stack2 && (*stack2)->next != *stack2)
 	{
-		tmp = stacks->stack_b;
-		stacks->stack_b = stacks->stack_b->next;
-		ft_stackadd_back(&stacks->stack_b, tmp);
-		tmp->next = NULL;
+		rotate(stack2, NULL, stacks, operation);
+		return ;
 	}
-	if (!stacks->is_double_operations)
-		store_operation(stacks, "rb");
-}
-
-void	rr(t_stacks *stacks)
-{
-	stacks->is_double_operations = 1;
-	ra(stacks);
-	rb(stacks);
-	store_operation(stacks, "rr");
+	else if (stack2 && *stack2 && (*stack2)->next != *stack2)
+		rotate(stack1, stack2, stacks, operation);
+	store_operation(stacks, operation);
 }

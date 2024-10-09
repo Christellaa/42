@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 14:02:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/09 10:45:41 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/09 20:36:05 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,26 @@ int	check_sorted(t_stack *stack_a)
 	t_stack	*tmp;
 
 	tmp = stack_a;
-	while (tmp && tmp->next)
+	while (tmp && tmp->next != stack_a)
 	{
 		if (tmp->idx > tmp->next->idx)
 			return (0);
 		tmp = tmp->next;
 	}
-	return (1);
-}
-
-int	check_inverse_sorted(t_stack *stack_b)
-{
-	t_stack	*tmp;
-
-	tmp = stack_b;
-	while (tmp && tmp->next)
-	{
-		if (*(int *)tmp->content < *(int *)tmp->next->content)
-			return (0);
-		tmp = tmp->next;
-	}
+	if (tmp->idx < stack_a->idx)
+		return (0);
 	return (1);
 }
 
 void	find_min_max(t_stacks *stacks)
 {
 	t_stack	*tmp;
+	int		first_iteration;
 
 	tmp = stacks->stack_a;
 	stacks->min_nb = tmp->idx;
 	stacks->max_nb = tmp->idx;
+	first_iteration = 1;
 	while (tmp)
 	{
 		if (tmp->idx < stacks->min_nb)
@@ -54,6 +44,9 @@ void	find_min_max(t_stacks *stacks)
 		if (tmp->idx > stacks->max_nb)
 			stacks->max_nb = tmp->idx;
 		tmp = tmp->next;
+		if (tmp == stacks->stack_a && !first_iteration)
+			break ;
+		first_iteration = 0;
 	}
 }
 

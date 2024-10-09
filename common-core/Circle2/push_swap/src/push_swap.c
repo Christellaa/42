@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:16:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/06 17:18:04 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/09 20:34:53 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	is_duplicate(t_stack *stack, int *content)
 		if (*(int *)tmp->content == *content)
 			return (0);
 		tmp = tmp->next;
+		if (tmp == stack)
+			break ;
 	}
 	return (1);
 }
@@ -70,16 +72,16 @@ void	put_args_in_stack_a(char **av, t_stacks *stacks)
 	while (av[i])
 	{
 		if (!split_args(av, &numbers, i))
-			cleanup(stacks, numbers, 0);
+			cleanup(stacks, &numbers, 0);
 		j = 0;
 		while (numbers[j])
 		{
 			if (!create_node(&(stacks->stack_a), numbers, j))
-				cleanup(stacks, numbers, 0);
+				cleanup(stacks, &numbers, 0);
 			stacks->count++;
 			j++;
 		}
-		free_group(numbers);
+		free_group(&numbers);
 		i++;
 	}
 }
