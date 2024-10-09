@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 14:02:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/07 18:38:01 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/09 10:45:41 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,33 +40,6 @@ int	check_inverse_sorted(t_stack *stack_b)
 	return (1);
 }
 
-t_stack	*index_numbers(t_stacks *stacks)
-{
-	t_stack	*tmp;
-	t_stack	*compare;
-	t_stack	*nb_max;
-	int		prev_count;
-
-	tmp = stacks->stack_a;
-	nb_max = stacks->stack_a;
-	while (tmp)
-	{
-		prev_count = 0;
-		compare = stacks->stack_a;
-		while (compare)
-		{
-			if (*(int *)tmp->content > *(int *)compare->content)
-				prev_count++;
-			compare = compare->next;
-		}
-		tmp->idx = prev_count;
-		if (tmp->idx > nb_max->idx)
-			nb_max = tmp;
-		tmp = tmp->next;
-	}
-	return (nb_max);
-}
-
 void	find_min_max(t_stacks *stacks)
 {
 	t_stack	*tmp;
@@ -88,7 +61,7 @@ void	algorithms(t_stacks *stacks)
 {
 	t_stack	*nb_max;
 
-	nb_max = index_numbers(stacks);
+	nb_max = index_numbers(stacks->stack_a);
 	if (check_sorted(stacks->stack_a))
 		cleanup(stacks, NULL, 1);
 	if (stacks->count <= 5)

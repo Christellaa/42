@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 10:23:52 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/05 10:42:08 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/09 10:47:31 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_stack	*ft_stacknew(void *content)
 		return (NULL);
 	new_content->content = content;
 	new_content->next = NULL;
+	new_content->prev = NULL;
 	return (new_content);
 }
 
@@ -48,6 +49,7 @@ void	ft_stackadd_back(t_stack **stack, t_stack *new)
 	{
 		last = ft_stacklast(*stack);
 		last->next = new;
+		new->prev = last;
 	}
 	else
 		*stack = new;

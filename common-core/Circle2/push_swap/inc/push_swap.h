@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:07:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/07 18:39:24 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/09 13:08:54 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_stack
 {
 	void			*content;
 	int				idx;
+	struct s_stack	*prev;
 	struct s_stack	*next;
 }	t_stack;
 
@@ -46,6 +47,7 @@ void	ft_stackadd_back(t_stack **stack, t_stack *new);
 int		ft_stacksize(t_stack *stack);
 // inits.c
 void	init_struct(t_stacks *stacks);
+t_stack	*index_numbers(t_stack *stack_a);
 // cleanup.c
 void	store_operation(t_stacks *stacks, char *operation);
 void	print_operations(t_stacks *stacks);
@@ -70,7 +72,6 @@ void	ss(t_stacks *stacks);
 // algorithms.c
 int		check_sorted(t_stack *stack_a);
 int		check_inverse_sorted(t_stack *stack_b);
-t_stack	*index_numbers(t_stacks *stacks);
 void	find_min_max(t_stacks *stacks);
 void	algorithms(t_stacks *stacks);
 // simple_sort.c
