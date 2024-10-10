@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:07:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/09 20:29:51 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:00:49 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,14 @@ void	print_operations(t_stacks *stacks);
 void	free_stack(t_stack *stack);
 void	free_group(char ***group);
 void	cleanup(t_stacks *stacks, char ***numbers, int exit_type);
-// push.c
+// operations.c
+void	pop_head_stack1(t_stack **stack1, t_stack *tmp);
 void	push(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
 			char *operation);
-// rotate.c
 void	rotate(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
 			char *operation);
-// reverse_rotate.c
 void	rev_rotate(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
 				char *operation);
-// swap.c
 void	swap(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
 			char *operation);
 // algorithms.c
