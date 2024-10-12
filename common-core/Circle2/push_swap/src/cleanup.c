@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:25:23 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/09 20:31:16 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/12 10:18:53 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	store_operation(t_stacks *stacks, char *operation)
 {
 	char	**tmp;
 
-	tmp = ft_realloc(stacks->operations, \
-	sizeof(char *) * stacks->operation_count, \
-	sizeof(char *) * (stacks->operation_count + 2));
+	tmp = ft_realloc(stacks->operations, sizeof(char *)
+			* stacks->operation_count, sizeof(char *) * (stacks->operation_count
+				+ 2));
 	if (!tmp)
 		cleanup(stacks, NULL, 0);
 	stacks->operations = tmp;
@@ -54,7 +54,6 @@ void	free_stack(t_stack *stack)
 		{
 			tmp = stack;
 			stack = stack->next;
-			free(tmp->content);
 			free(tmp);
 			if (stack == start)
 				break ;

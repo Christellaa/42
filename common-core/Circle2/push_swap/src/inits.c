@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 14:02:59 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/09 22:00:59 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/12 10:42:20 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,33 +25,26 @@ void	init_struct(t_stacks *stacks)
 	stacks->is_double_operations = 0;
 }
 
-t_stack	*index_numbers(t_stack *stack_a)
+void	index_numbers(t_stack *stack)
 {
 	t_stack	*tmp;
-	t_stack	*compare;
-	t_stack	*nb_max;
-	int		prev_count;
+	int		count;
 
-	tmp = stack_a;
-	nb_max = stack_a;
+	tmp = stack;
+	count = -1;
 	while (tmp)
 	{
-		prev_count = 0;
-		compare = stack_a;
-		while (compare)
-		{
-			if (*(int *)tmp->content > *(int *)compare->content)
-				prev_count++;
-			compare = compare->next;
-			if (compare == stack_a)
-				break ;
-		}
-		tmp->idx = prev_count;
-		if (tmp->idx > nb_max->idx)
-			nb_max = tmp;
+		tmp->idx = ++count;
 		tmp = tmp->next;
-		if (tmp == stack_a)
+		if (tmp == stack)
 			break ;
 	}
-	return (nb_max);
+}
+
+int	get_median(t_stack *stack)
+{
+	int len;
+
+	len = ft_stacksize(stack);
+	return (len / 2);
 }

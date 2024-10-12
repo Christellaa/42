@@ -6,20 +6,20 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:16:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/09 20:34:53 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/12 11:15:59 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/push_swap.h"
 
-int	is_duplicate(t_stack *stack, int *content)
+int	is_duplicate(t_stack *stack, int content)
 {
 	t_stack	*tmp;
 
 	tmp = stack;
 	while (tmp)
 	{
-		if (*(int *)tmp->content == *content)
+		if (tmp->content == content)
 			return (0);
 		tmp = tmp->next;
 		if (tmp == stack)
@@ -38,26 +38,16 @@ int	split_args(char **av, char ***numbers, int i)
 
 int	create_node(t_stack **stack, char **numbers, int j)
 {
-	int		*content;
+	int		content;
 	t_stack	*new_node;
 
-	content = malloc(sizeof(int));
-	if (!content)
+	content = ft_atoi(numbers[j]);
+	if (!is_duplicate(*stack, content) || (content == 0
+			&& numbers[j][0] != '0'))
 		return (0);
-	*content = ft_atoi(numbers[j]);
-	if (!is_duplicate(*stack, content) \
-		|| (*content == 0 && numbers[j][0] != '0'))
-	{
-		free(content);
-		return (0);
-	}
-	new_node = ft_stacknew((void *)content);
+	new_node = ft_stacknew(content);
 	if (!new_node)
-	{
-		free(content);
 		return (0);
-	}
-	new_node->idx = -1;
 	ft_stackadd_back(stack, new_node);
 	return (1);
 }

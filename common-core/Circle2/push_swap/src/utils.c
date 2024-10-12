@@ -6,13 +6,13 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 10:23:52 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/09 16:34:14 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/12 14:57:39 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/push_swap.h"
 
-t_stack	*ft_stacknew(void *content)
+t_stack	*ft_stacknew(int content)
 {
 	t_stack	*new_content;
 
@@ -22,6 +22,8 @@ t_stack	*ft_stacknew(void *content)
 	new_content->content = content;
 	new_content->next = NULL;
 	new_content->prev = NULL;
+	new_content->idx = -1;
+	new_content->target = NULL;
 	return (new_content);
 }
 
@@ -56,10 +58,10 @@ int	ft_stacksize(t_stack *stack)
 	start = stack;
 	while (stack)
 	{
+		i++;
 		stack = stack->next;
 		if (stack == start)
 			break ;
-		i++;
 	}
 	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:15:34 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/10 15:59:48 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/12 14:29:57 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	pop_head_stack1(t_stack **stack1, t_stack *tmp)
 	}
 }
 
-void	push(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
-			char *operation)
+void	push(t_stack **stack1, t_stack **stack2, t_stacks *stacks,
+		char *operation)
 {
 	t_stack	*tmp;
 
@@ -49,10 +49,9 @@ void	push(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
 	store_operation(stacks, operation);
 }
 
-void	rotate(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
-			char *operation)
+void	rotate(t_stack **stack1, t_stack **stack2, t_stacks *stacks,
+		char *operation)
 {
-
 	if (stack1 && *stack1 && (*stack1)->next != *stack1)
 		*stack1 = (*stack1)->next;
 	if (stack2 && *stack2 && (*stack2)->next != *stack2)
@@ -63,8 +62,8 @@ void	rotate(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
 	store_operation(stacks, operation);
 }
 
-void	rev_rotate(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
-				char *operation)
+void	rev_rotate(t_stack **stack1, t_stack **stack2, t_stacks *stacks,
+		char *operation)
 {
 	if (stack1 && *stack1 && (*stack1)->next != *stack1)
 		*stack1 = (*stack1)->prev;
@@ -76,8 +75,8 @@ void	rev_rotate(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
 	store_operation(stacks, operation);
 }
 
-void	swap(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
-			char *operation)
+void	swap(t_stack **stack1, t_stack **stack2, t_stacks *stacks,
+		char *operation)
 {
 	t_stack	*first;
 	t_stack	*second;
