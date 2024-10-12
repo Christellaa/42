@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:07:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/10 16:00:49 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/12 14:00:31 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,58 +20,67 @@
 
 typedef struct s_stack
 {
-	void			*content;
+	int				content;
 	int				idx;
+	struct s_stack	*target;
+	int				moves;
 	struct s_stack	*prev;
 	struct s_stack	*next;
-}	t_stack;
+}					t_stack;
 
 typedef struct s_stacks
 {
-	t_stack	*stack_a;
-	t_stack	*stack_b;
-	int		size_b;
-	int		count;
-	int		min_nb;
-	int		max_nb;
-	char	**operations;
-	int		operation_count;
-	int		is_double_operations;
-}	t_stacks;
+	t_stack			*stack_a;
+	t_stack			*stack_b;
+	int				size_b;
+	int				count;
+	int				min_nb;
+	int				max_nb;
+	char			**operations;
+	int				operation_count;
+	int				is_double_operations;
+}					t_stacks;
 
 // utils.c
-t_stack	*ft_stacknew(void *content);
-void	ft_stackadd_back(t_stack **stack, t_stack *new);
-int		ft_stacksize(t_stack *stack);
+t_stack				*ft_stacknew(int content);
+void				ft_stackadd_back(t_stack **stack, t_stack *new);
+int					ft_stacksize(t_stack *stack);
 // inits.c
-void	init_struct(t_stacks *stacks);
-t_stack	*index_numbers(t_stack *stack_a);
+void				init_struct(t_stacks *stacks);
+void				index_numbers(t_stack *stack);
+int					get_median(t_stack *stack);
 // cleanup.c
-void	store_operation(t_stacks *stacks, char *operation);
-void	print_operations(t_stacks *stacks);
-void	free_stack(t_stack *stack);
-void	free_group(char ***group);
-void	cleanup(t_stacks *stacks, char ***numbers, int exit_type);
+void				store_operation(t_stacks *stacks, char *operation);
+void				print_operations(t_stacks *stacks);
+void				free_stack(t_stack *stack);
+void				free_group(char ***group);
+void				cleanup(t_stacks *stacks, char ***numbers, int exit_type);
 // operations.c
-void	pop_head_stack1(t_stack **stack1, t_stack *tmp);
-void	push(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
-			char *operation);
-void	rotate(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
-			char *operation);
-void	rev_rotate(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
-				char *operation);
-void	swap(t_stack **stack1, t_stack **stack2, t_stacks *stacks, \
-			char *operation);
+void				pop_head_stack1(t_stack **stack1, t_stack *tmp);
+void				push(t_stack **stack1, t_stack **stack2, t_stacks *stacks,
+						char *operation);
+void				rotate(t_stack **stack1, t_stack **stack2, t_stacks *stacks,
+						char *operation);
+void				rev_rotate(t_stack **stack1, t_stack **stack2,
+						t_stacks *stacks, char *operation);
+void				swap(t_stack **stack1, t_stack **stack2, t_stacks *stacks,
+						char *operation);
 // algorithms.c
-int		check_sorted(t_stack *stack_a);
-void	find_min_max(t_stacks *stacks);
-void	algorithms(t_stacks *stacks);
-// simple_sort.c
-void	sort_3_numbers(t_stacks *stacks);
-int		get_pos_idx(t_stack *stack_a, int idx);
-void	sort_4_to_5_numbers(t_stacks *stacks);
-void	simple_sort(t_stacks *stacks);
-// radix_sort.c
-void	radix_sort(t_stacks *stacks, t_stack *nb_max);
+int					check_sorted(t_stack *stack_a);
+void				sort_3_numbers(t_stacks *stacks);
+void				algorithms(t_stacks *stacks);
+// complex_sort_utils.c
+t_stack				*find_min_nb(t_stack *stack);
+void				determine_min_moves(int moves_b, int moves_a,
+						t_stack *tmp_b);
+int					calculate_moves(t_stack *stack, int median, int stack_size);
+void				get_min_moves(t_stacks *stacks, int median_a, int median_b);
+// complex_sort.c
+void				get_target(t_stacks *stacks);
+t_stack				*find_cheapest_number(t_stacks *stacks);
+void				push_cheapest_number(t_stacks *stacks, t_stack *cheapest,
+						int median_b, int median_a);
+void				push_to_stack_a(t_stacks *stacks);
+void				complex_sort(t_stacks *stacks);
 
 #endif
