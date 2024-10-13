@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 15:07:36 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/13 17:45:53 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/13 21:06:40 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ t_stack	*find_cheapest_number(t_stacks *stacks)
 	return (cheapest);
 }
 
-void	push_cheapest_number(t_stacks *stacks, t_stack *cheapest, int median_b,
-		int median_a)
+void	rotate_cheapest_number(t_stacks *stacks, t_stack *cheapest,
+		int median_b, int median_a)
 {
 	if (cheapest->idx != 0 && cheapest->target->idx != 0
 		&& cheapest->idx > median_b && cheapest->target->idx > median_a)
@@ -75,7 +75,8 @@ void	push_to_stack_a(t_stacks *stacks)
 	cheapest = find_cheapest_number(stacks);
 	while (cheapest->idx != 0 || cheapest->target->idx != 0)
 	{
-		push_cheapest_number(stacks, cheapest, median_stack_b, median_stack_a);
+		rotate_cheapest_number(stacks, cheapest, median_stack_b,
+			median_stack_a);
 		if (cheapest->idx == 0 && cheapest->target->idx == 0)
 			break ;
 	}

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:07:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/13 20:34:59 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/13 21:02:45 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void				get_target(t_stacks *stacks);
 void				move_min_number_to_top(t_stack *min_nb, t_stacks *stacks);
 // complex_sort.c
 t_stack				*find_cheapest_number(t_stacks *stacks);
-void				push_cheapest_number(t_stacks *stacks, t_stack *cheapest,
+void				rotate_cheapest_number(t_stacks *stacks, t_stack *cheapest,
 						int median_b, int median_a);
 void				push_to_stack_a(t_stacks *stacks);
 void				move_to_stack_b(int len_stack_a, int median_stack_a,
