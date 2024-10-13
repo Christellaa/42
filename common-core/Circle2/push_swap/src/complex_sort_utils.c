@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/12 13:55:12 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/12 17:00:04 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/10/13 17:20:52 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/10/13 18:56:36 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,49 +30,44 @@ t_stack	*find_min_nb(t_stack *stack)
 	return (min_nb);
 }
 
-void	determine_min_moves(int moves_b, int moves_a, t_stack *tmp_b)
-{
-	if (moves_b > moves_a)
-		tmp_b->moves = moves_b;
-	else
-		tmp_b->moves = moves_a;
-}
-
-int	calculate_moves(t_stack *stack, int median, int stack_size)
-{
-	if (stack->idx <= median)
-		return (stack->idx);
-	return (stack_size - stack->idx);
-}
-
-void	get_min_moves(t_stacks *stacks, int median_a, int median_b)
+void	get_target(t_stacks *stacks)
 {
 	t_stack	*tmp_b;
 	t_stack	*tmp_a;
-	int		moves_b;
-	int		moves_a;
 
 	tmp_b = stacks->stack_b;
 	while (tmp_b)
 	{
-		tmp_b->moves = 0;
-		moves_b = 0;
-		moves_a = 0;
-		tmp_a = tmp_b->target;
-		moves_b = calculate_moves(tmp_b, median_b,
-				ft_stacksize(stacks->stack_b));
-		// ft_printf("tmp: %d, target: %d, mediana: %d, sizea: %d\n",
-		//	tmp_b->content, tmp_a->content, median_a,
-		//	ft_stacksize(stacks->stack_a));
-		moves_a = calculate_moves(tmp_a, median_a,
-				ft_stacksize(stacks->stack_a));
-		if ((tmp_b->idx < median_b && tmp_a->idx < median_a)
-			|| (tmp_b->idx > median_b && tmp_a->idx > median_a))
-			determine_min_moves(moves_b, moves_a, tmp_b);
-		else
-			tmp_b->moves = moves_b + moves_a;
+		tmp_b->target = NULL;
+		tmp_a = stacks->stack_a;
+		while (tmp_a)
+		{
+			if (tmp_b->content < tmp_a->content && (tmp_b->target == NULL
+					|| tmp_a->content < tmp_b->target->content))
+				tmp_b->target = tmp_a;
+			tmp_a = tmp_a->next;
+			if (tmp_a == stacks->stack_a)
+				break ;
+		}
+		if (tmp_b->target == NULL)
+			tmp_b->target = find_min_nb(stacks->stack_a);
 		tmp_b = tmp_b->next;
 		if (tmp_b == stacks->stack_b)
 			break ;
+	}
+}
+
+void	move_min_number_to_top(t_stack *min_nb, t_stacks *stacks)
+{
+	int	median_a;
+
+	median_a = get_median(stacks->stack_a);
+	while (min_nb->idx != 0)
+	{
+		if (min_nb->idx > median_a)
+			rev_rotate(&stacks->stack_a, NULL, stacks, "rra");
+		else
+			rotate(&stacks->stack_a, NULL, stacks, "ra");
+		index_numbers(stacks->stack_a);
 	}
 }

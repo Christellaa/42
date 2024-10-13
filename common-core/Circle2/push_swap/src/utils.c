@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 10:23:52 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/12 14:57:39 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/13 20:34:47 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,25 @@ t_stack	*ft_stacknew(int content)
 	return (new_content);
 }
 
-void	ft_stackadd_back(t_stack **stack, t_stack *new)
+void	ft_stackadd_back(t_stack **stack, t_stack *new_node)
 {
 	t_stack	*last;
 
-	if (!stack || !new)
+	if (!stack || !new_node)
 		return ;
 	if (*stack)
 	{
 		last = (*stack)->prev;
-		last->next = new;
-		new->prev = last;
-		new->next = *stack;
-		(*stack)->prev = new;
+		last->next = new_node;
+		new_node->prev = last;
+		new_node->next = *stack;
+		(*stack)->prev = new_node;
 	}
 	else
 	{
-		new->next = new;
-		new->prev = new;
-		*stack = new;
+		new_node->next = new_node;
+		new_node->prev = new_node;
+		*stack = new_node;
 	}
 }
 
