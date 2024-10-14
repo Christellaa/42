@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 09:16:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/14 14:14:04 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/10/13 19:46:40 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/10/14 14:41:59 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/push_swap.h"
+#include "../inc_bonus/push_swap_bonus.h"
 
 int	is_duplicate(t_stack *stack, int content)
 {
@@ -62,13 +62,12 @@ void	put_args_in_stack_a(char **av, t_stacks *stacks)
 	while (av[i])
 	{
 		if (!split_args(av, &numbers, i))
-			cleanup(stacks, &numbers, 0);
+			cleanup(stacks, &numbers, 1);
 		j = 0;
 		while (numbers[j])
 		{
 			if (!create_node(&(stacks->stack_a), numbers, j))
-				cleanup(stacks, &numbers, 0);
-			stacks->count++;
+				cleanup(stacks, &numbers, 1);
 			j++;
 		}
 		free_group(&numbers);
@@ -79,13 +78,23 @@ void	put_args_in_stack_a(char **av, t_stacks *stacks)
 int	main(int ac, char **av)
 {
 	t_stacks	stacks;
+	char		*line;
 
-	if (ac > 1)
+	if (ac < 2)
+		return (0);
+	stacks.stack_a = NULL;
+	stacks.stack_b = NULL;
+	put_args_in_stack_a(av, &stacks);
+	line = get_next_line(STDIN_FILENO);
+	while (line)
 	{
-		init_struct(&stacks);
-		put_args_in_stack_a(av, &stacks);
-		algorithms(&stacks);
-		cleanup(&stacks, NULL, 1);
+		ft_printf("line: %s\n", line);
+		check_valid_operation(line);
+		apply_operation(&stacks, line);
+		free(line);
+		line = get_next_line(STDIN_FILENO);
 	}
-	return (0);
+	if (!check_sorted(stacks.stack_a) || stacks.stack_b)
+		cleanup(&stacks, NULL, 2);
+	cleanup(&stacks, NULL, 0);
 }
