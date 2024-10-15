@@ -11,7 +11,7 @@ OBJS_B := $(SRCB:%.c=$(OBJS_DIR)/%.o)
 INCLUDES := inc/push_swap.h
 INCLUDESB := inc_bonus/push_swap_bonus.h
 CC := gcc
-CFLAGS := -Wall -Wextra -Werror -g3
+CFLAGS := -Wall -Wextra -Werror
 LIBFT_DIR := libft
 LIBFT := $(LIBFT_DIR)/libft.a
 
