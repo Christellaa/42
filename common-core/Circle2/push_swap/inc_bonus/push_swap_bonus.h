@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:07:37 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/14 14:07:22 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:06:18 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,10 @@ typedef struct s_stacks
 t_stack				*ft_stacknew(int content);
 void				ft_stackadd_back(t_stack **stack, t_stack *new_node);
 int					ft_stacksize(t_stack *stack);
-int					check_sorted(t_stack *stack_a);
 int					check_valid_operation(char *operation);
 void				apply_operation(t_stacks *stacks, char *operation);
-// inits_bonus.c
-void				init_struct(t_stacks *stacks);
 // cleanup_bonus.c
+int					check_sorted(t_stack *stack_a);
 void				free_stack(t_stack *stack);
 void				free_group(char ***group);
 void				cleanup(t_stacks *stacks, char ***numbers, int exit_type);

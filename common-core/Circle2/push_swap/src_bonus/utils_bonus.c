@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 10:23:52 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/14 14:30:43 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:06:24 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,24 +62,6 @@ int	ft_stacksize(t_stack *stack)
 			break ;
 	}
 	return (i);
-}
-
-int	check_sorted(t_stack *stack_a)
-{
-	t_stack	*tmp;
-
-	tmp = stack_a;
-	while (tmp)
-	{
-		if (tmp->content > tmp->next->content)
-			return (0);
-		tmp = tmp->next;
-		if (tmp == stack_a || tmp->next == stack_a)
-			break ;
-	}
-	if (tmp->content < stack_a->content)
-		return (0);
-	return (1);
 }
 
 int	check_valid_operation(char *operation)

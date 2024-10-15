@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 14:02:59 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/13 13:51:28 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:04:52 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	index_numbers(t_stack *stack)
 
 int	get_median(t_stack *stack)
 {
-	int len;
+	int	len;
 
 	len = ft_stacksize(stack);
 	return (len / 2);
