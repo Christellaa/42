@@ -3,17 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:18:34 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/28 15:18:35 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:31:24 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Outputs n to fd
-** Returns nothing
-*/
 
 #include "libft.h"
 

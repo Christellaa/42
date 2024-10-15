@@ -3,19 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:20:55 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/21 09:49:53 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:13:15 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Checks the first occurrence of little (needle) in big (haystack), up to len
-** Characters after null terminator are not checked
-** Returns a pointer to the first occurrence of needle in haystack
-** or big if little is empty, or NULL if little is not found in big
-*/
 
 #include "libft.h"
 

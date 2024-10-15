@@ -3,18 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 14:14:53 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/21 14:55:42 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:49:39 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Compares the first n bytes (each interpreted as unsigned char) of s1 and s2
-** Returns 0 if s1 == s2, a negative value if s1 < s2, a positive value if
-** s1 > s2
-*/
 
 #include "libft.h"
 

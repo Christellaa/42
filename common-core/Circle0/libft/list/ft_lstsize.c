@@ -1,19 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 09:12:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/31 09:12:49 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 18:42:20 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Counts the number of nodes in a list
-** Returns the length of the list
-*/
 
 #include "libft.h"
 

@@ -3,35 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:45:34 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/27 16:09:21 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:23:05 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** Allocates a new string and store the conversion of n to ASCII characters
-** Negative numbers must be handled
-** Returns the string representing the int, or NULL if the allocation fails
-*/
-
 #include "libft.h"
 
-static char	*ft_strcpy(char *dst, const char *src)
-{
-	size_t	i;
-
-	i = 0;
-	while (src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
-}
-
+// count the number of digits in the number
 static int	count_digits(int n)
 {
 	int	counter;
@@ -47,6 +28,7 @@ static int	count_digits(int n)
 	return (counter);
 }
 
+// reverse the string to get the numbers in order
 static void	reverse(char *s, int len, int is_negative)
 {
 	int		start;
@@ -68,6 +50,7 @@ static void	reverse(char *s, int len, int is_negative)
 	}
 }
 
+// convert the number to a string
 static char	*convert(int n, char *s)
 {
 	int	i;

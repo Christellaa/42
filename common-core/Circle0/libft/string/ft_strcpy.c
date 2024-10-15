@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 10:52:29 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/06 21:00:24 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/10/14 19:22:07 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/10/14 19:22:16 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "libft.h"
 
-char	*ft_strnjoin_free_s1(char *s1, char const *s2, size_t len)
+static char	*ft_strcpy(char *dst, const char *src)
 {
-	char	*new_s;
-	size_t	len_s1;
+	size_t	i;
 
-	if (s1)
-		len_s1 = ft_strlen(s1);
-	else
-		len_s1 = 0;
-	new_s = malloc(len_s1 + len + 1);
-	if (!new_s)
-		return (NULL);
-	if (s1)
+	i = 0;
+	while (src[i])
 	{
-		ft_memcpy(new_s, s1, len_s1);
-		free(s1);
+		dst[i] = src[i];
+		i++;
 	}
-	if (s2)
-		ft_memcpy(new_s + len_s1, s2, len);
-	new_s[len_s1 + len] = '\0';
-	return (new_s);
+	dst[i] = '\0';
+	return (dst);
 }

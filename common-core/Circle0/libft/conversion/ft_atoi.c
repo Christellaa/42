@@ -3,17 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:50:15 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/21 10:42:15 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:20:05 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Converts the ASCII string pointed to by nptr to an int value.
-** Returns the converted value, or 0 on error
-*/
 
 #include "libft.h"
 

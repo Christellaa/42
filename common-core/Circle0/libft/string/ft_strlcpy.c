@@ -3,17 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:12:30 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/16 14:27:08 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:09:40 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Copy n - 1 characters from src to dst
-** Returns the total length of the string created in dst (so the length of src)
-*/
 
 #include "libft.h"
 

@@ -3,22 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:46:54 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/22 14:40:43 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:14:58 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** Allocates a new string which is a copy of s1 with the characters specified
-** in set removed
-** Returns the trimmed string, or NULL if the allocation fails
-*/
-
 #include "libft.h"
 
-int	is_set(char c, char const *set)
+int	is_in_set(char c, char const *set)
 {
 	while (*set)
 	{
@@ -39,9 +33,9 @@ char	*ft_strtrim(char const *s1, char const *set)
 	start = 0;
 	end = ft_strlen(s1);
 	i = 0;
-	while (s1[start] && is_set(s1[start], set))
+	while (s1[start] && is_in_set(s1[start], set))
 		start++;
-	while (end > start && is_set(s1[end - 1], set))
+	while (end > start && is_in_set(s1[end - 1], set))
 		end--;
 	newstr = malloc((end - start + 1) * sizeof(char));
 	if (!newstr)

@@ -3,17 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 10:26:46 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/22 13:45:57 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:08:21 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Allocates a new string, which is the concatenation of s1 and s2
-** Returns the new string, or NULL if the allocation fails
-*/
 
 #include "libft.h"
 

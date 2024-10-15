@@ -3,20 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:26:43 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/22 09:54:17 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:50:22 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Allocates memory for an array of nmemb elements of size bytes each and the 
-** memory is set to zero
-** If nmemb or size is 0, then malloc(0) is returned
-** If nmemb is greater than SIZE_MAX / size, then NULL is returned
-** Returns a pointer to the allocated memory, or NULL if the request fails
-*/
 
 #include "libft.h"
 

@@ -3,18 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 13:44:02 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/21 14:14:18 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:48:56 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Checks for the first occurrence of c (converted to an unsigned char) in s
-** until n bytes
-** Returns a pointer to the byte in s that has the value c, or NULL if not found
-*/
 
 #include "libft.h"
 

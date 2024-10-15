@@ -3,18 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 08:28:56 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/21 09:00:42 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:14:01 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Returns a pointer to the last occurrence of the character c in the string s
-** or NULL if the character is not found
-** The terminating null byte is considered to be part of the string
-*/
 
 #include "libft.h"
 

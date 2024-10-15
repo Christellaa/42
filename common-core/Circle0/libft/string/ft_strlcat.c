@@ -3,18 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:25:49 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/16 14:41:10 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:08:54 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Concatenate src to dst
-** Returns the total length of the string created in dst (so the length of
-** dst + src or siz + src if dst is shorter than siz)
-*/
 
 #include "libft.h"
 

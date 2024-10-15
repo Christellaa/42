@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 08:08:03 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/06/06 08:08:06 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:46:07 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static int	print_percent(void)
-{
-	return (print_char('%'));
-}
 
 static int	convert(char current, va_list ptr, int len)
 {
@@ -32,7 +27,7 @@ static int	convert(char current, va_list ptr, int len)
 	else if (current == 'p')
 		len += print_pointer(va_arg(ptr, void *));
 	else if (current == '%')
-		len += print_percent();
+		len += print_char('%');
 	else
 		return (-1);
 	return (len);

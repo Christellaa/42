@@ -3,18 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:14:45 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/28 11:14:49 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:10:46 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Applies f to each character of s and stores the result in a new string
-** Returns the string created from the successive applications of f, or NULL
-** if the allocation fails
-*/
 
 #include "libft.h"
 

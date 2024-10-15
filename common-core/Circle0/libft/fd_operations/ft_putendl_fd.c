@@ -3,17 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:10:52 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/28 15:10:55 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:30:07 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Outputs s to fd followed by a newline
-** Returns nothing
-*/
 
 #include "libft.h"
 

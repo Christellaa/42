@@ -6,14 +6,9 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 10:42:01 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/05 14:52:28 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:10:16 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Calculates the length of a string, excluding the terminating null byte
-** Returns the length of the string
-*/
 
 #include "libft.h"
 

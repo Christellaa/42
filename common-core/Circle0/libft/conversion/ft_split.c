@@ -3,21 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:41:36 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/27 15:44:31 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:24:07 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** Allocates an new array and store the substrs obtained from splitting the
-** string s at each occurence of c
-** Returns the array of strings obtained, or NULL if the allocation fails
-*/
-
 #include "libft.h"
 
+// free the substrings
 static void	*free_substr(char **str)
 {
 	int	i;
@@ -32,6 +27,7 @@ static void	*free_substr(char **str)
 	return (NULL);
 }
 
+// count the number of substrings
 static size_t	count_substrs(char const *s, char c)
 {
 	int	count;
@@ -51,6 +47,7 @@ static size_t	count_substrs(char const *s, char c)
 	return (count);
 }
 
+// create substring
 static char	*create_substr(char const *str, char sep)
 {
 	int		i;
@@ -72,8 +69,9 @@ static char	*create_substr(char const *str, char sep)
 	return (substr);
 }
 
-static char	**split_substrs(char const *s, char sep, char **arr, \
-							size_t substr_count)
+// split the substrings
+static char	**split_substrs(char const *s, char sep, char **arr,
+		size_t substr_count)
 {
 	size_t	i;
 	size_t	j;

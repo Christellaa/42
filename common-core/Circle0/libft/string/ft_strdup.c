@@ -6,15 +6,9 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 14:57:48 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/09/06 16:12:03 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:06:15 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Copy from string s to a new string
-** Returns a pointer to the new string, or NULL if the allocation fails
-** 
-*/
 
 #include "libft.h"
 

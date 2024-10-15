@@ -3,18 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:17:55 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/05/21 13:43:18 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:48:25 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Copies n bytes from memory area src to memory area dest
-** Memory areas may overlap
-** Returns a pointer to dest
-*/
 
 #include "libft.h"
 
