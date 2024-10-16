@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 19:46:40 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/14 14:41:59 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:34:25 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int	main(int ac, char **av)
 	line = get_next_line(STDIN_FILENO);
 	while (line)
 	{
-		ft_printf("line: %s\n", line);
 		check_valid_operation(line);
 		apply_operation(&stacks, line);
 		free(line);
