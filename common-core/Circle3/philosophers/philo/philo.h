@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/26 12:41:14 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/26 15:56:27 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct s_philo
 	int				id;
 	int				times_eaten;
 	int				dead;
+	pthread_t		thread_id;
+	pthread_mutex_t	*lock;
 	struct s_philo	*next;
 }					t_philo;
 
@@ -44,6 +46,10 @@ t_philo				*ft_new_philo(int id);
 t_philo				*ft_list_last(t_philo *list);
 void				ft_add_back_philo(t_philo **list, t_philo *new_philo);
 // cleanup.c
+void				clean_list(t_philo *philo_list);
 void				ft_clean(t_philo *philo_list, int exit_type, char *msg);
+// simulation.c
+void				*actions(void *arg);
+void				run_simulation(t_philo **philo_list, t_args args);
 
 #endif

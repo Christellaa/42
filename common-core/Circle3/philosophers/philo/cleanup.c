@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 12:07:17 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/26 12:43:19 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/26 15:56:41 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	clean_list(t_philo *philo_list)
 {
-	t_philo	*tmp;
+	t_philo	*philo;
 
 	while (philo_list)
 	{
-		tmp = philo_list;
+		philo = philo_list;
 		philo_list = philo_list->next;
-		free(tmp);
+		free(philo);
 	}
 }
 

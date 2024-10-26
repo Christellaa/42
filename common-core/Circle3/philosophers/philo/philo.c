@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:14:20 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/26 12:44:27 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/10/26 15:57:26 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	main(int ac, char **av)
 		ft_clean(philo_list, 1, "Wrong number of arguments.");
 	if (parse_args(ac, av, &args, &philo_list) == 0)
 		ft_clean(philo_list, 1, "Arguments are not numbers or parsing error.");
+	run_simulation(&philo_list, args);
 	ft_clean(philo_list, 0, NULL);
 }
 
