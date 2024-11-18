@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 09:16:22 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/14 14:14:04 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:19:37 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ int	create_node(t_stack **stack, char **numbers, int j)
 
 	content = ft_atoi(numbers[j]);
 	if (!is_duplicate(*stack, content) || (content == 0
-			&& numbers[j][0] != '0'))
+			&& !(ft_strncmp(numbers[j], "0", ft_strlen(numbers[j])) == 0
+				|| ft_strncmp(numbers[j], "-0", ft_strlen(numbers[j])) == 0
+				|| ft_strncmp(numbers[j], "+0", ft_strlen(numbers[j])) == 0)))
 		return (0);
 	new_node = ft_stacknew(content);
 	if (!new_node)
