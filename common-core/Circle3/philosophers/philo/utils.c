@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:50:15 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/10/26 10:29:52 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:48:07 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,11 @@ int	ft_atoi(const char *nptr)
 	if (nptr[i])
 		return (0);
 	return (sign * res);
+}
+
+int	unlock_mutex_forks(t_philo *philo)
+{
+	pthread_mutex_unlock(philo->fork_right);
+	pthread_mutex_unlock(philo->fork_left);
+	return (0);
 }
