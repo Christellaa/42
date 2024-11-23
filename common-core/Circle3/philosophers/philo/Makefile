@@ -1,5 +1,5 @@
 NAME := philo
-SRCFILES := philo.c utils.c
+SRCFILES := philo.c utils.c cleanup.c
 OBJS := $(SRCFILES:.c=.o)
 INCLUDES := philo.h
 CC := gcc

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:52:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 10:32:02 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/23 10:56:02 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,8 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-// function to print error message then return 0,
-//	so the calling function will write its error and also return 0
+int	print_error(const char *msg)
+{
+	printf("Error: %s\n", msg);
+	return (0);
+}
