@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 13:40:27 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/23 14:32:10 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ typedef struct s_philo
 {
 	int				id;
 	pthread_t		thread_id;
-	pthread_mutex_t *fork_left; // points to forks of t_table
+	pthread_mutex_t	*fork_left;
 	pthread_mutex_t	*fork_right;
-	struct s_table *table; // to have access to shared data
+	struct s_table	*table;
 }					t_philo;
 
 typedef struct s_table
@@ -36,11 +36,21 @@ typedef struct s_table
 	int				time_eat;
 	int				time_sleep;
 	int				max_meals;
-	pthread_mutex_t *forks; // array of forks (1 for each philo)
+	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_lock;
 	pthread_mutex_t	ready_all_lock;
 	int				are_mutex_init;
 }					t_table;
+
+typedef enum e_status
+{
+	FORK_1,
+	FORK_2,
+	EAT,
+	SLEEP,
+	THINK,
+	DEAD
+}					t_status;
 
 // cleanup.c
 int					destroy_forks(t_table *table);
@@ -52,5 +62,9 @@ int					ft_strncmp(char *s1, const char *s2, size_t n);
 size_t				ft_strlen(const char *s);
 // simulation.c
 void				*run_simulation(void *arg);
+// inits.c
+void				assign_forks(t_philo *philo);
+int					init_philos(t_philo **philo_list, t_table *table);
+int					init_mutexes(t_table *table);
 
 #endif
