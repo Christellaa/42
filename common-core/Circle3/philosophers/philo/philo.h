@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 15:42:45 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/23 16:45:15 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_philo
 {
 	int				id;
 	pthread_t		thread_id;
+	int				times_eaten;
 	pthread_mutex_t	*fork_left;
 	pthread_mutex_t	*fork_right;
 	struct s_table	*table;

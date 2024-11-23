@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:30:39 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 16:41:48 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/23 16:48:10 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	philo_eat(t_philo *philo)
 	print_status(philo, FORK_2);
 	print_status(philo, EAT);
 	usleep(philo->table->time_eat);
+	philo->times_eaten++;
 	pthread_mutex_unlock(philo->fork_right);
 	pthread_mutex_unlock(philo->fork_left);
 	return (1);
@@ -81,7 +82,11 @@ void	*run_simulation(void *arg)
 	// eat
 	while (1)
 	{
+		if (philo->times_eaten == philo->table->max_meals)
+			break ;
 		if (philo_eat(philo) == 0)
+			break ;
+		if (philo->times_eaten == philo->table->max_meals)
 			break ;
 		// sleep
 		print_status(philo, SLEEP);
@@ -92,5 +97,4 @@ void	*run_simulation(void *arg)
 	return (NULL);
 }
 
-// 2. break if max_meals eaten (needs a loop)
 // 3. loop until death
