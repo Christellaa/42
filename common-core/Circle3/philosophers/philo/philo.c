@@ -6,11 +6,36 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:43:05 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 12:53:20 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/23 13:18:27 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	*run_simulation(void *arg)
+{
+	(void)arg;
+	return (NULL);
+}
+
+int	init_philos(t_philo **philo_list, t_table *table)
+{
+	int	i;
+
+	*philo_list = malloc(sizeof(t_philo) * table->nb_philo);
+	if (!*philo_list)
+		return (0);
+	i = -1;
+	while (++i < table->nb_philo)
+	{
+		(*philo_list)[i].id = i + 1;
+		(*philo_list)[i].table = table;
+		if (pthread_create(&(*philo_list)[i].thread_id, NULL, run_simulation,
+				&(*philo_list)[i]) != 0)
+			return (0);
+	}
+	return (1);
+}
 
 int	init_mutexes(t_table *table)
 {
@@ -39,7 +64,6 @@ int	parse_args(int ac, char **av, t_table *args)
 	int	i;
 
 	i = 0;
-	args->are_mutex_init = 0;
 	while (++i < ac)
 		if ((i != 5 && ft_atoi(av[i]) == 0) || (i == 5 && ft_atoi(av[i]) == 0
 				&& ft_strncmp(av[i], "0", ft_strlen(av[i])) != 0))
@@ -57,19 +81,24 @@ int	parse_args(int ac, char **av, t_table *args)
 int	main(int ac, char **av)
 {
 	t_table	*table;
+	t_philo	*philo_list;
 
 	table = malloc(sizeof(t_table));
+	philo_list = NULL;
 	if (!table)
-		ft_clean(table, 1, "Unable to allocate memory to table.");
+		ft_clean(table, philo_list, 1, "Unable to allocate memory to table.");
+	table->are_mutex_init = 0;
 	if (ac != 5 && ac != 6)
-		ft_clean(table, 1,
-			"Wrong number of arguments. It must be between 5 and 6 arguments.");
+		ft_clean(table, philo_list, 1,
+			"Wrong number of arguments.\nIt must be between 5 and 6 arguments.");
 	if (parse_args(ac, av, table) == 0)
-		ft_clean(table, 1, "Invalid arguments.\
+		ft_clean(table, philo_list, 1, "Invalid arguments.\
 			\nAll must be numeric and more than 0 (beside the 6th one).");
 	if (init_mutexes(table) == 0)
-		ft_clean(table, 1, "Unable to initialize mutexes.");
-	ft_clean(table, 0, NULL);
+		ft_clean(table, philo_list, 1, "Unable to initialize mutexes.");
+	if (init_philos(&philo_list, table) == 0)
+		ft_clean(table, philo_list, 1, "Unable to initialize philosophers.");
+	ft_clean(table, philo_list, 0, NULL);
 }
 
 /* print parsed args:
