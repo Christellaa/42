@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:30:39 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 15:44:41 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/23 16:32:35 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,18 @@ void	print_status(t_philo *philo, t_status status)
 	pthread_mutex_unlock(&philo->table->print_lock);
 }
 
+void	philo_eat(t_philo *philo)
+{
+	pthread_mutex_lock(philo->fork_left);
+	print_status(philo, FORK_1);
+	pthread_mutex_lock(philo->fork_right);
+	print_status(philo, FORK_2);
+	print_status(philo, EAT);
+	usleep(philo->table->time_eat);
+	pthread_mutex_unlock(philo->fork_right);
+	pthread_mutex_unlock(philo->fork_left);
+}
+
 void	*run_simulation(void *arg)
 {
 	t_philo	*philo;
@@ -53,15 +65,11 @@ void	*run_simulation(void *arg)
 		pthread_mutex_lock(&philo->table->start_lock);
 	}
 	pthread_mutex_unlock(&philo->table->start_lock);
+	// make philo % 2 wait time_eat before starting
+	if (philo->id % 2 == 0)
+		usleep(philo->table->time_eat);
 	// eat
-	pthread_mutex_lock(philo->fork_left);
-	print_status(philo, FORK_1);
-	pthread_mutex_lock(philo->fork_right);
-	print_status(philo, FORK_2);
-	print_status(philo, EAT);
-	usleep(philo->table->time_eat);
-	pthread_mutex_unlock(philo->fork_right);
-	pthread_mutex_unlock(philo->fork_left);
+	philo_eat(philo);
 	// sleep
 	print_status(philo, SLEEP);
 	usleep(philo->table->time_sleep);
