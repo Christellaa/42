@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 09:18:01 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/23 10:33:19 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,21 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+
+// define error messages
+
+typedef struct s_table
+{
+	int	nb_philo;
+	int	time_death;
+	int	time_eat;
+	int	time_sleep;
+	int	max_meals;
+}		t_table;
+
+// utils.c
+int		ft_atoi(const char *nptr);
+int		ft_strncmp(char *s1, const char *s2, size_t n);
+size_t	ft_strlen(const char *s);
 
 #endif
