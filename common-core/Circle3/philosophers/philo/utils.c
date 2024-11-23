@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:52:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 10:56:02 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/23 12:56:22 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,4 @@ size_t	ft_strlen(const char *s)
 	while (s[i])
 		i++;
 	return (i);
-}
-
-int	print_error(const char *msg)
-{
-	printf("Error: %s\n", msg);
-	return (0);
 }
