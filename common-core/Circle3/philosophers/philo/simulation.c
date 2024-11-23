@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:30:39 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 16:32:35 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/23 16:41:48 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,17 @@ void	print_status(t_philo *philo, t_status status)
 	pthread_mutex_unlock(&philo->table->print_lock);
 }
 
-void	philo_eat(t_philo *philo)
+int	philo_eat(t_philo *philo)
 {
+	if (philo->table->nb_philo == 1)
+	{
+		pthread_mutex_lock(philo->fork_left);
+		print_status(philo, FORK_1);
+		usleep(philo->table->time_death);
+		pthread_mutex_unlock(philo->fork_left);
+		print_status(philo, DEAD);
+		return (0);
+	}
 	pthread_mutex_lock(philo->fork_left);
 	print_status(philo, FORK_1);
 	pthread_mutex_lock(philo->fork_right);
@@ -46,6 +55,7 @@ void	philo_eat(t_philo *philo)
 	usleep(philo->table->time_eat);
 	pthread_mutex_unlock(philo->fork_right);
 	pthread_mutex_unlock(philo->fork_left);
+	return (1);
 }
 
 void	*run_simulation(void *arg)
@@ -69,11 +79,18 @@ void	*run_simulation(void *arg)
 	if (philo->id % 2 == 0)
 		usleep(philo->table->time_eat);
 	// eat
-	philo_eat(philo);
-	// sleep
-	print_status(philo, SLEEP);
-	usleep(philo->table->time_sleep);
-	// think
-	print_status(philo, THINK);
+	while (1)
+	{
+		if (philo_eat(philo) == 0)
+			break ;
+		// sleep
+		print_status(philo, SLEEP);
+		usleep(philo->table->time_sleep);
+		// think
+		print_status(philo, THINK);
+	}
 	return (NULL);
 }
+
+// 2. break if max_meals eaten (needs a loop)
+// 3. loop until death
