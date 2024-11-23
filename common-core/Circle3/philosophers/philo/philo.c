@@ -6,11 +6,29 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:43:05 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 14:03:34 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/23 15:43:50 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ready_all_philos(t_table *table)
+{
+	while (1)
+	{
+		pthread_mutex_lock(&table->ready_philos_lock);
+		if (table->ready_philos_counter == table->nb_philo)
+		{
+			pthread_mutex_lock(&table->start_lock);
+			table->start_time = get_time();
+			pthread_mutex_unlock(&table->start_lock);
+			pthread_mutex_unlock(&table->ready_philos_lock);
+			break ;
+		}
+		pthread_mutex_unlock(&table->ready_philos_lock);
+		usleep(100);
+	}
+}
 
 int	parse_args(int ac, char **av, t_table *args)
 {
@@ -28,6 +46,8 @@ int	parse_args(int ac, char **av, t_table *args)
 	args->max_meals = -1;
 	if (ac == 6)
 		args->max_meals = ft_atoi(av[5]);
+	args->ready_philos_counter = 0;
+	args->start_time = -1;
 	return (1);
 }
 
@@ -51,6 +71,7 @@ int	main(int ac, char **av)
 		ft_clean(table, philo_list, 1, "Unable to initialize mutexes.");
 	if (init_philos(&philo_list, table) == 0)
 		ft_clean(table, philo_list, 1, "Unable to initialize philosophers.");
+	ready_all_philos(table);
 	ft_clean(table, philo_list, 0, NULL);
 }
 

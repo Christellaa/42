@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 14:32:10 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/23 15:42:45 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ typedef struct s_table
 	int				max_meals;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_lock;
-	pthread_mutex_t	ready_all_lock;
+	pthread_mutex_t	ready_philos_lock;
+	int				ready_philos_counter;
 	int				are_mutex_init;
+	time_t			start_time;
+	pthread_mutex_t	start_lock;
 }					t_table;
 
 typedef enum e_status
@@ -60,6 +63,7 @@ void				ft_clean(t_table *table, t_philo *philo_list, int exit_type,
 int					ft_atoi(const char *nptr);
 int					ft_strncmp(char *s1, const char *s2, size_t n);
 size_t				ft_strlen(const char *s);
+time_t				get_time(void);
 // simulation.c
 void				*run_simulation(void *arg);
 // inits.c
