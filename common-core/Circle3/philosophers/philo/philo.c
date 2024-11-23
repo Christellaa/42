@@ -6,16 +6,26 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:43:05 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 13:18:27 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/23 13:51:21 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*run_simulation(void *arg)
+void	assign_forks(t_philo *philo)
 {
-	(void)arg;
-	return (NULL);
+	if (philo->id % 2)
+	{
+		philo->fork_left = &philo->table->forks[philo->id
+			% philo->table->nb_philo];
+		philo->fork_right = &philo->table->forks[philo->id - 1];
+	}
+	else
+	{
+		philo->fork_left = &philo->table->forks[philo->id - 1];
+		philo->fork_right = &philo->table->forks[philo->id
+			% philo->table->nb_philo];
+	}
 }
 
 int	init_philos(t_philo **philo_list, t_table *table)
@@ -30,6 +40,7 @@ int	init_philos(t_philo **philo_list, t_table *table)
 	{
 		(*philo_list)[i].id = i + 1;
 		(*philo_list)[i].table = table;
+		assign_forks(&(*philo_list)[i]);
 		if (pthread_create(&(*philo_list)[i].thread_id, NULL, run_simulation,
 				&(*philo_list)[i]) != 0)
 			return (0);

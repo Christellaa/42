@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 13:16:40 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/23 13:40:27 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ typedef struct s_philo
 {
 	int				id;
 	pthread_t		thread_id;
-	struct s_table	*table;
+	pthread_mutex_t *fork_left; // points to forks of t_table
+	pthread_mutex_t	*fork_right;
+	struct s_table *table; // to have access to shared data
 }					t_philo;
 
 typedef struct s_table
@@ -48,6 +50,7 @@ void				ft_clean(t_table *table, t_philo *philo_list, int exit_type,
 int					ft_atoi(const char *nptr);
 int					ft_strncmp(char *s1, const char *s2, size_t n);
 size_t				ft_strlen(const char *s);
-int					print_error(const char *msg);
+// simulation.c
+void				*run_simulation(void *arg);
 
 #endif
