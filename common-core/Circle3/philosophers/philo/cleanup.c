@@ -6,11 +6,31 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 10:59:13 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 14:57:22 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:34:20 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	unlock_destroy_mutexes(pthread_mutex_t *first, pthread_mutex_t *second,
+		int flag)
+{
+	if (flag == 1)
+	{
+		if (first)
+			pthread_mutex_unlock(first);
+		if (second)
+			pthread_mutex_unlock(second);
+	}
+	if (flag == 2)
+	{
+		if (first)
+			pthread_mutex_destroy(first);
+		if (second)
+			pthread_mutex_destroy(second);
+	}
+	return (0);
+}
 
 int	destroy_forks(t_table *table)
 {
@@ -40,6 +60,7 @@ void	ft_clean(t_table *table, t_philo *philo_list, int exit_type, char *msg)
 	{
 		if (philo_list)
 		{
+			pthread_join(table->monitor_thread, NULL);
 			join_threads(philo_list, table);
 			free(philo_list);
 		}
