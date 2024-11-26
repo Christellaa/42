@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:17:47 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 15:27:01 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 16:05:32 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ int	check_death_status(t_table *table)
 {
 	pthread_mutex_lock(&table->is_dead_lock);
 	if (table->is_dead == 1)
-	{
-		pthread_mutex_unlock(&table->is_dead_lock);
-		return (0);
-	}
+		return (unlock_destroy_mutexes(&table->is_dead_lock, NULL, 1));
 	pthread_mutex_unlock(&table->is_dead_lock);
 	return (1);
 }
@@ -43,10 +40,7 @@ int	print_status(t_philo *philo, t_status status)
 {
 	pthread_mutex_lock(&philo->table->print_lock);
 	if (check_death_status(philo->table) == 0)
-	{
-		pthread_mutex_unlock(&philo->table->print_lock);
-		return (0);
-	}
+		return (unlock_destroy_mutexes(&philo->table->print_lock, NULL, 1));
 	if (status == FORK)
 		printf("%ld %d has taken a fork\n", get_time_relative(philo->table),
 			philo->id);
@@ -68,7 +62,7 @@ int	print_status(t_philo *philo, t_status status)
 int	check_if_dead(time_t current_time, t_table *table, t_philo **philo_list)
 {
 	int		i;
-	time_t	current;
+	time_t	last_meal;
 
 	i = -1;
 	while (++i < table->nb_philo)
@@ -76,15 +70,14 @@ int	check_if_dead(time_t current_time, t_table *table, t_philo **philo_list)
 		if (check_death_status(table) == 0)
 			return (0);
 		pthread_mutex_lock(&(*philo_list)[i].table->start_lock);
-		current = (*philo_list)[i].last_meal_time;
+		last_meal = (*philo_list)[i].last_meal_time;
 		pthread_mutex_unlock(&(*philo_list)[i].table->start_lock);
-		if ((current_time - current) >= table->time_death)
+		if ((current_time - last_meal) >= table->time_death)
 		{
 			print_status(&(*philo_list)[i], DEAD);
 			pthread_mutex_lock(&table->is_dead_lock);
 			table->is_dead = 1;
-			pthread_mutex_unlock(&table->is_dead_lock);
-			return (0);
+			return (unlock_destroy_mutexes(&table->is_dead_lock, NULL, 1));
 		}
 	}
 	return (1);

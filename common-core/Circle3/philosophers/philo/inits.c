@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:53:19 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 10:58:56 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:49:45 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,15 @@ int	init_mutexes(t_table *table)
 	}
 	if (pthread_mutex_init(&table->start_lock, NULL) != 0)
 	{
-		pthread_mutex_destroy(&table->print_lock);
-		pthread_mutex_destroy(&table->ready_philos_lock);
+		unlock_destroy_mutexes(&table->print_lock, &table->ready_philos_lock,
+			2);
 		return (destroy_forks(table));
 	}
 	if (pthread_mutex_init(&table->is_dead_lock, NULL) != 0)
 	{
 		pthread_mutex_destroy(&table->start_lock);
-		pthread_mutex_destroy(&table->print_lock);
-		pthread_mutex_destroy(&table->ready_philos_lock);
+		unlock_destroy_mutexes(&table->print_lock, &table->ready_philos_lock,
+			2);
 		return (destroy_forks(table));
 	}
 	table->are_mutex_init = 1;

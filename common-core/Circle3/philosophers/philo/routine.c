@@ -15,6 +15,8 @@
 int	is_dead_in_action(t_philo *philo, t_status action)
 {
 	time_t	action_time;
+	time_t	start_time;
+	time_t	elapsed_time;
 
 	if (action == EAT || action == WAIT_TO_EAT)
 		action_time = philo->table->time_eat;
@@ -22,8 +24,12 @@ int	is_dead_in_action(t_philo *philo, t_status action)
 		action_time = philo->table->time_sleep;
 	else if (action == WAIT_TO_DIE)
 		action_time = philo->table->time_death + 1;
-	while (get_time_relative(philo->table) < action_time)
+	start_time = get_time_relative(philo->table);
+	while (1)
 	{
+		elapsed_time = get_time_relative(philo->table) - start_time;
+		if (elapsed_time >= action_time)
+			break ;
 		if (check_death_status(philo->table) == 0)
 			return (0);
 		usleep(100);
@@ -37,13 +43,9 @@ int	only_one_philo(t_philo *philo)
 	{
 		pthread_mutex_lock(philo->fork_left);
 		if (print_status(philo, FORK) == 0)
-		{
-			pthread_mutex_unlock(philo->fork_left);
-			return (0);
-		}
-		is_dead_in_action(philo, WAIT_TO_DIE);
-		pthread_mutex_unlock(philo->fork_left);
-		return (0);
+			return (unlock_destroy_mutexes(philo->fork_left, NULL, 1));
+		if (is_dead_in_action(philo, WAIT_TO_DIE) == 0)
+			return (unlock_destroy_mutexes(philo->fork_left, NULL, 1));
 	}
 	return (1);
 }
@@ -86,7 +88,6 @@ int	actions(t_philo *philo)
 		return (0);
 	if (is_dead_in_action(philo, SLEEP) == 0)
 		return (0);
-	// it was: usleep(philo->table->time_sleep);
 	if (print_status(philo, THINK) == 0)
 		return (0);
 	return (1);
@@ -101,7 +102,6 @@ void	*run_routine(void *arg)
 	if (philo->id % 2 == 0)
 		if (is_dead_in_action(philo, WAIT_TO_EAT) == 0)
 			return (NULL);
-	// it was: usleep(philo->table->time_eat);
 	while (1)
 		if (actions(philo) == 0)
 			break ;
