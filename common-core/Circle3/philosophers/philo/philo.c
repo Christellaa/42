@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:43:05 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/25 16:51:15 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 14:01:00 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int	main(int ac, char **av)
 
 /* print all philos:
 
-int		i = 0;
-printf("Printing all philosophers:\n");
+	int		i = 0;
+	printf("Printing all philosophers:\n");
 	for (i = 0; i < philo_list->table->nb_philo; i++)
 	{
 		printf("Philosopher %d:\n", philo_list[i].id);

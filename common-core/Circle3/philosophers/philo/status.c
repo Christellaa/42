@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 10:06:58 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/25 16:58:22 by cde-sous         ###   ########.fr       */
+/*   Created: 2024/11/26 09:17:47 by cde-sous          #+#    #+#             */
+/*   Updated: 2024/11/26 14:01:10 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ int	print_status(t_philo *philo, t_status status)
 {
 	pthread_mutex_lock(&philo->table->print_lock);
 	if (check_death_status(philo->table) == 0)
+	{
+		pthread_mutex_unlock(&philo->table->print_lock);
 		return (0);
-	if (status == FORK_1)
-		printf("%ld %d has taken fork 1\n", get_time_relative(philo->table),
-			philo->id);
-	else if (status == FORK_2)
-		printf("%ld %d has taken fork 2\n", get_time_relative(philo->table),
+	}
+	if (status == FORK)
+		printf("%ld %d has taken a fork\n", get_time_relative(philo->table),
 			philo->id);
 	else if (status == EAT)
 		printf("%ld %d is eating\n", get_time_relative(philo->table),
@@ -67,16 +67,23 @@ int	print_status(t_philo *philo, t_status status)
 
 int	check_if_dead(time_t current_time, t_table *table, t_philo **philo_list)
 {
-	int	i;
+	int		i;
+	time_t	last_meal;
 
 	i = -1;
 	while (++i < table->nb_philo)
 	{
+		if ((*philo_list)[table->nb_philo
+			- 1].times_eaten == (*philo_list)->table->max_meals)
+			return (0);
 		if (check_death_status(table) == 0)
 			return (0);
-		if ((current_time - philo_list[i]->last_meal_time) >= table->time_death)
+		pthread_mutex_lock(&table->start_lock);
+		last_meal = (*philo_list)[i].last_meal_time;
+		pthread_mutex_unlock(&table->start_lock);
+		if ((current_time - last_meal) >= table->time_death)
 		{
-			print_status(philo_list[i], DEAD);
+			print_status(&(*philo_list)[i], DEAD);
 			pthread_mutex_lock(&table->is_dead_lock);
 			table->is_dead = 1;
 			pthread_mutex_unlock(&table->is_dead_lock);
@@ -93,14 +100,14 @@ void	*monitor_routine(void *arg)
 	time_t	current_time;
 
 	philo_list = (t_philo **)arg;
-	table = philo_list[0]->table;
-	check_all_ready(philo_list[0]);
+	table = (*philo_list)[0].table;
+	check_all_ready(&(*philo_list)[0]);
 	while (1)
 	{
 		current_time = get_time_relative(table);
 		if (check_if_dead(current_time, table, philo_list) == 0)
 			break ;
-		usleep(1000000);
+		usleep(10);
 	}
 	return (NULL);
 }

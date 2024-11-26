@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/25 15:19:19 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 14:01:19 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_philo
 	int				id;
 	pthread_t		thread_id;
 	int				times_eaten;
+	time_t			last_meal_time;
 	pthread_mutex_t	*fork_left;
 	pthread_mutex_t	*fork_right;
 	time_t			last_meal_time;
@@ -52,18 +53,20 @@ typedef struct s_table
 
 typedef enum e_status
 {
-	FORK_1,
-	FORK_2,
+	FORK,
 	EAT,
 	SLEEP,
 	THINK,
 	DEAD,
-	WAIT,
-	WAIT_DEATH
+	WAIT_TO_EAT,
+	WAIT_TO_DIE
 }					t_status;
 
 // cleanup.c
+int					unlock_destroy_mutexes(pthread_mutex_t *first,
+						pthread_mutex_t *second, int flag);
 int					destroy_forks(t_table *table);
+void				join_threads(t_philo *philo, t_table *table);
 void				ft_clean(t_table *table, t_philo *philo_list, int exit_type,
 						char *msg);
 // utils.c
@@ -74,14 +77,14 @@ time_t				get_time(void);
 time_t				get_time_relative(t_table *table);
 // status.c
 void				check_all_ready(t_philo *philo);
-int					print_status(t_philo *philo, t_status status);
 int					check_death_status(t_table *table);
+int					print_status(t_philo *philo, t_status status);
 int					check_if_dead(time_t current_time, t_table *table,
-						t_philo **philo);
+						t_philo **philo_list);
 void				*monitor_routine(void *arg);
 // routine.c
-int					only_one_philo(t_philo *philo);
 int					is_dead_in_action(t_philo *philo, t_status action);
+int					only_one_philo(t_philo *philo);
 int					philo_eat(t_philo *philo);
 int					actions(t_philo *philo);
 void				*run_routine(void *arg);
