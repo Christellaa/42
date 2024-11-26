@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 16:45:15 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/25 15:19:19 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_philo
 	int				times_eaten;
 	pthread_mutex_t	*fork_left;
 	pthread_mutex_t	*fork_right;
+	time_t			last_meal_time;
 	struct s_table	*table;
 }					t_philo;
 
@@ -44,6 +45,9 @@ typedef struct s_table
 	int				are_mutex_init;
 	time_t			start_time;
 	pthread_mutex_t	start_lock;
+	int				is_dead;
+	pthread_mutex_t	is_dead_lock;
+	pthread_t		monitor_thread;
 }					t_table;
 
 typedef enum e_status
@@ -53,7 +57,9 @@ typedef enum e_status
 	EAT,
 	SLEEP,
 	THINK,
-	DEAD
+	DEAD,
+	WAIT,
+	WAIT_DEATH
 }					t_status;
 
 // cleanup.c
@@ -65,11 +71,24 @@ int					ft_atoi(const char *nptr);
 int					ft_strncmp(char *s1, const char *s2, size_t n);
 size_t				ft_strlen(const char *s);
 time_t				get_time(void);
-// simulation.c
-void				*run_simulation(void *arg);
+time_t				get_time_relative(t_table *table);
+// status.c
+void				check_all_ready(t_philo *philo);
+int					print_status(t_philo *philo, t_status status);
+int					check_death_status(t_table *table);
+int					check_if_dead(time_t current_time, t_table *table,
+						t_philo **philo);
+void				*monitor_routine(void *arg);
+// routine.c
+int					only_one_philo(t_philo *philo);
+int					is_dead_in_action(t_philo *philo, t_status action);
+int					philo_eat(t_philo *philo);
+int					actions(t_philo *philo);
+void				*run_routine(void *arg);
 // inits.c
 void				assign_forks(t_philo *philo);
 int					init_philos(t_philo **philo_list, t_table *table);
+int					init_forks(t_table *table);
 int					init_mutexes(t_table *table);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:52:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 14:55:31 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/25 15:37:48 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,15 @@ size_t	ft_strlen(const char *s)
 
 time_t	get_time(void)
 {
-	struct timeval tv;
-	time_t time;
+	struct timeval	tv;
+	time_t			time;
+
 	gettimeofday(&tv, NULL);
 	time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 	return (time);
+}
+
+time_t	get_time_relative(t_table *table)
+{
+	return (get_time() - table->start_time);
 }

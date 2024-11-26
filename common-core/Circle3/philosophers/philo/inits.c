@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:53:19 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 16:45:05 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:45:58 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,19 @@ int	init_philos(t_philo **philo_list, t_table *table)
 		(*philo_list)[i].id = i + 1;
 		(*philo_list)[i].table = table;
 		(*philo_list)[i].times_eaten = 0;
+		(*philo_list)[i].last_meal_time = 0;
 		assign_forks(&(*philo_list)[i]);
-		if (pthread_create(&(*philo_list)[i].thread_id, NULL, run_simulation,
+		if (pthread_create(&(*philo_list)[i].thread_id, NULL, run_routine,
 				&(*philo_list)[i]) != 0)
 			return (0);
 	}
+	if (pthread_create(&table->monitor_thread, NULL, monitor_routine,
+			philo_list) != 0)
+		return (0);
 	return (1);
 }
 
-int	init_mutexes(t_table *table)
+int	init_forks(t_table *table)
 {
 	int	i;
 
@@ -60,6 +64,13 @@ int	init_mutexes(t_table *table)
 	while (++i < table->nb_philo)
 		if (pthread_mutex_init(&table->forks[i], NULL) != 0)
 			return (destroy_forks(table));
+	return (1);
+}
+
+int	init_mutexes(t_table *table)
+{
+	if (init_forks(table) == 0)
+		return (destroy_forks(table));
 	if (pthread_mutex_init(&table->print_lock, NULL) != 0)
 		return (destroy_forks(table));
 	if (pthread_mutex_init(&table->ready_philos_lock, NULL) != 0)
@@ -69,6 +80,13 @@ int	init_mutexes(t_table *table)
 	}
 	if (pthread_mutex_init(&table->start_lock, NULL) != 0)
 	{
+		pthread_mutex_destroy(&table->print_lock);
+		pthread_mutex_destroy(&table->ready_philos_lock);
+		return (destroy_forks(table));
+	}
+	if (pthread_mutex_init(&table->is_dead_lock, NULL) != 0)
+	{
+		pthread_mutex_destroy(&table->start_lock);
 		pthread_mutex_destroy(&table->print_lock);
 		pthread_mutex_destroy(&table->ready_philos_lock);
 		return (destroy_forks(table));
