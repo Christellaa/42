@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simulation.c                                       :+:      :+:    :+:   */
+/*   routine.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -59,7 +59,7 @@ int	philo_eat(t_philo *philo)
 	return (1);
 }
 
-void	*run_simulation(void *arg)
+void	*run_routine(void *arg)
 {
 	t_philo	*philo;
 
