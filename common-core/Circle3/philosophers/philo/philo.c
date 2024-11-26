@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:43:05 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 15:43:50 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 09:25:34 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,22 @@ int	main(int ac, char **av)
 	ready_all_philos(table);
 	ft_clean(table, philo_list, 0, NULL);
 }
+
+/* print all philos:
+
+	int		i = 0;
+	printf("Printing all philosophers:\n");
+	for (i = 0; i < philo_list->table->nb_philo; i++)
+	{
+		printf("Philosopher %d:\n", philo_list[i].id);
+		printf("  ID: %d\n", philo_list[i].id);
+		printf("  Times eaten: %d\n", philo_list[i].times_eaten);
+		printf("  Last meal time: %ld\n", philo_list[i].last_meal_time);
+		printf("  Table: %p\n", philo_list[i].table);
+		// If you want to print more info about the forks or threads:
+		printf("  Thread ID: %ld\n", philo_list[i].thread_id);
+	}
+*/
 
 /* print parsed args:
 

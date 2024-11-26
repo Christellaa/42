@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 09:13:51 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 09:29:30 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_philo
 	int				id;
 	pthread_t		thread_id;
 	int				times_eaten;
+	time_t			last_meal_time;
 	pthread_mutex_t	*fork_left;
 	pthread_mutex_t	*fork_right;
 	struct s_table	*table;
@@ -66,9 +67,13 @@ int					ft_strncmp(char *s1, const char *s2, size_t n);
 size_t				ft_strlen(const char *s);
 time_t				get_time(void);
 time_t				get_time_relative(t_table *table);
-// routine.c
+// status.c
+void				check_all_ready(t_philo *philo);
 void				print_status(t_philo *philo, t_status status);
+// routine.c
+int					only_one_philo(t_philo *philo);
 int					philo_eat(t_philo *philo);
+int					actions(t_philo *philo);
 void				*run_routine(void *arg);
 // inits.c
 void				assign_forks(t_philo *philo);

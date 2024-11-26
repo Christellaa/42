@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:53:19 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 09:13:15 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 09:27:03 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	init_philos(t_philo **philo_list, t_table *table)
 		(*philo_list)[i].id = i + 1;
 		(*philo_list)[i].table = table;
 		(*philo_list)[i].times_eaten = 0;
+		(*philo_list)[i].last_meal_time = 0;
 		assign_forks(&(*philo_list)[i]);
 		if (pthread_create(&(*philo_list)[i].thread_id, NULL, run_routine,
 				&(*philo_list)[i]) != 0)
