@@ -36,7 +36,7 @@ int	only_one_philo(t_philo *philo)
 	if (philo->table->nb_philo == 1)
 	{
 		pthread_mutex_lock(philo->fork_left);
-		if (print_status(philo, FORK_1) == 0)
+		if (print_status(philo, FORK) == 0)
 		{
 			pthread_mutex_unlock(philo->fork_left);
 			return (0);
@@ -53,36 +53,22 @@ int	philo_eat(t_philo *philo)
 	if (only_one_philo(philo) == 0)
 		return (0);
 	pthread_mutex_lock(philo->fork_left);
-	if (print_status(philo, FORK_1) == 0)
-	{
-		pthread_mutex_unlock(philo->fork_left);
-		return (0);
-	}
+	if (print_status(philo, FORK) == 0)
+		return (unlock_destroy_mutexes(philo->fork_left, NULL, 1));
 	pthread_mutex_lock(philo->fork_right);
-	if (print_status(philo, FORK_2) == 0)
-	{
-		pthread_mutex_unlock(philo->fork_right);
-		pthread_mutex_unlock(philo->fork_left);
-		return (0);
-	}
+	if (print_status(philo, FORK) == 0)
+		return (unlock_destroy_mutexes(philo->fork_right, philo->fork_left, 1));
 	pthread_mutex_lock(&philo->table->start_lock);
 	philo->last_meal_time = get_time_relative(philo->table);
 	pthread_mutex_unlock(&philo->table->start_lock);
 	if (print_status(philo, EAT) == 0)
-	{
-		pthread_mutex_unlock(philo->fork_right);
-		pthread_mutex_unlock(philo->fork_left);
-		return (0);
-	}
+		return (unlock_destroy_mutexes(philo->fork_right, philo->fork_left, 1));
 	if (is_dead_in_action(philo, EAT) == 0)
-	{
-		pthread_mutex_unlock(philo->fork_right);
-		pthread_mutex_unlock(philo->fork_left);
-		return (0);
-	}
+		return (unlock_destroy_mutexes(philo->fork_right, philo->fork_left, 1));
+	pthread_mutex_lock(&philo->table->ready_philos_lock);
 	philo->times_eaten++;
-	pthread_mutex_unlock(philo->fork_right);
-	pthread_mutex_unlock(philo->fork_left);
+	pthread_mutex_unlock(&philo->table->ready_philos_lock);
+	unlock_destroy_mutexes(philo->fork_right, philo->fork_left, 1);
 	return (1);
 }
 

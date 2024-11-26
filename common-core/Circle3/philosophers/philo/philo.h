@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 14:06:27 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:18:23 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ typedef struct s_table
 
 typedef enum e_status
 {
-	FORK_1,
-	FORK_2,
+	FORK,
 	EAT,
 	SLEEP,
 	THINK,
@@ -63,6 +62,8 @@ typedef enum e_status
 }					t_status;
 
 // cleanup.c
+int					unlock_destroy_mutexes(pthread_mutex_t *first,
+						pthread_mutex_t *second, int flag);
 int					destroy_forks(t_table *table);
 void				join_threads(t_philo *philo, t_table *table);
 void				ft_clean(t_table *table, t_philo *philo_list, int exit_type,

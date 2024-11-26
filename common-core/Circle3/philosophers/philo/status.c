@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:17:47 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 14:11:08 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:27:01 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,15 @@ int	print_status(t_philo *philo, t_status status)
 	pthread_mutex_lock(&philo->table->print_lock);
 	if (check_death_status(philo->table) == 0)
 	{
-		// print death?
 		pthread_mutex_unlock(&philo->table->print_lock);
 		return (0);
 	}
-	if (status == FORK_1)
-		printf("%ld %d has taken fork 1\n", get_time_relative(philo->table),
-			philo->id);
-	else if (status == FORK_2)
-		printf("%ld %d has taken fork 2\n", get_time_relative(philo->table),
+	if (status == FORK)
+		printf("%ld %d has taken a fork\n", get_time_relative(philo->table),
 			philo->id);
 	else if (status == EAT)
-		printf("%ld || %ld %d is eating\n", philo->last_meal_time,
-			get_time_relative(philo->table), philo->id);
+		printf("%ld %d is eating\n", get_time_relative(philo->table),
+			philo->id);
 	else if (status == SLEEP)
 		printf("%ld %d is sleeping\n", get_time_relative(philo->table),
 			philo->id);
@@ -105,6 +101,13 @@ void	*monitor_routine(void *arg)
 	check_all_ready(&(*philo_list)[0]);
 	while (1)
 	{
+		pthread_mutex_lock(&table->ready_philos_lock);
+		if ((*philo_list)[table->nb_philo - 1].times_eaten == table->max_meals)
+		{
+			pthread_mutex_unlock(&table->ready_philos_lock);
+			break ;
+		}
+		pthread_mutex_unlock(&table->ready_philos_lock);
 		current_time = get_time_relative(table);
 		if (check_if_dead(current_time, table, philo_list) == 0)
 			break ;
