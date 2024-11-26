@@ -42,9 +42,7 @@ int	only_one_philo(t_philo *philo)
 			return (0);
 		}
 		is_dead_in_action(philo, WAIT_TO_DIE);
-		// it was: usleep(philo->table->time_death);
 		pthread_mutex_unlock(philo->fork_left);
-		// print_status(philo, DEAD);
 		return (0);
 	}
 	return (1);
@@ -67,7 +65,9 @@ int	philo_eat(t_philo *philo)
 		pthread_mutex_unlock(philo->fork_left);
 		return (0);
 	}
+	pthread_mutex_lock(&philo->table->start_lock);
 	philo->last_meal_time = get_time_relative(philo->table);
+	pthread_mutex_unlock(&philo->table->start_lock);
 	if (print_status(philo, EAT) == 0)
 	{
 		pthread_mutex_unlock(philo->fork_right);
@@ -80,7 +80,6 @@ int	philo_eat(t_philo *philo)
 		pthread_mutex_unlock(philo->fork_left);
 		return (0);
 	}
-	// it was: usleep(philo->table->time_eat);
 	philo->times_eaten++;
 	pthread_mutex_unlock(philo->fork_right);
 	pthread_mutex_unlock(philo->fork_left);

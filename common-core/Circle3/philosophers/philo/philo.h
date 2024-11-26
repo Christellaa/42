@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 11:31:11 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 14:06:27 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef enum e_status
 
 // cleanup.c
 int					destroy_forks(t_table *table);
+void				join_threads(t_philo *philo, t_table *table);
 void				ft_clean(t_table *table, t_philo *philo_list, int exit_type,
 						char *msg);
 // utils.c
@@ -80,6 +81,7 @@ int					check_if_dead(time_t current_time, t_table *table,
 						t_philo **philo_list);
 void				*monitor_routine(void *arg);
 // routine.c
+int					is_dead_in_action(t_philo *philo, t_status action);
 int					only_one_philo(t_philo *philo);
 int					philo_eat(t_philo *philo);
 int					actions(t_philo *philo);

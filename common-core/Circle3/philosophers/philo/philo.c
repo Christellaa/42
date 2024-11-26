@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:43:05 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 11:02:18 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 14:07:22 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	parse_args(int ac, char **av, t_table *args)
 		args->max_meals = ft_atoi(av[5]);
 	args->ready_philos_counter = 0;
 	args->start_time = -1;
+	args->is_dead = 0;
 	return (1);
 }
 

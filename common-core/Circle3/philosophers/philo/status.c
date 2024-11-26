@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:17:47 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 11:26:13 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 14:11:08 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,18 @@ int	print_status(t_philo *philo, t_status status)
 
 int	check_if_dead(time_t current_time, t_table *table, t_philo **philo_list)
 {
-	int	i;
+	int		i;
+	time_t	current;
 
 	i = -1;
 	while (++i < table->nb_philo)
 	{
 		if (check_death_status(table) == 0)
 			return (0);
-		if ((current_time
-				- (*philo_list)[i].last_meal_time) >= table->time_death)
+		pthread_mutex_lock(&(*philo_list)[i].table->start_lock);
+		current = (*philo_list)[i].last_meal_time;
+		pthread_mutex_unlock(&(*philo_list)[i].table->start_lock);
+		if ((current_time - current) >= table->time_death)
 		{
 			print_status(&(*philo_list)[i], DEAD);
 			pthread_mutex_lock(&table->is_dead_lock);

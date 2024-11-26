@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 10:59:13 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/23 14:57:22 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 14:04:26 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_clean(t_table *table, t_philo *philo_list, int exit_type, char *msg)
 	{
 		if (philo_list)
 		{
+			pthread_join(table->monitor_thread, NULL);
 			join_threads(philo_list, table);
 			free(philo_list);
 		}
