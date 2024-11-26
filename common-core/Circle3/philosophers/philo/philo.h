@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 09:29:30 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 11:31:11 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ typedef struct s_table
 	int				are_mutex_init;
 	time_t			start_time;
 	pthread_mutex_t	start_lock;
+	int				is_dead;
+	pthread_mutex_t	is_dead_lock;
+	pthread_t		monitor_thread;
 }					t_table;
 
 typedef enum e_status
@@ -54,7 +57,9 @@ typedef enum e_status
 	EAT,
 	SLEEP,
 	THINK,
-	DEAD
+	DEAD,
+	WAIT_TO_EAT,
+	WAIT_TO_DIE
 }					t_status;
 
 // cleanup.c
@@ -69,7 +74,11 @@ time_t				get_time(void);
 time_t				get_time_relative(t_table *table);
 // status.c
 void				check_all_ready(t_philo *philo);
-void				print_status(t_philo *philo, t_status status);
+int					check_death_status(t_table *table);
+int					print_status(t_philo *philo, t_status status);
+int					check_if_dead(time_t current_time, t_table *table,
+						t_philo **philo_list);
+void				*monitor_routine(void *arg);
 // routine.c
 int					only_one_philo(t_philo *philo);
 int					philo_eat(t_philo *philo);

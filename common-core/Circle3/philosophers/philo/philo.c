@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:43:05 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 09:25:34 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 11:02:18 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ready_all_philos(t_table *table)
 	while (1)
 	{
 		pthread_mutex_lock(&table->ready_philos_lock);
-		if (table->ready_philos_counter == table->nb_philo)
+		if (table->ready_philos_counter == (table->nb_philo + 1))
 		{
 			pthread_mutex_lock(&table->start_lock);
 			table->start_time = get_time();

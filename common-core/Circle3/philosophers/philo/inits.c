@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:53:19 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 09:27:03 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/26 10:58:56 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ int	init_philos(t_philo **philo_list, t_table *table)
 				&(*philo_list)[i]) != 0)
 			return (0);
 	}
+	if (pthread_create(&table->monitor_thread, NULL, monitor_routine,
+			philo_list) != 0)
+		return (0);
 	return (1);
 }
 
@@ -77,6 +80,13 @@ int	init_mutexes(t_table *table)
 	}
 	if (pthread_mutex_init(&table->start_lock, NULL) != 0)
 	{
+		pthread_mutex_destroy(&table->print_lock);
+		pthread_mutex_destroy(&table->ready_philos_lock);
+		return (destroy_forks(table));
+	}
+	if (pthread_mutex_init(&table->is_dead_lock, NULL) != 0)
+	{
+		pthread_mutex_destroy(&table->start_lock);
 		pthread_mutex_destroy(&table->print_lock);
 		pthread_mutex_destroy(&table->ready_philos_lock);
 		return (destroy_forks(table));
