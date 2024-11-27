@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:53:19 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 15:49:45 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/27 10:58:30 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	init_philos(t_philo **philo_list, t_table *table)
 		(*philo_list)[i].last_meal_time = 0;
 		assign_forks(&(*philo_list)[i]);
 		if (pthread_create(&(*philo_list)[i].thread_id, NULL, run_routine,
-				&(*philo_list)[i]) != 0)
+			&(*philo_list)[i]) != 0)
 			return (0);
 	}
 	if (pthread_create(&table->monitor_thread, NULL, monitor_routine,

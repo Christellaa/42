@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:17:47 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 16:05:32 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/27 09:38:31 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	*monitor_routine(void *arg)
 		current_time = get_time_relative(table);
 		if (check_if_dead(current_time, table, philo_list) == 0)
 			break ;
-		usleep(10);
+		ft_usleep(table->time_death + 1);
 	}
 	return (NULL);
 }

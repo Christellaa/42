@@ -6,11 +6,20 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 10:59:13 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 14:15:14 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/27 10:26:16 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_usleep(long int time)
+{
+	long int	start;
+
+	start = get_time();
+	while (get_time() - start < time)
+		usleep(time / 10);
+}
 
 int	unlock_destroy_mutexes(pthread_mutex_t *first, pthread_mutex_t *second,
 		int flag)

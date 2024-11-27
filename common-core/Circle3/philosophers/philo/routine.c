@@ -18,7 +18,7 @@ int	is_dead_in_action(t_philo *philo, t_status action)
 	time_t	start_time;
 	time_t	elapsed_time;
 
-	if (action == EAT || action == WAIT_TO_EAT)
+	if (action == EAT)
 		action_time = philo->table->time_eat;
 	else if (action == SLEEP)
 		action_time = philo->table->time_sleep;
@@ -44,8 +44,8 @@ int	only_one_philo(t_philo *philo)
 		pthread_mutex_lock(philo->fork_left);
 		if (print_status(philo, FORK) == 0)
 			return (unlock_destroy_mutexes(philo->fork_left, NULL, 1));
-		if (is_dead_in_action(philo, WAIT_TO_DIE) == 0)
-			return (unlock_destroy_mutexes(philo->fork_left, NULL, 1));
+		ft_usleep(philo->table->time_death);
+		return (unlock_destroy_mutexes(philo->fork_left, NULL, 1));
 	}
 	return (1);
 }
@@ -100,8 +100,7 @@ void	*run_routine(void *arg)
 	philo = (t_philo *)arg;
 	check_all_ready(philo);
 	if (philo->id % 2 == 0)
-		if (is_dead_in_action(philo, WAIT_TO_EAT) == 0)
-			return (NULL);
+		ft_usleep(philo->table->time_eat / 10);
 	while (1)
 		if (actions(philo) == 0)
 			break ;

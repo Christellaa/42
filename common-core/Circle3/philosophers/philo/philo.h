@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 15:18:23 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/11/27 10:59:12 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ typedef enum e_status
 	SLEEP,
 	THINK,
 	DEAD,
-	WAIT_TO_EAT,
 	WAIT_TO_DIE
 }					t_status;
 
 // cleanup.c
+void				ft_usleep(long int time);
 int					unlock_destroy_mutexes(pthread_mutex_t *first,
 						pthread_mutex_t *second, int flag);
 int					destroy_forks(t_table *table);
