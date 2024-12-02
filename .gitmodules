@@ -4,3 +4,5 @@
 [submodule "common-core/Circle3/minishell"]
 	path = common-core/Circle3/minishell
 	url = https://github.com/Christellaa/minishell.git
+[submodule "minishell"]
+	branch = main
