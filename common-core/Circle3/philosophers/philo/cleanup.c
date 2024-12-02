@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 10:59:13 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/12/02 09:59:05 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/12/02 10:10:44 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	join_threads(t_philo *philo, t_table *table)
 		pthread_join(philo[i].thread_id, NULL);
 }
 
-void	ft_clean(t_table *table, t_philo *philo_list, int exit_type, char *msg)
+int	ft_clean(t_table *table, t_philo *philo_list, int exit_type, char *msg)
 {
 	if (msg)
 		printf("%s\n", msg);
@@ -82,6 +82,6 @@ void	ft_clean(t_table *table, t_philo *philo_list, int exit_type, char *msg)
 		free(table);
 	}
 	if (exit_type == 0)
-		exit(EXIT_SUCCESS);
-	exit(EXIT_FAILURE);
+		return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/12/02 09:59:05 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/12/02 10:10:41 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int					unlock_destroy_mutexes(pthread_mutex_t *first,
 						pthread_mutex_t *second, int flag);
 int					destroy_forks(t_table *table);
 void				join_threads(t_philo *philo, t_table *table);
-void				ft_clean(t_table *table, t_philo *philo_list, int exit_type,
+int					ft_clean(t_table *table, t_philo *philo_list, int exit_type,
 						char *msg);
 // utils.c
 int					ft_atoi(const char *nptr);
