@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/27 10:59:12 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:59:05 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ typedef struct s_table
 	int				max_meals;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_lock;
-	pthread_mutex_t	ready_philos_lock;
+	pthread_mutex_t	philo_state_lock;
 	int				ready_philos_counter;
 	int				are_mutex_init;
 	time_t			start_time;
-	pthread_mutex_t	start_lock;
+	pthread_mutex_t	time_lock;
 	int				is_dead;
 	pthread_mutex_t	is_dead_lock;
 	pthread_t		monitor_thread;

@@ -60,16 +60,16 @@ int	philo_eat(t_philo *philo)
 	pthread_mutex_lock(philo->fork_right);
 	if (print_status(philo, FORK) == 0)
 		return (unlock_destroy_mutexes(philo->fork_right, philo->fork_left, 1));
-	pthread_mutex_lock(&philo->table->start_lock);
+	pthread_mutex_lock(&philo->table->time_lock);
 	philo->last_meal_time = get_time_relative(philo->table);
-	pthread_mutex_unlock(&philo->table->start_lock);
+	pthread_mutex_unlock(&philo->table->time_lock);
 	if (print_status(philo, EAT) == 0)
 		return (unlock_destroy_mutexes(philo->fork_right, philo->fork_left, 1));
 	if (is_dead_in_action(philo, EAT) == 0)
 		return (unlock_destroy_mutexes(philo->fork_right, philo->fork_left, 1));
-	pthread_mutex_lock(&philo->table->ready_philos_lock);
+	pthread_mutex_lock(&philo->table->philo_state_lock);
 	philo->times_eaten++;
-	pthread_mutex_unlock(&philo->table->ready_philos_lock);
+	pthread_mutex_unlock(&philo->table->philo_state_lock);
 	unlock_destroy_mutexes(philo->fork_right, philo->fork_left, 1);
 	return (1);
 }

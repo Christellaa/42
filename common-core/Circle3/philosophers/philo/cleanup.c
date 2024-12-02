@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 10:59:13 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/27 10:26:16 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:59:05 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_clean(t_table *table, t_philo *philo_list, int exit_type, char *msg)
 		{
 			destroy_forks(table);
 			pthread_mutex_destroy(&table->print_lock);
-			pthread_mutex_destroy(&table->ready_philos_lock);
+			pthread_mutex_destroy(&table->philo_state_lock);
 		}
 		free(table);
 	}

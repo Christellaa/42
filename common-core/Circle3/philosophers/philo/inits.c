@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:53:19 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/27 10:58:30 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:59:05 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,21 +73,21 @@ int	init_mutexes(t_table *table)
 		return (0);
 	if (pthread_mutex_init(&table->print_lock, NULL) != 0)
 		return (destroy_forks(table));
-	if (pthread_mutex_init(&table->ready_philos_lock, NULL) != 0)
+	if (pthread_mutex_init(&table->philo_state_lock, NULL) != 0)
 	{
 		pthread_mutex_destroy(&table->print_lock);
 		return (destroy_forks(table));
 	}
-	if (pthread_mutex_init(&table->start_lock, NULL) != 0)
+	if (pthread_mutex_init(&table->time_lock, NULL) != 0)
 	{
-		unlock_destroy_mutexes(&table->print_lock, &table->ready_philos_lock,
+		unlock_destroy_mutexes(&table->print_lock, &table->philo_state_lock,
 			2);
 		return (destroy_forks(table));
 	}
 	if (pthread_mutex_init(&table->is_dead_lock, NULL) != 0)
 	{
-		pthread_mutex_destroy(&table->start_lock);
-		unlock_destroy_mutexes(&table->print_lock, &table->ready_philos_lock,
+		pthread_mutex_destroy(&table->time_lock);
+		unlock_destroy_mutexes(&table->print_lock, &table->philo_state_lock,
 			2);
 		return (destroy_forks(table));
 	}
