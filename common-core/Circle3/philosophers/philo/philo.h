@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 14:01:19 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/12/02 10:56:50 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ typedef struct s_table
 	int				max_meals;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_lock;
-	pthread_mutex_t	ready_philos_lock;
+	pthread_mutex_t	philo_state_lock;
 	int				ready_philos_counter;
 	int				are_mutex_init;
 	time_t			start_time;
-	pthread_mutex_t	start_lock;
+	pthread_mutex_t	time_lock;
 	int				is_dead;
 	pthread_mutex_t	is_dead_lock;
 	pthread_t		monitor_thread;
@@ -58,16 +58,16 @@ typedef enum e_status
 	SLEEP,
 	THINK,
 	DEAD,
-	WAIT_TO_EAT,
 	WAIT_TO_DIE
 }					t_status;
 
 // cleanup.c
+void				ft_usleep(long int time);
 int					unlock_destroy_mutexes(pthread_mutex_t *first,
 						pthread_mutex_t *second, int flag);
 int					destroy_forks(t_table *table);
 void				join_threads(t_philo *philo, t_table *table);
-void				ft_clean(t_table *table, t_philo *philo_list, int exit_type,
+int					ft_clean(t_table *table, t_philo *philo_list, int exit_type,
 						char *msg);
 // utils.c
 int					ft_atoi(const char *nptr);

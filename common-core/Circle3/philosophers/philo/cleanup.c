@@ -6,11 +6,20 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 10:59:13 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/11/26 14:01:16 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/12/02 10:55:55 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_usleep(long int time)
+{
+	long int	start;
+
+	start = get_time();
+	while (get_time() - start < time)
+		usleep(time / 10);
+}
 
 int	unlock_destroy_mutexes(pthread_mutex_t *first, pthread_mutex_t *second,
 		int flag)
@@ -52,7 +61,7 @@ void	join_threads(t_philo *philo, t_table *table)
 		pthread_join(philo[i].thread_id, NULL);
 }
 
-void	ft_clean(t_table *table, t_philo *philo_list, int exit_type, char *msg)
+int	ft_clean(t_table *table, t_philo *philo_list, int exit_type, char *msg)
 {
 	if (msg)
 		printf("%s\n", msg);
@@ -68,11 +77,11 @@ void	ft_clean(t_table *table, t_philo *philo_list, int exit_type, char *msg)
 		{
 			destroy_forks(table);
 			pthread_mutex_destroy(&table->print_lock);
-			pthread_mutex_destroy(&table->ready_philos_lock);
+			pthread_mutex_destroy(&table->philo_state_lock);
 		}
 		free(table);
 	}
 	if (exit_type == 0)
-		exit(EXIT_SUCCESS);
-	exit(EXIT_FAILURE);
+		return (0);
+	return (1);
 }
