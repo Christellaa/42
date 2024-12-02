@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 09:43:05 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/12/02 10:14:33 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/12/02 10:21:30 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	main(int ac, char **av)
 	table->are_mutex_init = 0;
 	if (ac != 5 && ac != 6)
 		return (ft_clean(table, philo_list, 1, "Wrong number of arguments.\
-				\nIt must be between 5 and 6 arguments."));
+				\n./philo nb_philo time_die time_eat time_sleep [max_eat]"));
 	if (parse_args(ac, av, table) == 0)
 		return (ft_clean(table, philo_list, 1, "Invalid arguments.\
 			\nAll must be numeric and more than 0 (beside the 6th one)."));
