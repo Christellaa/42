@@ -6,7 +6,7 @@
 /*   By: cde-sous <cde-sous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:05:11 by cde-sous          #+#    #+#             */
-/*   Updated: 2024/12/02 10:56:50 by cde-sous         ###   ########.fr       */
+/*   Updated: 2024/12/05 11:53:42 by cde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_philo
 	time_t			last_meal_time;
 	pthread_mutex_t	*fork_left;
 	pthread_mutex_t	*fork_right;
-	time_t			last_meal_time;
 	struct s_table	*table;
 }					t_philo;
 
