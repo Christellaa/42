@@ -1,4 +1,5 @@
 NAME := phonebook
+INCFILES := includes.h PhoneBook.hpp Contact.hpp
 SRCFILES := main.cpp PhoneBook.cpp Contact.cpp
 OBJS := $(SRCFILES:.cpp=.o)
 CC := g++
@@ -10,7 +11,7 @@ $(NAME): $(OBJS)
 	@echo "Building $(NAME)"
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o: %.c
+%.o: %.cpp $(INCFILES)
 	@echo "Compiling $<"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
