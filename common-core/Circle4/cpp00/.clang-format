@@ -1,0 +1,15 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+ColumnLimit: 100
+AlignAfterOpenBracket: Align
+AlignOperands: true
+AllowShortFunctionsOnASingleLine: Inline
+BreakBeforeBraces: Allman
+KeepEmptyLinesAtTheStartOfBlocks: false
+PointerAlignment: Left
+SpaceAfterCStyleCast: true
+SpaceBeforeAssignmentOperators: true
+SpacesInParentheses: false
+SpaceBeforeParens: ControlStatements
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
