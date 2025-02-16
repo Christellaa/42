@@ -1,5 +1,4 @@
 #include "PhoneBook.hpp"
-
 #include "includes.h"
 
 PhoneBook::PhoneBook()
@@ -16,22 +15,21 @@ bool areFieldsFilled(const Contact& contact)
 
 bool PhoneBook::setFields(int _idx)
 {
-    std::cout << BLUE << "FirstName: " << RESET;
+    Contact copy = _contact[_idx];
+    std::cout << BLUE << "First name: " << RESET;
     _contact[_idx].setFirstName();
-    std::cout << BLUE << "LastName: " << RESET;
+    std::cout << BLUE << "Last name: " << RESET;
     _contact[_idx].setLastName();
-    std::cout << BLUE << "NickName: " << RESET;
+    std::cout << BLUE << "Nickname: " << RESET;
     _contact[_idx].setNickName();
-    std::cout << BLUE << "PhoneNumber: " << RESET;
+    std::cout << BLUE << "Phone number: " << RESET;
     _contact[_idx].setPhone();
-    std::cout << BLUE << "DarkestSecret: " << RESET;
+    std::cout << BLUE << "Darkest secret: " << RESET;
     _contact[_idx].setSecret();
     if (!areFieldsFilled(_contact[_idx]))
     {
-        std::cout << "At least one field is empty, the contact will not be saved" << std::endl;
-        // if field is empty when replacing last contact, we should keep last contact => copy of
-        // last contact, replace last contact, if failed take copy, otherwise delete copy ???
-        _contact[_idx].resetFields();
+        std::cout << "At least one field is empty. Contact will not be saved." << std::endl;
+        _contact[_idx] = copy;
         return false;
     }
     return true;
@@ -39,8 +37,24 @@ bool PhoneBook::setFields(int _idx)
 
 void PhoneBook::addContact()
 {
+    std::cout << "current idx: " << _idx << std::endl; // debug
     if (!setFields(_idx))
         return;
-    if (_idx < 7)
-        _idx++;
+    _idx = (_idx + 1) % 8;
+}
+
+void PhoneBook::searchContact()
+{
+    /*
+    - display all contacts as a list of 4 cols -> idx, firstname, lastname, nickname
+    - prompt the user for the idx of the contact to display
+        - out of range idx = prompt again
+        - good idx = display contact info, one field per line
+    COL
+    - 10 chars wide
+    - | between each col
+    TEXT
+    - right-aligned
+    - more than col width = trunc and last char replaced by .
+    */
 }

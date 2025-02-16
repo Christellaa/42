@@ -17,8 +17,6 @@ class Contact
     std::string getPhone() const;
     std::string getSecret() const;
 
-    void resetFields();
-
   private:
     std::string _firstName;
     std::string _lastName;

@@ -6,11 +6,9 @@
 class PhoneBook
 {
   public:
-    PhoneBook();
-    void addContact(); // = setter
-
-    // void search_contact();
-    // = getter
+    PhoneBook();          // = construct
+    void addContact();    // = setter
+    void searchContact(); // = getter
 
   private:
     int _idx;

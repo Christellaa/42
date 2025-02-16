@@ -1,5 +1,4 @@
 #include "Contact.hpp"
-
 #include "includes.h"
 
 void Contact::setFirstName(void)
@@ -60,13 +59,4 @@ std::string Contact::getPhone() const
 std::string Contact::getSecret() const
 {
     return this->_secret;
-}
-
-void Contact::resetFields()
-{
-    _firstName.clear();
-    _lastName.clear();
-    _nickName.clear();
-    _phone.clear();
-    _secret.clear();
 }
