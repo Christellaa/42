@@ -60,3 +60,10 @@ std::string Contact::getSecret() const
 {
     return this->_secret;
 }
+
+bool areFieldsFilled(const Contact& contact)
+{
+    return (!contact.getFirstName().empty() && !contact.getLastName().empty() &&
+            !contact.getNickName().empty() && !contact.getPhone().empty() &&
+            !contact.getSecret().empty());
+}

@@ -6,13 +6,15 @@
 class PhoneBook
 {
   public:
-    PhoneBook();          // = construct
-    void addContact();    // = setter
-    void searchContact(); // = getter
+    PhoneBook();
+    void addContact();
+    void searchContact() const;
 
   private:
     int _idx;
     bool setFields(int _idx);
+    void printAllContacts() const;
+    void printContact(int idx) const;
     Contact _contact[8];
 };
 

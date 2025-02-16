@@ -7,4 +7,7 @@
 #define YELLOW "\033[0;33m"
 #define RED "\033[1;31m"
 #define RESET "\033[0m"
+
+std::string truncateWord(std::string word);
+
 #endif

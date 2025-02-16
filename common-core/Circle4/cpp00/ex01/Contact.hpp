@@ -25,4 +25,6 @@ class Contact
     std::string _secret;
 };
 
+bool areFieldsFilled(const Contact& contact);
+
 #endif

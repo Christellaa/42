@@ -9,6 +9,16 @@ void commandInfo(void)
     std::cout << "EXIT: quit the program" << RESET << std::endl;
 }
 
+std::string truncateWord(std::string word)
+{
+    std::string truncated;
+
+    truncated = word.substr(0, 10);
+    if (word.length() > 10)
+        truncated[9] = '.';
+    return truncated;
+}
+
 int main(void)
 {
     PhoneBook phonebook;
@@ -21,7 +31,6 @@ int main(void)
         if (command == "ADD")
             phonebook.addContact();
         else if (command == "SEARCH")
-            // std::cout << "searchContact() to do" << std::endl;
             phonebook.searchContact();
         else if (command == "EXIT")
             break;
