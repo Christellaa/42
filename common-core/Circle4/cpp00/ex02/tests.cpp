@@ -14,29 +14,15 @@
 
 int main(void)
 {
-    // dynamic array of class Account named accounts_t, where each element is an Account object
-    typedef std::vector<Account::t> accounts_t;
-    // dynamic array of type int named ints_t, will be used to hold deposits and withdrawals
-    typedef std::vector<int> ints_t;
-    // group accounts_t and ints_t to iterate them together like a key-value pair, named acc_int_t
+    typedef std::vector<Account::t>                           accounts_t;
+    typedef std::vector<int>                                  ints_t;
     typedef std::pair<accounts_t::iterator, ints_t::iterator> acc_int_t;
 
-    // create int array named amounts, will be associated with each account
-    int const amounts[] = {42, 54, 957, 432, 1234, 0, 754, 16576};
-    // calculate the size of amounts array in terms of nb of elements
-    // - sizeof(amounts) = total size in bytes
-    // - sizeof(int) = size of a single int in bytes
-    // - sizeof(amounts) / sizeof(int) = nb of elements in the array
-    size_t const amounts_size(sizeof(amounts) / sizeof(int));
-    // it creates a vector that creates 8 Account objects, each init with a value from amounts array
-    // - the 1st arg is a ptr to the beginning of the amounts array
-    // - the 2nd arg is a ptr to the last element of the amounts array, determining the range of
-    // values used for init
-    accounts_t accounts(amounts, amounts + amounts_size);
-    // create an iterator to the first element (= account object) of the vector
+    int const            amounts[] = {42, 54, 957, 432, 1234, 0, 754, 16576};
+    size_t const         amounts_size(sizeof(amounts) / sizeof(int));
+    accounts_t           accounts(amounts, amounts + amounts_size);
     accounts_t::iterator acc_begin = accounts.begin();
-    // create an iterator to the past the last element (= account object) of the vector
-    accounts_t::iterator acc_end = accounts.end();
+    accounts_t::iterator acc_end   = accounts.end();
 
     int const        d[] = {5, 765, 564, 2, 87, 23, 9, 20};
     size_t const     d_size(sizeof(d) / sizeof(int));
