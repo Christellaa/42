@@ -1,6 +1,6 @@
-NAME := accounts
-INCFILES := Account.hpp
-SRCFILES := tests.cpp Account.cpp
+NAME := zombies
+INCFILES := Zombie.h Zombie.hpp
+SRCFILES := main.cpp Zombie.cpp newZombie.cpp randomChump.cpp
 OBJS := $(SRCFILES:.cpp=.o)
 CC := g++
 CFLAGS := -Wall -Wextra -Werror -std=c++98

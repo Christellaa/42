@@ -18,4 +18,5 @@ int main(int ac, char** av)
     i = 0;
     while (i < sentence.length())
         putchar(toupper(sentence[i++]));
+    std::cout << std::endl;
 }
