@@ -36,27 +36,27 @@ void Contact::setSecret(void)
     this->_secret = secret;
 }
 
-std::string Contact::getFirstName() const
+std::string const& Contact::getFirstName() const
 {
     return this->_firstName;
 }
 
-std::string Contact::getLastName() const
+std::string const& Contact::getLastName() const
 {
     return this->_lastName;
 }
 
-std::string Contact::getNickName() const
+std::string const& Contact::getNickName() const
 {
     return this->_nickName;
 }
 
-std::string Contact::getPhone() const
+std::string const& Contact::getPhone() const
 {
     return this->_phone;
 }
 
-std::string Contact::getSecret() const
+std::string const& Contact::getSecret() const
 {
     return this->_secret;
 }
