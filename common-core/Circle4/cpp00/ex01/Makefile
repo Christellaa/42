@@ -2,7 +2,7 @@ NAME := phonebook
 INCFILES := includes.h PhoneBook.hpp Contact.hpp
 SRCFILES := main.cpp PhoneBook.cpp Contact.cpp
 OBJS := $(SRCFILES:.cpp=.o)
-CC := g++
+CC := c++
 CFLAGS := -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME)

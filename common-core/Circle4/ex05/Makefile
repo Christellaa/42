@@ -1,4 +1,5 @@
-NAME := brain
+NAME := harl
+INCFILES := includes.h
 SRCFILES := main.cpp
 OBJS := $(SRCFILES:.cpp=.o)
 CC := c++
@@ -10,7 +11,7 @@ $(NAME): $(OBJS)
 	@echo "Building $(NAME)"
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o: %.cpp
+%.o: %.cpp $(INCFILES)
 	@echo "Compiling $<"
 	@$(CC) $(CFLAGS) -c $< -o $@
 

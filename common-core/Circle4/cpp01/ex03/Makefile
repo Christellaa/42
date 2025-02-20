@@ -2,7 +2,7 @@ NAME := weapon
 INCFILES := Weapon.hpp HumanA.hpp HumanB.hpp
 SRCFILES := main.cpp Weapon.cpp HumanA.cpp HumanB.cpp
 OBJS := $(SRCFILES:.cpp=.o)
-CC := g++
+CC := c++
 CFLAGS := -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME)
