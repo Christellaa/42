@@ -1,6 +1,6 @@
 NAME := harl
-INCFILES := includes.h
-SRCFILES := main.cpp
+INCFILES := Harl.hpp
+SRCFILES := main.cpp Harl.cpp
 OBJS := $(SRCFILES:.cpp=.o)
 CC := c++
 CFLAGS := -Wall -Wextra -Werror -std=c++98
