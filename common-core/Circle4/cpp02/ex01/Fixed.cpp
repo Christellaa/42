@@ -26,17 +26,17 @@ Fixed::Fixed(const Fixed& copy)
     *this = copy;
 }
 
+Fixed::~Fixed()
+{
+    std::cout << "Destructor called" << std::endl;
+}
+
 Fixed& Fixed::operator=(const Fixed& original)
 {
     std::cout << "Copy assignment operator called" << std::endl;
     if (this != &original)
         this->_value = original.getRawBits();
     return *this;
-}
-
-Fixed::~Fixed()
-{
-    std::cout << "Destructor called" << std::endl;
 }
 
 int Fixed::getRawBits() const

@@ -10,8 +10,9 @@ class Fixed
     // copy construct
     Fixed(const Fixed& copy);
     // overloaded operator
-    Fixed& operator=(const Fixed& fixed);
     ~Fixed();
+
+    Fixed& operator=(const Fixed& fixed);
 
     int  getRawBits(void) const;
     void setRawBits(int const raw);

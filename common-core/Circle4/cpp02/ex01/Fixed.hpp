@@ -10,8 +10,9 @@ class Fixed
     Fixed(const int number);
     Fixed(const float number);
     Fixed(const Fixed& copy);
-    Fixed& operator=(const Fixed& fixed);
     ~Fixed();
+
+    Fixed& operator=(const Fixed& fixed);
 
     int  getRawBits(void) const;
     void setRawBits(int const raw);
