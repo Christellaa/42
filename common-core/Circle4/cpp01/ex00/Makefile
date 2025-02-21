@@ -1,5 +1,5 @@
 NAME := zombies
-INCFILES := Zombie.h Zombie.hpp
+INCFILES := Zombie.hpp
 SRCFILES := main.cpp Zombie.cpp newZombie.cpp randomChump.cpp
 OBJS := $(SRCFILES:.cpp=.o)
 CC := c++
