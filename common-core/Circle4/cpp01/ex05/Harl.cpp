@@ -2,7 +2,7 @@
 
 void Harl::complain(std::string level)
 {
-    const std::string levels[4] = {"debug", "info", "warning", "error"};
+    const std::string levels[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
     // becomeAnnoying complains[4] == (Harl::*complains[4])()
     const becomeAnnoying complains[4] = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
     for (int lvl = 0; lvl < 4; ++lvl)
