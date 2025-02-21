@@ -2,6 +2,7 @@
 #define _HUMANA_HPP_
 
 #include "Weapon.hpp"
+#include <iostream>
 
 class HumanA
 {

@@ -2,6 +2,7 @@
 #define _HUMANB_HPP_
 
 #include "Weapon.hpp"
+#include <iostream>
 
 class HumanB
 {

@@ -1,5 +1,5 @@
 NAME := harl
-INCFILES := Harl.h Harl.hpp
+INCFILES := Harl.hpp
 SRCFILES := main.cpp Harl.cpp
 OBJS := $(SRCFILES:.cpp=.o)
 CC := c++

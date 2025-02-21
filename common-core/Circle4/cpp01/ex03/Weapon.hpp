@@ -1,7 +1,7 @@
 #ifndef _WEAPON_HPP_
 #define _WEAPON_HPP_
 
-#include "Weapon.h"
+#include <string>
 
 class Weapon
 {
