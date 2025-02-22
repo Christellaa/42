@@ -1,6 +1,6 @@
-NAME := bsp
-INCFILES := Fixed.hpp Point.hpp
-SRCFILES := main.cpp Fixed.cpp Point.cpp bsp.cpp
+NAME := fixed
+INCFILES := Fixed.hpp
+SRCFILES := main.cpp Fixed.cpp
 OBJS := $(SRCFILES:.cpp=.o)
 CC := c++
 CFLAGS := -Wall -Wextra -Werror -std=c++98

@@ -1,51 +1,53 @@
-#include "Fixed.hpp"
+#include "Point.hpp"
 
 int main()
 {
-    Fixed       a(2);
-    Fixed const b(Fixed(5.05f) * Fixed(2)); // b = 5.05 * 2
+    {
+        Point a(5, 5);
+        Point b(2, 9);
+        Point c(0, 5);
+        Point p(3, 7);
+        Point p2(3.5, 7);
+        Point p3(4, 7);
 
-    std::cout << "Initial values:" << std::endl;
-    std::cout << "a: " << a << std::endl; // Should print 0 (default value)
-    std::cout << "b: " << b << std::endl; // Should print 10.1016 (5.05 * 2)
-
-    // Increment operators (both pre and post)
-    std::cout << "\nIncrement operators:" << std::endl;
-    std::cout << "Pre-increment a: " << ++a << std::endl; // Should increment a first, then print
-    std::cout << "a after pre-increment: " << a << std::endl;  // Print a after increment
-    std::cout << "Post-increment a: " << a++ << std::endl;     // Should print a, then increment
-    std::cout << "a after post-increment: " << a << std::endl; // Print a after increment
-
-    // Decrement operators (both pre and post)
-    std::cout << "\nDecrement operators:" << std::endl;
-    std::cout << "Pre-decrement a: " << --a << std::endl; // Should decrement a first, then print
-    std::cout << "a after pre-decrement: " << a << std::endl;  // Print a after decrement
-    std::cout << "Post-decrement a: " << a-- << std::endl;     // Should print a, then decrement
-    std::cout << "a after post-decrement: " << a << std::endl; // Print a after decrement
-
-    // Comparison operators
-    std::cout << "\nComparison operators:" << std::endl;
-    std::cout << "a == b: " << (a == b) << std::endl; // Should print 0 (false) if a != b
-    std::cout << "a != b: " << (a != b) << std::endl; // Should print 1 (true) if a != b
-    std::cout << "a < b: " << (a < b) << std::endl;   // Should print 1 (true) if a < b
-    std::cout << "a <= b: " << (a <= b) << std::endl; // Should print 1 (true) if a <= b
-    std::cout << "a > b: " << (a > b) << std::endl;   // Should print 0 (false) if a > b
-    std::cout << "a >= b: " << (a >= b) << std::endl; // Should print 0 (false) if a >= b
-
-    // Arithmetic operators
-    std::cout << "\nArithmetic operators:" << std::endl;
-    std::cout << "a + b: " << a + b << std::endl; // Should print the result of a + b
-    std::cout << "a - b: " << a - b << std::endl; // Should print the result of a - b
-    std::cout << "a * b: " << a * b << std::endl; // Should print the result of a * b
-    std::cout << "a / b: " << a / b << std::endl; // Should print the result of a / b
-
-    // Max function
-    std::cout << "\nMax function:" << std::endl;
-    std::cout << "Max of a and b: " << Fixed::max(a, b) << std::endl;
-    // Should print the largest value between a and b
-
-    // Min function
-    std::cout << "\nMin function:" << std::endl;
-    std::cout << "Min of a and b: " << Fixed::min(a, b) << std::endl;
-    // Should print the smallest value between a and b
+        std::cout << "Point a.x = " << a.getX() << " a.y = " << a.getY() << std::endl;
+        std::cout << "Point b.x = " << b.getX() << " b.y = " << b.getY() << std::endl;
+        std::cout << "Point c.x = " << c.getX() << " c.y = " << c.getY() << std::endl;
+        std::cout << "Point p.x = " << p.getX() << " p.y = " << p.getY() << std::endl;
+        std::cout << "Point p2.x = " << p2.getX() << " p2.y = " << p2.getY() << std::endl;
+        std::cout << "Point p3.x = " << p3.getX() << " p3.y = " << p3.getY() << std::endl;
+        if (bsp(a, b, c, p))
+            std::cout << "p is in the triangle" << std::endl;
+        else
+            std::cout << "p is outside the triangle" << std::endl;
+        if (bsp(a, b, c, p2))
+            std::cout << "p2 is in the triangle" << std::endl;
+        else
+            std::cout << "p2 is outside the triangle" << std::endl;
+        if (bsp(a, b, c, p3))
+            std::cout << "p3 is in the triangle" << std::endl;
+        else
+            std::cout << "p3 is outside the triangle" << std::endl;
+    }
+    std::cout << "\n" << std::endl;
+    {
+        Point a(-1.5, -1.5);
+        Point b(2.5, 2.5);
+        Point c(-1, -2);
+        Point p(-1, -2);
+        Point p2(-1, -1.99);
+        std::cout << "Point a.x = " << a.getX() << " a.y = " << a.getY() << std::endl;
+        std::cout << "Point b.x = " << b.getX() << " b.y = " << b.getY() << std::endl;
+        std::cout << "Point c.x = " << c.getX() << " c.y = " << c.getY() << std::endl;
+        std::cout << "Point p.x = " << p.getX() << " p.y = " << p.getY() << std::endl;
+        std::cout << "Point p2.x = " << p2.getX() << " p2.y = " << p2.getY() << std::endl;
+        if (bsp(a, b, c, p))
+            std::cout << "p is in the triangle" << std::endl;
+        else
+            std::cout << "p is outside the triangle" << std::endl;
+        if (bsp(a, b, c, p2))
+            std::cout << "p2 is in the triangle" << std::endl;
+        else
+            std::cout << "p2 is outside the triangle" << std::endl;
+    }
 }
