@@ -1,5 +1,5 @@
-#ifndef _CAT_H_
-#define _CAT_H_
+#ifndef _CAT_HPP_
+#define _CAT_HPP_
 
 #include "Animal.hpp"
 #include "Brain.hpp"

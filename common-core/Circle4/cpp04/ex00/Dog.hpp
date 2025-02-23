@@ -1,5 +1,5 @@
-#ifndef _DOG_H_
-#define _DOG_H_
+#ifndef _DOG_HPP_
+#define _DOG_HPP_
 
 #include "Animal.hpp"
 
