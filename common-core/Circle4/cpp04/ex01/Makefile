@@ -1,4 +1,4 @@
-NAME := animal
+NAME := brain
 INCFILES := Animal.hpp Dog.hpp Cat.hpp Brain.hpp
 SRCFILES := main.cpp Animal.cpp Dog.cpp Cat.cpp Brain.cpp
 OBJS := $(SRCFILES:.cpp=.o)
