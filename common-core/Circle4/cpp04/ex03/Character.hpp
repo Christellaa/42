@@ -11,16 +11,17 @@ class Character : public ICharacter
     Character(const std::string& name);
     ~Character();
 
-    Character& operator=(const Character& rhs);
+    Character&         operator=(const Character& rhs);
     std::string const& getName() const;
     void               equip(AMateria* m);
     void               unequip(int idx);
-    void               use(int idx, Character& target);
+    void               equipFromFloor(int idx);
+    void               use(int idx, ICharacter& target);
 
-	private:
-		std::string _name;
-		AMateria  	*_inventory[4];
-		int 		_slotIdx;
+  private:
+    std::string _name;
+    AMateria*   _inventory[4];
+    AMateria*   _unequippedMateria[4];
 };
 
 #endif

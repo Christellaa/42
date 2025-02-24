@@ -1,6 +1,6 @@
 NAME := interface
-INCFILES := AMateria.hpp Cure.hpp Ice.hpp ICharacter.hpp IMateriaSource.hpp
-SRCFILES := main.cpp AMateria.cpp Cure.cpp Ice.cpp ICharacter.cpp IMateriaSource.cpp
+INCFILES := AMateria.hpp Character.hpp Cure.hpp Ice.hpp ICharacter.hpp IMateriaSource.hpp MateriaSource.hpp
+SRCFILES := main.cpp AMateria.cpp Character.cpp Cure.cpp Ice.cpp MateriaSource.cpp
 OBJS := $(SRCFILES:.cpp=.o)
 CC := c++
 CFLAGS := -Wall -Wextra -Werror -std=c++98
