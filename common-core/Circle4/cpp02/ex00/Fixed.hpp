@@ -9,9 +9,9 @@ class Fixed
     Fixed();
     // copy construct
     Fixed(const Fixed& copy);
-    // overloaded operator
     ~Fixed();
-
+    
+    // overloaded operator
     Fixed& operator=(const Fixed& rhs);
 
     int  getRawBits(void) const;
