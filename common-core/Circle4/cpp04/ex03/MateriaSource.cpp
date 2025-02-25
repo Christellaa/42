@@ -4,6 +4,7 @@
 
 MateriaSource::MateriaSource()
 {
+    std::cout << "MateriaSource constructor called" << std::endl;
     for (int i = 0; i < 4; ++i)
         this->_inventory[i] = NULL;
 }
@@ -23,12 +24,12 @@ MateriaSource::MateriaSource(const MateriaSource& copy)
 
 MateriaSource::~MateriaSource()
 {
-    std::cout << "Destructor called" << std::endl;
+    std::cout << "MateriaSource destructor called" << std::endl;
     for (int i = 0; i < 4; ++i)
     {
         if (this->_inventory[i])
         {
-            std::cout << "Deleting materia " << this->_inventory[i]->getType() << std::endl;
+            std::cout << "Deleting MateriaSource's " << this->_inventory[i]->getType() << " materia" << std::endl;
             delete this->_inventory[i];
         }
     }

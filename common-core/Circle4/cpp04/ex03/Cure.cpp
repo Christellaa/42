@@ -3,6 +3,7 @@
 
 Cure::Cure() : AMateria()
 {
+    std::cout << "Cure constructor called" << std::endl;
     this->_type = "cure";
 }
 
@@ -11,7 +12,9 @@ Cure::Cure(const Cure& copy) : AMateria()
     this->_type = copy._type;
 }
 
-Cure::~Cure() {}
+Cure::~Cure() {
+std::cout << "Cure destructor called" << std::endl;
+ }
 
 Cure& Cure::operator=(const Cure& rhs)
 {
@@ -22,6 +25,7 @@ Cure& Cure::operator=(const Cure& rhs)
 
 AMateria* Cure::clone() const
 {
+    std::cout << "Cure clone called" << std::endl;
     return new Cure();
 }
 

@@ -3,6 +3,7 @@
 
 Ice::Ice() : AMateria()
 {
+    std::cout << "Ice constructor called" << std::endl;
     this->_type = "ice";
 }
 
@@ -11,7 +12,9 @@ Ice::Ice(const Ice& copy) : AMateria()
     this->_type = copy._type;
 }
 
-Ice::~Ice() {}
+Ice::~Ice() {
+	std::cout << "Ice destructor called" << std::endl;
+	}
 
 Ice& Ice::operator=(const Ice& rhs)
 {
@@ -22,6 +25,7 @@ Ice& Ice::operator=(const Ice& rhs)
 
 AMateria* Ice::clone() const
 {
+    std::cout << "Ice clone called" << std::endl;
     return new Ice();
 }
 

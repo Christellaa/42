@@ -3,6 +3,7 @@
 
 Character::Character() : _name("default")
 {
+    	std::cout << "Character constructor called" << std::endl;
     for (int i = 0; i < 4; ++i)
         this->_inventory[i] = NULL;
     for (int i = 0; i < 4; ++i)
@@ -27,6 +28,7 @@ Character::Character(const Character& copy)
 
 Character::Character(const std::string& name) : _name(name)
 {
+    std::cout << "Character constructor called" << std::endl;
     for (int i = 0; i < 4; ++i)
         this->_inventory[i] = NULL;
     for (int i = 0; i < 4; ++i)
@@ -35,12 +37,12 @@ Character::Character(const std::string& name) : _name(name)
 
 Character::~Character()
 {
-    std::cout << "Destroying Character..." << std::endl;
+    std::cout << "Character destructor called" << std::endl;
     for (int i = 0; i < 4; ++i)
     {
         if (this->_inventory[i])
         {
-            std::cout << "Deleting materia from inventory..." << std::endl;
+            std::cout << "Deleting" << this->_inventory[i]->getType() << " from " << this->_name << "'s inventory" << std::endl;
             delete this->_inventory[i];
         }
     }
@@ -48,7 +50,7 @@ Character::~Character()
     {
         if (this->_unequippedMateria[i])
         {
-            std::cout << "Deleting unequipped materia..." << std::endl;
+            std::cout << "Deleting" << this->_name << "'s unequipped materia " << this->_unequippedMateria[i] << std::endl;
             delete this->_unequippedMateria[i];
         }
     }
