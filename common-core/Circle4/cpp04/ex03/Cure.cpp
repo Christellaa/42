@@ -10,7 +10,7 @@ Cure::Cure() : AMateria()
 // shouldn't be used, use clone instead
 Cure::Cure(const Cure& copy) : AMateria()
 {
-    (void)copy;
+    (void) copy;
 }
 
 Cure::~Cure()

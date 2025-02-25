@@ -11,7 +11,7 @@ class Character : public ICharacter
     Character(const std::string& name);
     ~Character();
 
-    Character&         operator=(const Character& rhs);
+    Character& operator=(const Character& rhs);
 
     std::string const& getName() const;
     void               equip(AMateria* m);
@@ -25,8 +25,8 @@ class Character : public ICharacter
     std::string _name;
     AMateria*   _inventory[4];
     AMateria*   _floor[4];
-    void deleteMaterias() const;
-    void shiftLeftMaterias(int idx, AMateria** m) const;
+    void        deleteMaterias() const;
+    void        shiftLeftMaterias(int idx, AMateria** m) const;
 };
 
 #endif

@@ -9,12 +9,13 @@ Ice::Ice() : AMateria()
 // shouldn't be used, use clone instead
 Ice::Ice(const Ice& copy) : AMateria()
 {
-    (void)copy;
+    (void) copy;
 }
 
-Ice::~Ice() {
-	std::cout << "Ice destructor called" << std::endl;
-	}
+Ice::~Ice()
+{
+    std::cout << "Ice destructor called" << std::endl;
+}
 
 Ice& Ice::operator=(const Ice& rhs)
 {

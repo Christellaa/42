@@ -29,7 +29,8 @@ MateriaSource::~MateriaSource()
     {
         if (this->_inventory[i])
         {
-            std::cout << "Deleting MateriaSource's " << this->_inventory[i]->getType() << " materia" << std::endl;
+            std::cout << "Deleting MateriaSource's " << this->_inventory[i]->getType() << " materia"
+                      << std::endl;
             delete this->_inventory[i];
         }
     }

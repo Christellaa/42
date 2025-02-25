@@ -58,9 +58,9 @@ int main()
     std::cout << "-------------------------------------------------" << std::endl;
     std::cout << std::endl;
     { // same type added twice to equip
-        Character *char1 = new Character("Character1");
-        AMateria*  ice     = new Ice();
-        AMateria*  ice2     = new Ice();
+        Character* char1 = new Character("Character1");
+        AMateria*  ice   = new Ice();
+        AMateria*  ice2  = new Ice();
         char1->equip(ice);
         char1->equip(ice2);
         delete char1;
@@ -69,10 +69,10 @@ int main()
     std::cout << "-------------------------------------------------" << std::endl;
     std::cout << std::endl;
     { // full equipped + full unequipped
-        Character* char1   = new Character("Character1");
-        AMateria*  ice     = new Ice();
-        AMateria*  cure    = new Cure();
-        AMateria*  ice2   = new Ice();
+        Character* char1 = new Character("Character1");
+        AMateria*  ice   = new Ice();
+        AMateria*  cure  = new Cure();
+        AMateria*  ice2  = new Ice();
         AMateria*  cure2 = new Cure();
         AMateria*  cure3 = new Cure();
         AMateria*  cure4 = new Cure();

@@ -98,8 +98,9 @@ void Character::equip(AMateria* m)
             return;
         }
     }
-    std::cout << this->_name <<
-        "'s inventory is full and the floor is full of materias. Materia is deleted" << std::endl;
+    std::cout << this->_name
+              << "'s inventory is full and the floor is full of materias. Materia is deleted"
+              << std::endl;
     delete m;
     return;
 }
@@ -117,8 +118,8 @@ void Character::unequip(int idx)
         {
             if (!this->_floor[i])
             {
-                this->_floor[i] = this->_inventory[idx];
-                this->_inventory[idx]       = NULL;
+                this->_floor[i]       = this->_inventory[idx];
+                this->_inventory[idx] = NULL;
                 shiftLeftMaterias(idx, this->_inventory);
                 return;
             }
@@ -142,8 +143,8 @@ void Character::equipFromFloor(int idx)
         {
             if (this->_floor[idx])
             {
-                this->_inventory[i]           = this->_floor[idx];
-                this->_floor[idx] = NULL;
+                this->_inventory[i] = this->_floor[idx];
+                this->_floor[idx]   = NULL;
                 shiftLeftMaterias(idx, this->_floor);
             }
             else if (!this->_floor[idx])
@@ -176,7 +177,7 @@ std::string const& Character::getEquippedMateria(int idx) const
     {
         std::cout << "Invalid index. Must be between 0 and 3" << std::endl;
         return empty;
-    } 
+    }
     else if (this->_inventory[idx])
         return this->_inventory[idx]->getType();
     std::cout << "Inventory empty at index " << idx << std::endl;
@@ -190,7 +191,7 @@ std::string const& Character::getUnequippedMateria(int idx) const
     {
         std::cout << "Invalid index. Must be between 0 and 3" << std::endl;
         return empty;
-    } 
+    }
     else if (this->_floor[idx])
         return this->_floor[idx]->getType();
     std::cout << "Floor empty at index " << idx << std::endl;
@@ -203,8 +204,8 @@ void Character::deleteMaterias() const
     {
         if (this->_inventory[i])
         {
-            std::cout << "Deleting " << this->_inventory[i]->getType() << " from "
-            << this->_name << "'s inventory" << std::endl;
+            std::cout << "Deleting " << this->_inventory[i]->getType() << " from " << this->_name
+                      << "'s inventory" << std::endl;
             delete this->_inventory[i];
         }
     }
@@ -212,8 +213,8 @@ void Character::deleteMaterias() const
     {
         if (this->_floor[i])
         {
-            std::cout << "Deleting " << this->_name << "'s materia "
-            << this->_floor[i]->getType() << " left on the floor" << std::endl;
+            std::cout << "Deleting " << this->_name << "'s materia " << this->_floor[i]->getType()
+                      << " left on the floor" << std::endl;
             delete this->_floor[i];
         }
     }

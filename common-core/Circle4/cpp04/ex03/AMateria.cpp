@@ -1,9 +1,10 @@
 #include "AMateria.hpp"
 #include "ICharacter.hpp"
 
-AMateria::AMateria(std::string const& type) : _type(type) {
-	std::cout << "AMateria " << this->_type << " constructor called" << std::endl;
-	}
+AMateria::AMateria(std::string const& type) : _type(type)
+{
+    std::cout << "AMateria " << this->_type << " constructor called" << std::endl;
+}
 
 AMateria::AMateria()
 {
