@@ -63,7 +63,7 @@ void MateriaSource::learnMateria(AMateria* materia)
     {
         if (!this->_inventory[i])
         {
-            std::cout << "Add materia " << materia->getType() << std::endl;
+            std::cout << "Learn materia " << materia->getType() << std::endl;
             this->_inventory[i] = materia->clone();
             delete materia;
             return;
@@ -73,13 +73,16 @@ void MateriaSource::learnMateria(AMateria* materia)
 
 AMateria* MateriaSource::createMateria(std::string const& type)
 {
+    if (type != "ice" && type != "cure")
+    {
+        std::cout << "Invalid type given. Cannot create new materia" << std::endl;
+        return 0;
+    }
     for (int i = 0; i < 4; ++i)
     {
         if (this->_inventory[i] && this->_inventory[i]->getType() == type)
-        {
             return this->_inventory[i]->clone();
-        }
     }
-    std::cout << "Invalid type given. Cannot create new materia" << std::endl;
+    std::cout << "Materia was not learned. Cannot create it" << std::endl;
     return 0;
 }

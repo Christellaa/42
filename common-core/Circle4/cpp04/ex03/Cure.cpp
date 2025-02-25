@@ -7,14 +7,16 @@ Cure::Cure() : AMateria()
     this->_type = "cure";
 }
 
+// shouldn't be used, use clone instead
 Cure::Cure(const Cure& copy) : AMateria()
 {
-    this->_type = copy._type;
+    (void)copy;
 }
 
-Cure::~Cure() {
-std::cout << "Cure destructor called" << std::endl;
- }
+Cure::~Cure()
+{
+    std::cout << "Cure destructor called" << std::endl;
+}
 
 Cure& Cure::operator=(const Cure& rhs)
 {

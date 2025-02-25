@@ -6,10 +6,10 @@ Ice::Ice() : AMateria()
     std::cout << "Ice constructor called" << std::endl;
     this->_type = "ice";
 }
-
+// shouldn't be used, use clone instead
 Ice::Ice(const Ice& copy) : AMateria()
 {
-    this->_type = copy._type;
+    (void)copy;
 }
 
 Ice::~Ice() {
