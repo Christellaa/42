@@ -2,7 +2,9 @@
 
 int main()
 {
-    { // constructor with too high grade
+    std::cout << "Constructor with too high grade:" << std::endl;
+    std::cout << std::endl;
+    {
         try
         {
             Bureaucrat test1("test1", 0);
@@ -13,7 +15,9 @@ int main()
         }
     }
     std::cout << "----------" << std::endl;
-    { // constructor with too low grade
+    std::cout << "Constructor with too low grade:" << std::endl;
+    std::cout << std::endl;
+    {
         try
         {
             Bureaucrat test2("test2", 151);
@@ -24,7 +28,9 @@ int main()
         }
     }
     std::cout << "----------" << std::endl;
-    { // increment grade until exception
+    std::cout << "Increment grade until exception:" << std::endl;
+    std::cout << std::endl;
+    {
         try
         {
             Bureaucrat test3("test3", 1);
@@ -37,7 +43,9 @@ int main()
         }
     }
     std::cout << "----------" << std::endl;
-    { // decrement grade until exception
+    std::cout << "Decrement grade until exception:" << std::endl;
+    std::cout << std::endl;
+    {
         try
         {
             Bureaucrat test4;
@@ -50,7 +58,9 @@ int main()
         }
     }
     std::cout << "----------" << std::endl;
-    { // everything working
+    std::cout << "Everything working:" << std::endl;
+    std::cout << std::endl;
+    {
         try
         {
             Bureaucrat test5("test5", 55);
@@ -68,7 +78,9 @@ int main()
         }
     }
     std::cout << "----------" << std::endl;
-    { // incrementation of copy and copy2
+    std::cout << "Increment copy and copy2 (must have different value at the end):" << std::endl;
+    std::cout << std::endl;
+    {
         try
         {
             Bureaucrat test("test");
