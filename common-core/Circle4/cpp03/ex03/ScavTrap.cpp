@@ -81,3 +81,8 @@ void ScavTrap::guardGate()
             std::cout << this->_name << " is already in guard mode" << std::endl;
     }
 }
+
+void ScavTrap::setScavEnergyPoints(unsigned int number)
+{
+    this->_energyPoints = number;
+}
