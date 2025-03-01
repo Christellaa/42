@@ -27,14 +27,14 @@ class Form
     };
 
     std::string const& getName() const;
-    bool const&        getSigned() const;
+    bool const&        getIsSigned() const;
     int const&         getGradeToSign() const;
     int const&         getGradeToExec() const;
     void               beSigned(const Bureaucrat& bureaucrat);
 
   private:
     const std::string _name;
-    bool              _signed;
+    bool              _isSigned;
     const int         _gradeToSign;
     const int         _gradeToExec;
 };
