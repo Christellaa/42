@@ -53,7 +53,7 @@ class AForm
     bool              _isSigned;
     const int         _gradeToSign;
     const int         _gradeToExec;
-    virtual void      performAction() const = 0; // to implement in children
+    virtual void      performAction() const = 0;
 };
 
 std::ostream& operator<<(std::ostream& out, const AForm& form);
