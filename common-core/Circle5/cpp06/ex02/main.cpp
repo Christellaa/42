@@ -39,12 +39,33 @@ void  identify(Base* p)
 
 void  identify(Base& p)
 {
-    if (dynamic_cast<A*>(&p))
+    try
+    {
+        (void)dynamic_cast<A&>(p);
         std::cout << "The type refered to by " << &p << " is: " << "A" << std::endl;
-    else if (dynamic_cast<B*>(&p))
+    }
+    catch(const std::exception& e)
+    {
+        (void)e;
+    }
+    try
+    {
+        (void)dynamic_cast<B&>(p);
         std::cout << "The type refered to by " << &p << " is: " << "B" << std::endl;
-    else if (dynamic_cast<C*>(&p))
+    }
+    catch(const std::exception& e)
+    {
+        (void)e;
+    }
+    try
+    {
+        (void)dynamic_cast<C&>(p);
         std::cout << "The type refered to by " << &p << " is: " << "C" << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        (void)e;
+    }
 }
 
 int main()
