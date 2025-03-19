@@ -1,6 +1,6 @@
 NAME := scalar
-INCFILES := ScalarConverter.hpp
-SRCFILES := main.cpp ScalarConverter.cpp
+INCFILES := ScalarConverter.hpp checkType.h converts.h
+SRCFILES := main.cpp ScalarConverter.cpp checkType.cpp converts.cpp
 OBJS := $(SRCFILES:.cpp=.o)
 CC := c++
 CFLAGS := -Wall -Wextra -Werror -std=c++98

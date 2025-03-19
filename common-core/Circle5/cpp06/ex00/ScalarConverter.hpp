@@ -1,7 +1,8 @@
 #ifndef _SCALARCONVERTER_HPP_
 #define _SCALARCONVERTER_HPP_
 
-#include <iostream>
+#include "checkType.h"
+#include "converts.h"
 
 class ScalarConverter
 {
@@ -15,8 +16,5 @@ class ScalarConverter
 
     ScalarConverter& operator=(const ScalarConverter& rhs);
 };
-
-void convertSpecial(double d);
-void convertNormal(double d);
 
 #endif
