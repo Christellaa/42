@@ -13,23 +13,23 @@ swap = function's name
 */
 
 template <typename T>
-void swap(T& x, T& y)
+void swap(T& a, T& b)
 {
-	T tmp = x;
-	x = y;
-	y = tmp;
+	T tmp = a;
+	a = b;
+	b = tmp;
 }
 
 template <typename T>
-T min(T& x, T& y)
+T min(T& a, T& b)
 {
-	return (x < y) ? x : y;
+	return (a < b) ? a : b;
 }
 
 template <typename T>
-T max(T& x, T& y)
+T max(T& a, T& b)
 {
-	return (x > y) ? x : y;
+	return (a > b) ? a : b;
 }
 
 #endif
