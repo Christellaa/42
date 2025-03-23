@@ -1,24 +1,40 @@
 #ifndef _SPAN_HPP_
 #define _SPAN_HPP_
 
+#include <exception>
+#include <vector>
+
 class Span
 {
-	public:
-		Span();
-		Span(&Span copy);
-		~Span();
+  public:
+    Span(unsigned int max);
+    Span(const Span& copy);
+    ~Span();
 
-		Span operator=(Span& rhs);
+    Span& operator=(const Span& rhs);
 
-		addNumber(); // add a single number to the Span; throw exception if more than _max allowed
-		shortestSpan(); // find the shortest span (= dist) between all numbers stored and return it
-		longestSpan(); // find the longest span (= dist) between all numbers stored and return it
-		// -> for both => no number stored or only 1 = exception bc no span can be found
+    class MaxExceededException : public std::exception
+    {
+      public:
+        const char* what() const throw();
+    };
 
-	private:
-		unsigned int _max;
+    class NotEnoughForSpanException : public std::exception
+    {
+      public:
+        const char* what() const throw();
+    };
+
+    void addNumber(int number);
+    void addNumbers(std::vector<int>::iterator begin, std::vector<int>::iterator end);
+    void showNumbers();
+    int  shortestSpan();
+    int  longestSpan();
+
+  private:
+    unsigned int     _max;
+    std::vector<int> _span;
+    Span();
 };
 
 #endif
-
-// TODO after the class: create method to add multiple numbers to Span using a range of iterators instead of numerous calls to addNumber()
