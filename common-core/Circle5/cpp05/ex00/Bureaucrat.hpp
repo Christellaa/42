@@ -25,15 +25,15 @@ class Bureaucrat
         const char* what() const throw();
     };
 
-    std::string const&  getName() const;
-    unsigned int const& getGrade() const;
+    std::string const& getName() const;
+    int const&         getGrade() const;
 
     void incrementGrade();
     void decrementGrade();
 
   private:
     const std::string _name;
-    unsigned int      _grade;
+    int               _grade;
 };
 
 std::ostream& operator<<(std::ostream& out, const Bureaucrat& bureaucrat);

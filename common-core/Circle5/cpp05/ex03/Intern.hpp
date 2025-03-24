@@ -1,5 +1,5 @@
-#ifndef _INTERN_HPP
-#define _INTERN_HPP
+#ifndef _INTERN_HPP_
+#define _INTERN_HPP_
 
 #include "AForm.hpp"
 
@@ -17,7 +17,7 @@ class Intern
         const char* what() const throw();
     };
 
-    AForm* makeForm(const std::string& s1, const std::string& s2);
+    AForm* makeForm(const std::string& formName, const std::string& formTarget);
 
   private:
     static AForm* makeShrubbery(const std::string& target);

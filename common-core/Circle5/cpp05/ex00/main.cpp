@@ -7,7 +7,7 @@ int main()
     {
         try
         {
-            Bureaucrat test1("test1", 0);
+            Bureaucrat test1("test1", -2);
         }
         catch (std::exception& e)
         {
