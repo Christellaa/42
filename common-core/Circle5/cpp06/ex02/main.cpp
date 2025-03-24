@@ -80,4 +80,5 @@ int main()
     std::cout << "bob is: " << bob << std::endl;
     identify(bob);
     identify(*bob);
+    delete bob;
 }
