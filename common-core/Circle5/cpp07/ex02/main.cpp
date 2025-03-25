@@ -28,6 +28,8 @@ int main(int, char**)
             std::cerr << "didn't save the same value!!" << std::endl;
             return 1;
         }
+        else
+            std::cout << "have the same value!" << std::endl;
     }
     try
     {

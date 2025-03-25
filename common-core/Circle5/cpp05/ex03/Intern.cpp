@@ -45,7 +45,7 @@ AForm* Intern::makePresidentialPardon(const std::string& target)
     return new PresidentialPardonForm(target);
 }
 
-AForm* Intern::makeForm(const std::string& formName, const std::string& target)
+AForm* Intern::makeForm(const std::string& formName, const std::string& formTarget)
 {
     const std::string _formName[3]             = {"shrubbery creation", "robotomy request",
                                                   "presidential pardon"};
@@ -56,7 +56,7 @@ AForm* Intern::makeForm(const std::string& formName, const std::string& target)
         if (formName == _formName[i])
         {
             std::cout << "Intern creates " << _formName[i] << std::endl;
-            return (*formArray[i])(target);
+            return (*formArray[i])(formTarget);
         }
     }
     throw MakeFormException();

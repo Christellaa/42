@@ -7,6 +7,12 @@
 template <class T> class MutantStack : public std::stack<T>
 {
   public:
+    MutantStack();
+    MutantStack(MutantStack const& copy);
+    ~MutantStack();
+
+    MutantStack& operator=(MutantStack const& rhs);
+
     typedef typename std::stack<T>::container_type    container_type;
     typedef typename container_type::iterator         iterator;
     typedef typename container_type::const_iterator   const_iterator;

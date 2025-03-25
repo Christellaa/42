@@ -35,8 +35,12 @@ int main()
             AForm* form3 = intern.makeForm("presidential pardon", "president");
             std::cout << *form3 << std::endl;
             Bureaucrat bureaucrat("bureaucrat", 1);
+            form->beSigned(bureaucrat);
+            form->execute(bureaucrat);
             form2->beSigned(bureaucrat);
             form2->execute(bureaucrat);
+            form3->beSigned(bureaucrat);
+            form3->execute(bureaucrat);
             delete form;
             delete form2;
             delete form3;

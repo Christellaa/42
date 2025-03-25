@@ -15,7 +15,8 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& rhs)
 
 void ScalarConverter::convert(std::string literal)
 {
-    e_type type = literalType(literal);
-    void (*toConvert[6])(std::string&) = { invalidLiteral, convertSpecial, convertChar, convertInt, convertFloat, convertDouble };
+    e_type type                        = literalType(literal);
+    void (*toConvert[6])(std::string&) = {invalidLiteral, convertSpecial, convertChar,
+                                          convertInt,     convertFloat,   convertDouble};
     toConvert[type](literal);
 }
