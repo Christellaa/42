@@ -2,6 +2,9 @@
 #define _BITCOIN_EXCHANGE_HPP_
 
 #include <map>
+#include <string>
+#include <fstream>
+#include <cstdlib>
 
 class BitcoinExchange
 {
@@ -11,9 +14,11 @@ class BitcoinExchange
 		~BitcoinExchange();
 
 		BitcoinExchange& operator=(BitcoinExchange const& rhs);
+		void fillMap();
+		std::map<std::string, float>& getMap();
 
 	private:
-		std::map<std::string, std::string> map;
+		std::map<std::string, float> _map;
 };
 
 #endif
