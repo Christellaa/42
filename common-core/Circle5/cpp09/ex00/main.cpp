@@ -21,7 +21,7 @@ bool checkDate(std::string date)
 	return true;
 }
 
-bool checkValue(std::string value)
+int checkValue(std::string value)
 {
 	bool dot = false;
 	for (size_t i = 0; i < value.length(); ++i)
@@ -29,15 +29,20 @@ bool checkValue(std::string value)
 		if (value[i] == '.')
 		{
 			if (dot)
-				return false;
+				return -1;
 			dot = true;
 		}
 		else if (!isdigit(value[i]))
-			return false;
+		{
+			if (i == 0 && value[i] == '+')
+				continue;
+			else
+				return -1;
+		}
 	}
 	if (!isIntOrFloat(value))
-		return false;
-	return true;
+		return -2;
+	return 0;
 }
 
 bool parseLine(std::string line)
@@ -61,10 +66,13 @@ bool parseLine(std::string line)
 		std::cout << "Error: no value given at line [" << line << "]" << std::endl;
 		return false;
 	}
-	else if (!checkValue(line.substr(line.find('|') + 2)))
+	int ret = checkValue(line.substr(line.find('|') + 2));
+	if (ret < 0)
 	{
 		if (line.substr(line.find('|') + 2)[0] == '-')
 			std::cout << "Error: not a positive number at line [" << line << "]" << std::endl;
+		else if (ret == -1)
+			std::cout << "Error: wrong value format at line [" << line << "]" << std::endl;
 		else
 			std::cout << "Error: too large a number at line [" << line << "]" << std::endl;
 		return false;
@@ -128,3 +136,9 @@ int main(int ac, char **av)
 	if (!parseAndExecute(av[1], data))
 		return 1;
 }
+
+
+/*
+TODO:
+error = cout -> cerr
+*/
