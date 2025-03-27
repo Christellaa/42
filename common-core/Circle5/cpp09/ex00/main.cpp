@@ -114,15 +114,16 @@ float getValue(std::string line)
 void executeOperation(std::string line, BitcoinExchange& data)
 {
 	std::string date = line.substr(0, line.find(' '));
-	std::map<std::string, float>::iterator search = data.getMap().find(date);
-	if (search != data.getMap().end())
-	{
-		float value = getValue(line);
-		std::cout << date << " => " << value << " = " << search->second * value << std::endl;
-	}
+	std::map<std::string, float>::iterator it = data.getMap().lower_bound(date);
+	float value = getValue(line);
+	if (it == data.getMap().begin())
+		std::cout << "Error: no date found in data.csv for this line: [" << line << "]" << std::endl;
 	else
-		std::cout << "no date found at line: " << line << std::endl;
-	// if date not found, get nearest lower date
+	{
+		if (it == data.getMap().end() || it->first != date)
+			--it;
+		std::cout << date << " => " << value << " = " << it->second * value << std::endl;
+	}
 }
 
 bool parseAndExecute(std::string fileName, BitcoinExchange& data)
@@ -170,5 +171,4 @@ int main(int ac, char **av)
 /*
 TODO:
 - stop max date to time of today
-- get nearest lower date if date demanded is not found
 */
