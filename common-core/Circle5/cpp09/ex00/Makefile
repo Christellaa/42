@@ -1,6 +1,6 @@
 NAME := btc
-INCFILES := BitcoinExchange.hpp
-SRCFILES := main.cpp BitcoinExchange.cpp
+INCFILES := BitcoinExchange.hpp utils.h
+SRCFILES := main.cpp BitcoinExchange.cpp utils.cpp
 OBJS := $(SRCFILES:.cpp=.o)
 CC := c++
 CFLAGS := -Wall -Wextra -Werror -std=c++98
