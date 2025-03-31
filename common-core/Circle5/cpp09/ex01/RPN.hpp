@@ -5,17 +5,17 @@
 
 class RPN
 {
-	public:
-		RPN();
-		RPN(RPN const& copy);
-		~RPN();
+  public:
+    RPN();
+    RPN(RPN const& copy);
+    ~RPN();
 
-		RPN& operator=(RPN const& rhs);
+    RPN& operator=(RPN const& rhs);
 
-		std::stack<float>& getStack();
+    std::stack<double>& getStack();
 
-	private:
-		std::stack<float> _stack;
+  private:
+    std::stack<double> _stack;
 };
 
 #endif
