@@ -1,36 +1,25 @@
-// use std::stack
 #include "RPN.hpp"
+#include <algorithm>
 #include <iostream>
 
-bool parseExpression(std::string expression)
+void parseExpression(std::string expression)
 {
     int nbOperator = 0;
     int nbOperand  = 0;
     for (size_t i = 0; i < expression.length(); ++i)
     {
-        if (expression[i] == ' ')
-            continue;
-        else if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' ||
-                 expression[i] == '/')
+        if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' ||
+            expression[i] == '/')
         {
             nbOperator++;
             if (nbOperator >= nbOperand)
-            {
-                std::cerr << "Error: too much operators in the expression" << std::endl;
-                return false;
-            }
+                throw RPN::TooMuchOperatorsException();
         }
         else if (isdigit(expression[i]))
             nbOperand++;
         else
-        {
-            std::cerr
-                << "Error: token not recognized. Only digits and operators [+ - * /] are accepted"
-                << std::endl;
-            return false;
-        }
+            throw RPN::UnrecognizedTokenException();
     }
-    return true;
 }
 
 void executeOperation(RPN& stack, char operation)
@@ -49,10 +38,7 @@ void executeOperation(RPN& stack, char operation)
     else if (operation == '/')
     {
         if (second == 0)
-        {
-            std::cerr << "exception to do" << std::endl;
-            return;
-        }
+            throw RPN::DivisionByZeroException();
         res = first / second;
     }
     stack.getStack().push(res);
@@ -62,10 +48,8 @@ void executeExpression(std::string expression, RPN& stack)
 {
     for (size_t i = 0; i < expression.length(); ++i)
     {
-        if (expression[i] == ' ')
-            continue;
-        else if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' ||
-                 expression[i] == '/')
+        if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' ||
+            expression[i] == '/')
             executeOperation(stack, expression[i]);
         else
         {
@@ -75,28 +59,29 @@ void executeExpression(std::string expression, RPN& stack)
     }
 }
 
-int main(int ac, char** av)
+std::string removeSpaces(std::string expression)
 {
-    if (ac != 2)
-    {
-        std::cerr << "Usage: " << av[0] << " [inverted polish mathematical expression in quotes]"
-                  << std::endl;
-        return 1;
-    }
-    if (!parseExpression(av[1]))
-        return 1;
-    RPN stack;
-    executeExpression(av[1], stack);
-    if (stack.getStack().size() != 1)
-    {
-        std::cerr << "Error: result should be a single number" << std::endl;
-        return 1;
-    }
-    std::cout << stack.getStack().top() << std::endl;
+    std::string res = expression;
+    res.erase(std::remove(res.begin(), res.end(), ' '), res.end());
+    return res;
 }
 
-/*
-TODO:
-- use exceptions
-- use function ptr for operations to avoid if/elses
-*/
+int main(int ac, char** av)
+{
+    try
+    {
+        std::string expression = removeSpaces(av[1]);
+        if (ac != 2 || expression.empty())
+            throw RPN::UsageException();
+        parseExpression(expression);
+        RPN stack;
+        executeExpression(expression, stack);
+        if (stack.getStack().size() != 1)
+            throw RPN::ResultException();
+        std::cout << stack.getStack().top() << std::endl;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+}

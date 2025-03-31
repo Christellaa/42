@@ -1,4 +1,4 @@
-NAME := rpn
+NAME := RPN
 INCFILES := RPN.hpp
 SRCFILES := main.cpp RPN.cpp
 OBJS := $(SRCFILES:.cpp=.o)
