@@ -35,3 +35,13 @@ const char* PmergeMe::TooLargeNumberException::what() const throw()
 {
     return ("Error: number larger than an int");
 }
+
+std::list<int>& PmergeMe::getList()
+{
+    return this->_list;
+}
+
+std::vector<int>& PmergeMe::getVector()
+{
+    return this->_vector;
+}

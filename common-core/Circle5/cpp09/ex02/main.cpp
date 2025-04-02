@@ -4,13 +4,12 @@
 #include <iostream>
 #include <limits>
 #include <sstream>
+#include <cmath>
 
 void isAPositiveNumber(std::string arg)
 {
-    // std::cout << "arg in: " << arg << std::endl;
     for (size_t i = 0; i < arg.size(); ++i)
     {
-        // std::cout << "arg[i]: [" << arg[i] << "]" << std::endl;
         if (i == 0 && arg[i] == '+')
         {
             if (!isdigit(arg[i + 1]))
@@ -31,48 +30,104 @@ void isAnInt(std::string arg)
         throw PmergeMe::TooLargeNumberException();
 }
 
-void parseSequence(char** av)
+void parseSequence(char** av, PmergeMe& pmerge)
 {
     int i = 1;
     while (av[i])
     {
-        // std::cout << "av[i]: [" << av[i] << "]" << std::endl;
         std::stringstream ss(av[i]);
         std::string       arg;
         if (!(ss >> arg))
             throw PmergeMe::UsageException();
         do
         {
-            // std::cout << "arg: [" << arg << "]" << std::endl;
             isAPositiveNumber(arg);
             isAnInt(arg);
+            pmerge.getList().push_back(atoi(arg.c_str()));
+            pmerge.getVector().push_back(atoi(arg.c_str()));
         } while (ss >> arg);
         i++;
     }
 }
 
-void printBefore(char** av)
+void printBefore(std::list<int>& list)
 {
-    int  i        = 1;
-    bool firstArg = true;
-    while (av[i])
+    std::cout << "before: ";
+    std::list<int>::iterator it = list.begin();
+    bool firstValue = true;
+    while (it != list.end())
     {
-        if (!firstArg)
+        if (!firstValue)
             std::cout << " ";
-        firstArg = false;
-        std::stringstream ss(av[i]);
-        std::string       arg;
-        bool              firstValue = true;
-        while (ss >> arg)
-        {
-            if (!firstValue)
-                std::cout << " ";
-            firstValue = false;
-            std::cout << arg;
-        }
-        i++;
+        firstValue = false;
+        std::cout << *it;
+        ++it;
     }
     std::cout << std::endl;
+}
+
+void mergePairs(std::list<int>& list, int &order)
+{
+    int pairSize = list.size() / order;
+    if (pairSize < 2)
+        return;
+    bool isOdd = pairSize % 2 == 1;
+    std::list<int>::iterator begin = list.begin();
+    std::list<int>::iterator end = begin;
+    std::advance(end, (order * pairSize) - (isOdd * order));
+    std::list<int>::iterator it = begin;
+    while (it != end)
+    {
+        std::list<int>::iterator first = it;
+        std::advance(first, order - 1);
+        std::list<int>::iterator second = it;
+        std::advance(second, order * 2 - 1);
+        std::cout << "Comparing " << *first << " with " << *second << std::endl;
+        if (*first > *second)
+        {
+            std::cout << "Swapping..." << std::endl;
+            for (int i = 0; i < order; ++i)
+            {
+                std::list<int>::iterator firstElement = it;
+                std::advance(firstElement, i);
+                std::list<int>::iterator secondElement = it;
+                std::advance(secondElement, order + i);
+                std::swap(*firstElement, *secondElement);
+            }
+        }
+        std::advance(it, order * 2);
+    }
+    printBefore(list);
+    order *= 2;
+    mergePairs(list, order);
+}
+
+// use jacobsthal to determine the indices for precessing elements in a pecific order during insertion
+int getJacobsthal(int number)
+{
+    // formula: Jacobsthal(number) = (2^ (number + 1) + (-1) ^number) / 3
+    return round((pow(2, number + 1) + pow(-1, number)) / 3);
+}
+
+void insertPairs(std::list<int> list, std::list<int> main, std::list<int> pend, int order)
+{
+    /*
+    1. init main and pend containers
+    2a. if pend size = 1: sort using binary search (use std::upperbound)
+    3b. if pend size > 1: sort using jacobsthal(start with jacobsthal = 3):
+    */
+}
+
+void fjmiSort(PmergeMe& pmerge)
+{
+    int order = 1;
+    mergePairs(pmerge.getList(), order);
+    std::cout << "order after merging: " << order << std::endl;
+    order /= 2;
+    std::list<int> main; // keep last elem of each pair
+    std::list<int> pend; // keep last elem of each pair
+    std::list<int> leftover; // no pairs
+    insertPairs(pmerge.getList(), main, pend, order);
 }
 
 int main(int ac, char** av)
@@ -81,9 +136,10 @@ int main(int ac, char** av)
     {
         if (ac < 2)
             throw PmergeMe::UsageException();
-        parseSequence(av);
-        printBefore(av);
-        // sort();
+        PmergeMe pmerge;
+        parseSequence(av, pmerge);
+        printBefore(pmerge.getList());
+        fjmiSort(pmerge);
         // printAfter();
         // printUsageTime();
     }

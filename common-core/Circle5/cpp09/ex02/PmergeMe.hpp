@@ -34,6 +34,9 @@ class PmergeMe
         const char* what() const throw();
     };
 
+    std::list<int>& getList();
+    std::vector<int>& getVector();
+
   private:
     std::list<int>   _list;
     std::vector<int> _vector;
