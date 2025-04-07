@@ -1,5 +1,5 @@
 NAME := PmergeMe
-INCFILES := PmergeMe.hpp
+INCFILES := PmergeMe.hpp fjmiSort.hpp fjmiSort.tpp
 SRCFILES := main.cpp PmergeMe.cpp
 OBJS := $(SRCFILES:.cpp=.o)
 CC := c++

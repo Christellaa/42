@@ -5,10 +5,6 @@
 #include <list>
 #include <vector>
 
-typedef std::list<int>           List;
-typedef std::list<int>::iterator Iterator;
-typedef std::vector<int>         Vector;
-
 class PmergeMe
 {
   public:
