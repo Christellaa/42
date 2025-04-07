@@ -5,6 +5,10 @@
 #include <list>
 #include <vector>
 
+typedef std::list<int>           List;
+typedef std::list<int>::iterator Iterator;
+typedef std::vector<int>         Vector;
+
 class PmergeMe
 {
   public:
@@ -34,7 +38,7 @@ class PmergeMe
         const char* what() const throw();
     };
 
-    std::list<int>& getList();
+    std::list<int>&   getList();
     std::vector<int>& getVector();
 
   private:
