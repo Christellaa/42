@@ -1,4 +1,4 @@
-#include "fjmiSort.hpp"
+#include "FjmiSort.hpp"
 
 template <typename Container> void printList(Container& list)
 {

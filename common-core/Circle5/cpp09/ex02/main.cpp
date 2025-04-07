@@ -1,6 +1,6 @@
 #include "PmergeMe.hpp"
-#include "fjmiSort.hpp"
-#include "fjmiSort.tpp"
+#include "FjmiSort.hpp"
+#include "FjmiSort.tpp"
 #include <ctime>
 #include <iomanip>
 #include <iostream>
