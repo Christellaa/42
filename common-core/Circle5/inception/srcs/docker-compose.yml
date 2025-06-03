@@ -1,0 +1,97 @@
+services:
+  nginx:
+    image: nginx:v1.0
+    container_name: nginx
+    restart: on-failure
+    depends_on:
+      - wordpress
+    networks:
+      - inception
+    volumes:
+      - wordpress:/var/www/html
+    build:
+      context: requirements/nginx
+    env_file:
+      - .env
+    ports:
+      - "443:443"
+  mariadb:
+    image: mariadb:v1.0
+    container_name: mariadb
+    restart: on-failure
+    networks:
+      - inception
+    volumes:
+      - mariadb:/var/lib/mysql
+    build:
+      context: requirements/mariadb
+    env_file:
+      - .env
+    secrets:
+      - db_user
+      - db_pass
+      - db_root_pass
+    expose:
+      - "3306"
+  wordpress:
+    image: wordpress:v1.0
+    container_name: wordpress
+    restart: on-failure
+    depends_on:
+      - mariadb
+    networks:
+      - inception
+    volumes:
+      - wordpress:/var/www/html
+    build:
+      context: requirements/wordpress
+    env_file:
+      - .env
+    secrets:
+      - db_user
+      - db_pass
+      - wp_admin_user
+      - wp_admin_mail
+      - wp_admin_pass
+      - wp_guest_user
+      - wp_guest_mail
+      - wp_guest_pass
+    expose:
+      - "9000"
+volumes:
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/mariadb
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/wordpress
+networks:
+  inception:
+    driver: bridge
+secrets:
+  db_user:
+    file: ../secrets/db_user
+  db_pass:
+    file: ../secrets/db_pass
+  db_root_pass:
+    file: ../secrets/db_root_pass
+  wp_admin_user:
+    file: ../secrets/wp_admin_user
+  wp_admin_mail:
+    file: ../secrets/wp_admin_mail
+  wp_admin_pass:
+    file: ../secrets/wp_admin_pass
+  wp_guest_user:
+    file: ../secrets/wp_guest_user
+  wp_guest_mail:
+    file: ../secrets/wp_guest_mail
+  wp_guest_pass:
+    file: ../secrets/wp_guest_pass
