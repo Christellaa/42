@@ -5,3 +5,6 @@
 	path = common-core/Circle3/minishell
 	url = https://github.com/Christellaa/minishell.git
 
+[submodule "common-core/Circle4/cub3d"]
+	path = common-core/Circle4/cub3d
+	url = https://github.com/Christellaa/Cub3D.git
