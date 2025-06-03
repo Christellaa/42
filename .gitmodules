@@ -8,3 +8,6 @@
 [submodule "common-core/Circle4/cub3d"]
 	path = common-core/Circle4/cub3d
 	url = https://github.com/Christellaa/Cub3D.git
+[submodule "common-core/Circle5/irc"]
+	path = common-core/Circle5/irc
+	url = https://github.com/Christellaa/irc.git
